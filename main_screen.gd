@@ -4,43 +4,61 @@ extends Node
 @onready var sky_tint := $CanvasLayer/ColorRect
 @onready var world_env := $WorldEnvironment
 @onready var clock_label := $CanvasLayer/ClockLabel
+@onready var speed_label := $CanvasLayer/Control/MarginContainer/Buttons/SpeedButton
 
 func _ready():
-	clock_label.text = "Day %d, %02d:%02d" % [TimeManager.day_count, TimeManager.in_game_hours, TimeManager.in_game_minutes]
-	TimeManager.time_changed.connect(Callable (self, "_on_time_changed"))
-	
-func _on_time_changed(new_time: float, new_day: int) -> void:
-	var in_game_hours = int(new_time * TimeManager.hours_in_day)
-	var in_game_minutes = int(fmod(new_time * TimeManager.hours_in_day * 60, 60))
-	var time_text = "Day %d, %02d:%02d" % [new_day, in_game_hours, in_game_minutes]
-	clock_label.text = time_text
-	
-func _process(delta):
-	# **Smooth Sunrise and Sunset**
-	var sunrise_start = 5.0  # When the sun starts rising (5:00 AM)
-	var sunrise_end = 8.0  # When full brightness is reached (8:00 AM)
-	var sunset_start = 18.0  # When the sun starts setting (6:00 PM)
-	var sunset_end = 21.0  # When it's fully dark (9:00 PM)
+	# Connect the time update signal
+	TimeManager.time_updated.connect(_on_time_changed)
+	# Force an initial update when the game starts
+	_on_time_changed(int(TimeManager.time_of_day * TimeManager.HOURS_IN_DAY), 0, TimeManager.day_count)
 
-	var day_brightness = 1.2  # Max brightness at noon
-	var night_brightness = 0.4  # Min brightness at midnight
+func _on_time_changed(in_game_hours: int, in_game_minutes: int, new_day: int) -> void:
+	# Update the UI clock
+	clock_label.text = "Day %d, %02d:%02d" % [new_day, in_game_hours, in_game_minutes]
+	# Update lighting
+	update_lighting(in_game_hours)
 
-	if TimeManager.in_game_hours >= sunrise_start and TimeManager.in_game_hours <= sunrise_end:
-		var t = (TimeManager.in_game_hours - sunrise_start) / (sunrise_end - sunrise_start)
+func update_lighting(in_game_hours: int):
+	# Time ranges for transitions
+	var sunrise_start = 5.0
+	var sunrise_end = 8.0
+	var sunset_start = 18.0
+	var sunset_end = 21.0
+
+	# Light intensities
+	var day_brightness = 1.2
+	var night_brightness = 0.4
+
+	if in_game_hours >= sunrise_start and in_game_hours <= sunrise_end:
+		# Morning transition (dawn)
+		var t = (in_game_hours - sunrise_start) / (sunrise_end - sunrise_start)
 		sun_light.energy = lerp(night_brightness, day_brightness, t)
-		world_env.environment.ambient_light_energy = lerp(0.3, 1.0, t)  # Adjust ambient light
-		sky_tint.color = Color(0.1, 0.1, 0.3, 0.6).lerp(Color(0.2, 0.6, 1.0, 0.3), t)  # Smoothly change sky
+		world_env.environment.ambient_light_energy = lerp(0.3, 1.0, t)
+		sky_tint.color = Color(0.1, 0.1, 0.3, 0.6).lerp(Color(0.2, 0.6, 1.0, 0.3), t)
 
-	elif TimeManager.in_game_hours >= sunset_start and TimeManager.in_game_hours <= sunset_end:
-		var t = (TimeManager.in_game_hours - sunset_start) / (sunset_end - sunset_start)
+	elif in_game_hours >= sunset_start and in_game_hours <= sunset_end:
+		# Evening transition (dusk)
+		var t = (in_game_hours - sunset_start) / (sunset_end - sunset_start)
 		sun_light.energy = lerp(day_brightness, night_brightness, t)
 		world_env.environment.ambient_light_energy = lerp(1.0, 0.3, t)
 		sky_tint.color = Color(0.2, 0.6, 1.0, 0.3).lerp(Color(0.1, 0.1, 0.3, 0.6), t)
 
-	# Update light angle for realistic sun movement
+	else:
+		# Set brightness directly outside transition times
+		if in_game_hours < sunrise_start or in_game_hours > sunset_end:
+			# Night settings
+			sun_light.energy = night_brightness
+			world_env.environment.ambient_light_energy = 0.3
+			sky_tint.color = Color(0.1, 0.1, 0.3, 0.6)
+		else:
+			# Day settings
+			sun_light.energy = day_brightness
+			world_env.environment.ambient_light_energy = 1.0
+			sky_tint.color = Color(0.2, 0.6, 1.0, 0.3)
+
+	# Update sun position to reflect the time of day
 	sun_light.rotation_degrees = lerp(-90, 90, TimeManager.time_of_day)
 
-# 🔧 Debugging Functions (Only Enabled if use_debug_options = true)
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		match event.keycode:
@@ -52,14 +70,13 @@ func _input(event):
 			KEY_D:  # Skip 1 Full Day
 				TimeManager.skip_hours(24)
 
-# ⏩ Speed Toggle Button
-func _on_button_pressed() -> void:
+func _on_speed_button_pressed() -> void:
 	if TimeManager.time_speed_multiplier == 1.0:
 		TimeManager.time_speed_multiplier = 2.0
-		$CanvasLayer/Control/Buttons/SpeedButton.text = "Speed: x2"
+		speed_label.text = "Speed: x2"
 	else:
 		TimeManager.time_speed_multiplier = 1.0
-		$CanvasLayer/Control/Buttons/SpeedButton.text = "Speed: x1"
+		speed_label.text = "Speed: x1"
 
 func _on_skip_hour_pressed() -> void:
 	TimeManager.skip_hours(1)

@@ -1,45 +1,35 @@
 extends Node
 
-signal time_changed(time_of_day, day_count)
+signal time_updated(in_game_hours: int, in_game_minutes: int, day: int)
 
-@export var real_seconds_per_in_game_minute := 12.0  # 12 real seconds = 1 in-game minute
-@export var hours_in_day := 24  # Defines a full in-game day as 24 hours
-@export var transition_duration := 0.1  # Controls how smooth the sunrise transition is
-@export var time_speed_multiplier := 1.0  # Default time speed
+const TIME_SCALE_FACTOR: float = 0.0001
+const HOURS_IN_DAY: float = 24.0
 
-var time_of_day := 0.0  # 0 = Morning, 1 = Night
-var day_count := 1  # Tracks the in-game day
-var direction := 1  # 1 = Day -> Night, -1 = Night -> Day
-var last_displayed_minute := -1  # Tracks the last displayed in-game minute
-var time_paused := false  # Tracks whether time is paused
-var in_game_hours = int(time_of_day * hours_in_day)  # Scales time_of_day to 24-hour format
-var in_game_minutes = int(fmod(time_of_day * hours_in_day * 60, 60))  # Gets the fractional minutes
+var time_of_day: float = 0.0  # 0.0 to 1.0 (midnight) to 1.0 (end of day)
+var day_count: int = 1
+var time_paused: bool = false
+var time_speed_multiplier: float = 1.0
 
 func _process(delta):
-	if time_paused:
-		return  # Stop updating if time is paused
+	if not time_paused:
+		# Update time progression
+		time_of_day += (delta * TIME_SCALE_FACTOR * time_speed_multiplier)  
+		
+		# Ensure we loop time correctly
+		if time_of_day >= 1.0:
+			time_of_day = 0.0
+			day_count += 1  # Move to next day
 
-	# Adjust time based on speed multiplier
-	time_of_day += ((delta / (real_seconds_per_in_game_minute * hours_in_day * 60)) * direction) * time_speed_multiplier
+		emit_time_update()  # Send signal every update
 
-	# Handle day rollover
-	if time_of_day >= 1.0:
-		time_of_day = 0.0  # Reset to midnight
-		day_count += 1  # Increment day counter
+func emit_time_update():
+	var in_game_hours = int(time_of_day * HOURS_IN_DAY)
+	var in_game_minutes = int(fmod(time_of_day * HOURS_IN_DAY * 60, 60))
+	emit_signal("time_updated", in_game_hours, in_game_minutes, day_count)
 
-	# Recalculate current time values
-	in_game_hours = int(time_of_day * hours_in_day)
-	in_game_minutes = int(fmod(time_of_day * hours_in_day * 60, 60))
-
-	if in_game_minutes != last_displayed_minute:
-		last_displayed_minute = in_game_minutes
-		emit_signal("time_changed", time_of_day, day_count)
-
-func skip_hours(hours: int) -> void:
-	time_of_day += float(hours) / hours_in_day
+func skip_hours(hours: int):
+	time_of_day += hours / HOURS_IN_DAY
 	if time_of_day >= 1.0:
 		time_of_day -= 1.0
 		day_count += 1
-	print("Skipped ", hours, " hour. New Time: ", time_of_day * 24, " Day:", day_count)
-	#update_clock_label()
-	emit_signal("time_changed", time_of_day, day_count)
+	emit_time_update()

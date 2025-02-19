@@ -1,6 +1,6 @@
 extends Control
 
-@onready var load_game_button = $VBoxContainer/LoadGameButton
+@onready var load_game_button = $MarginContainer/MainMenuButtons/LoadGameButton
 
 const GAME_SCENE = "res://main_screen.tscn"
 
@@ -20,7 +20,3 @@ func _on_new_game_button_pressed():
 func _on_load_game_button_pressed():
 	get_tree().change_scene_to_file(GAME_SCENE)
 	SaveSystem.load_game()
-
-# Quit the game
-func _on_quit_button_pressed():
-	get_tree().quit()
