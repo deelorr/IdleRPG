@@ -10,14 +10,14 @@ func _ready():
 	$VBoxContainer/QuitButton.pressed.connect(_on_quit_pressed)
 	
 	# Disable load button if no save file exists
-	if not FileAccess.file_exists("user://savegame.json"):
+	if not FileAccess.file_exists("res://savegame.json"):
 		$VBoxContainer/LoadGameButton.disabled = true
 
 # Start a new game
 func _on_new_game_pressed():
 	# Erase any existing save file (optional, to ensure a fresh start)
-	if FileAccess.file_exists("user://savegame.json"):
-		DirAccess.remove_absolute("user://savegame.json")
+	if FileAccess.file_exists("res://savegame.json"):
+		DirAccess.remove_absolute("res://savegame.json")
 	
 	get_tree().change_scene_to_file(GAME_SCENE)
 
@@ -27,8 +27,8 @@ func _on_load_game_pressed():
 	call_deferred("_delayed_load")  # Calls load function AFTER scene transition
 
 func _delayed_load():
-	if TimeManager:
-		TimeManager.load_progress()
+	if SaveSystem:
+		SaveSystem.load_game()
 	else:
 		print("Error: TimeManager still not available after scene load.")
 
