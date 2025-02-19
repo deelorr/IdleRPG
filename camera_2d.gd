@@ -3,7 +3,7 @@ extends Camera2D
 @export var transition_speed := 5.0  # Adjust for smooth movement speed
 @export var zoom_out_level := 1.8  # Zoom out slightly (instead of 0.8)
 
-# Define section positions
+# Define section camera positions
 var section_1 := Vector2(0, 0)
 var section_2 := Vector2(548, 0)
 var section_3 := Vector2(0, 960)
