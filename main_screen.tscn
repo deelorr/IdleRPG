@@ -477,10 +477,51 @@ tile_map_data = PackedByteArray("AAAAAAAAAAALAAcAAAABAAAAAAAMAAcAAAACAAAAAAAMAAc
 tile_set = SubResource("TileSet_rrqh5")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(411, 1920)
+position = Vector2(-1, 962)
+anchor_mode = 0
 zoom = Vector2(2, 2)
 limit_left = 0
 limit_top = 0
 limit_right = 1088
 limit_bottom = 1920
 script = ExtResource("2_ys8c8")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 461.0
+offset_top = 1725.0
+offset_right = 501.0
+offset_bottom = 1765.0
+
+[node name="Buttons" type="GridContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = -74.0
+offset_top = 57.0
+offset_right = 86.0
+offset_bottom = 123.0
+scale = Vector2(2, 2)
+columns = 2
+
+[node name="Section 1" type="Button" parent="CanvasLayer/Control/Buttons"]
+layout_mode = 2
+text = "Section 1"
+
+[node name="Section 2" type="Button" parent="CanvasLayer/Control/Buttons"]
+layout_mode = 2
+text = "Section 2"
+
+[node name="Section 3" type="Button" parent="CanvasLayer/Control/Buttons"]
+layout_mode = 2
+text = "Section 3"
+
+[node name="Section 4" type="Button" parent="CanvasLayer/Control/Buttons"]
+layout_mode = 2
+text = "Section 4"
+
+[connection signal="pressed" from="CanvasLayer/Control/Buttons/Section 1" to="Camera2D" method="_on_section_1_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Buttons/Section 2" to="Camera2D" method="_on_section_2_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Buttons/Section 3" to="Camera2D" method="_on_section_3_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Buttons/Section 4" to="Camera2D" method="_on_section_4_pressed"]
