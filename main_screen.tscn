@@ -556,18 +556,6 @@ offset_top = 10.0
 offset_right = 530.0
 offset_bottom = 45.0
 scale = Vector2(4, 4)
-text = "Current Time: 00:00"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="DayLabel" type="Label" parent="CanvasLayer"]
-visible = false
-offset_left = 360.0
-offset_top = 71.0
-offset_right = 403.0
-offset_bottom = 94.0
-scale = Vector2(3, 3)
-text = "Day 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 

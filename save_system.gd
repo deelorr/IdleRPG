@@ -1,6 +1,6 @@
 extends Node
 
-const SAVE_PATH = "res://savegame.json"
+const SAVE_PATH = "user://savegame.json"
 
 # Call this function to save the time and day
 func save_game(day: int, time: float):
@@ -36,7 +36,6 @@ func load_game():
 		#return save_data  # Return the loaded data as a dictionary
 		TimeManager.day_count = save_data.get("day")
 		TimeManager.time_of_day = save_data.get("time")
-		TimeManager.update_clock()
 		
 	else:
 		print("Failed to load game!")
