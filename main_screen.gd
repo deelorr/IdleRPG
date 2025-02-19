@@ -1,6 +1,6 @@
 extends Node
 
-@export var real_seconds_per_in_game_minute := 12.0  # 12 real seconds = 1 in-game minute
+@export var real_seconds_per_in_game_minute := 10.0  # 12 real seconds = 1 in-game minute
 @export var hours_in_day := 24  # Defines a full in-game day as 24 hours
 @export var transition_duration := 0.1  # Controls how smooth the sunrise transition is
 
@@ -16,6 +16,7 @@ var last_displayed_minute := -1  # Tracks the last displayed in-game minute
 @onready var day_label := $CanvasLayer/DayLabel  # New UI Label for day counter
 
 @export var time_speed_multiplier := 1.0  # Default time speed
+
 var time_paused := false  # Tracks whether time is paused
 
 func _process(delta):
@@ -23,7 +24,7 @@ func _process(delta):
 		return  # Stop updating if time is paused
 
 	# Adjust time based on speed multiplier (5 in-game minutes = 1 real minute)
-	time_of_day += ((delta / (real_seconds_per_in_game_minute * 60)) * direction) * time_speed_multiplier
+	time_of_day += ((delta / (real_seconds_per_in_game_minute * hours_in_day * 60)) * direction) * time_speed_multiplier
 
 	# Smoothly transition into the next day instead of snapping
 	if time_of_day >= 1.0:
@@ -85,6 +86,17 @@ func skip_hours(hours: int):
 	if time_of_day >= 1.0:
 		time_of_day -= 1.0
 		day_count += 1  # Increment day count if skipping past midnight
+	
+	# Update UI immediately after skipping hours
+	var in_game_hours = int(time_of_day * hours_in_day)
+	var in_game_minutes = int(fmod(time_of_day * hours_in_day * 60, 60))
+	last_displayed_minute = in_game_minutes  # Sync the last displayed minute
+	
+	# Format and update the clock and day labels
+	var time_text = "Day %d, %02d:%02d" % [day_count, in_game_hours, in_game_minutes]
+	clock_label.text = time_text
+	day_label.text = "Day: %d" % day_count
+	
 	print("Skipped", hours, "hours. New Time:", time_of_day * 24, "Day:", day_count)
 
 # ⏩ Speed Toggle Button
@@ -96,6 +108,8 @@ func _on_button_pressed() -> void:
 		time_speed_multiplier = 1.0
 		$CanvasLayer/Control/Buttons/SpeedButton.text = "Speed: x1"
 
-
 func _on_skip_hour_pressed() -> void:
 	skip_hours(1)
+
+func _on_save_pressed():
+	TimeManager.save_progress()
