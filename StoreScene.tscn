@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://clfhfh54lg1nf"]
+
+[ext_resource type="Script" path="res://store.gd" id="1_dmtaq"]
+[ext_resource type="Texture2D" uid="uid://bibovbyiaqvn0" path="res://StoreSprite.png" id="2_m5vij"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_spwqx"]
+size = Vector2(64, 48)
+
+[node name="Node2D" type="Area2D"]
+scale = Vector2(4, 4)
+script = ExtResource("1_dmtaq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(32, 24)
+texture = ExtResource("2_m5vij")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(32, 24)
+shape = SubResource("RectangleShape2D_spwqx")
+
+[node name="Menu" type="Panel" parent="."]
+visible = false
+custom_minimum_size = Vector2(16, 24)
+offset_left = 66.0
+offset_right = 105.0
+offset_bottom = 48.0
