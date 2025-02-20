@@ -3,7 +3,7 @@ extends Node
 @onready var sun_light := $DirectionalLight2D
 @onready var sky_tint := $CanvasLayer/ColorRect
 @onready var world_env := $WorldEnvironment
-@onready var clock_label := $CanvasLayer/ClockLabel
+@onready var clock_label := $CanvasLayer/Control/MarginContainer/Buttons/Panel/ClockLabel
 @onready var speed_label := $CanvasLayer/Control/MarginContainer/Buttons/SpeedButton
 
 func _ready():

@@ -495,9 +495,9 @@ script = ExtResource("2_ys8c8")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-visible = false
 offset_right = 1088.0
 offset_bottom = 1920.0
+mouse_filter = 2
 color = Color(1, 1, 0.717647, 0.243137)
 
 [node name="Control" type="Control" parent="CanvasLayer"]
@@ -574,18 +574,17 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "???"
 
-[node name="NewButton2" type="Button" parent="CanvasLayer/Control/MarginContainer/Buttons"]
-custom_minimum_size = Vector2(350, 150)
+[node name="Panel" type="Panel" parent="CanvasLayer/Control/MarginContainer/Buttons"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "???"
 
-[node name="ClockLabel" type="Label" parent="CanvasLayer" groups=["clock_ui"]]
-offset_left = 338.0
-offset_top = 10.0
-offset_right = 530.0
-offset_bottom = 45.0
-scale = Vector2(4, 4)
+[node name="ClockLabel" type="Label" parent="CanvasLayer/Control/MarginContainer/Buttons/Panel" groups=["clock_ui"]]
+layout_mode = 2
+offset_left = -3.0
+offset_top = 44.0
+offset_right = 347.0
+offset_bottom = 113.0
+theme_override_font_sizes/font_size = 50
+text = "Day 0, 00:00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
