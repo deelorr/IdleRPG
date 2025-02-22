@@ -3,14 +3,20 @@ extends Node
 @onready var sun_light := $DirectionalLight2D
 @onready var sky_tint := $CanvasLayer/ColorRect
 @onready var world_env := $WorldEnvironment
-@onready var clock_label := $CanvasLayer/Control/MarginContainer/Buttons/Panel/ClockLabel
+@onready var clock_label := $CanvasLayer/Control/MarginContainer/Buttons/ClockPanel/ClockLabel
 @onready var speed_label := $CanvasLayer/Control/MarginContainer/Buttons/SpeedButton
+@onready var city_wood := $CanvasLayer/Control/MarginContainer/Buttons/CityPanel/CityStats/CityWood
+@onready var city_food := $CanvasLayer/Control/MarginContainer/Buttons/CityPanel/CityStats/CityFood
 
 func _ready():
 	# Connect the time update signal
 	TimeManager.time_updated.connect(_on_time_changed)
 	# Force an initial update when the game starts
 	_on_time_changed(int(TimeManager.time_of_day * TimeManager.HOURS_IN_DAY), 0, TimeManager.day_count)
+
+func _process(_delta: float) -> void:
+	city_food.text = "Total Food: " + str(Global.total_city_food)
+	city_wood.text = "Total Wood: " + str(Global.total_city_wood)
 
 func _on_time_changed(in_game_hours: int, in_game_minutes: int, new_day: int) -> void:
 	# Update the UI clock
@@ -82,5 +88,5 @@ func _on_skip_hour_pressed() -> void:
 	TimeManager.skip_hours(1)
 
 func _on_save_pressed():
-	SaveSystem.save_game(TimeManager.day_count, TimeManager.time_of_day)
+	SaveManager.save_game(TimeManager.day_count, TimeManager.time_of_day)
 	print("SAVED GAME AT DAY ", TimeManager.day_count, TimeManager.time_of_day)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bibovbyiaqvn0"
-path="res://.godot/imported/StoreSprite.png-41a293a60ebecfd8f68165605db4bcac.ctex"
+uid="uid://divfpcj4wyvog"
+path="res://.godot/imported/WorkersHutSprite.png-00811e4584a50272014bdffe13f6ef1e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://StoreSprite.png"
-dest_files=["res://.godot/imported/StoreSprite.png-41a293a60ebecfd8f68165605db4bcac.ctex"]
+source_file="res://art/WorkersHutSprite.png"
+dest_files=["res://.godot/imported/WorkersHutSprite.png-00811e4584a50272014bdffe13f6ef1e.ctex"]
 
 [params]
 

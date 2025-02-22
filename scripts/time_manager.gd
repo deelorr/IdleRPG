@@ -25,7 +25,8 @@ func _process(delta):
 func emit_time_update():
 	var in_game_hours = int(time_of_day * HOURS_IN_DAY)
 	var in_game_minutes = int(fmod(time_of_day * HOURS_IN_DAY * 60, 60))
-	emit_signal("time_updated", in_game_hours, in_game_minutes, day_count)
+	time_updated.emit(in_game_hours, in_game_minutes, day_count)
+	#emit_signal("time_updated", in_game_hours, in_game_minutes, day_count)
 
 func skip_hours(hours: int):
 	time_of_day += hours / HOURS_IN_DAY

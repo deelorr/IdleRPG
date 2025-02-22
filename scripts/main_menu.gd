@@ -2,7 +2,7 @@ extends Control
 
 @onready var load_game_button = $MarginContainer/MainMenuButtons/LoadGameButton
 
-const GAME_SCENE = "res://main_screen.tscn"
+const GAME_SCENE = "res://scenes/MainScreen.tscn"
 
 func _ready():
 	# Disable load button if no save file exists
@@ -19,4 +19,4 @@ func _on_new_game_button_pressed():
 # Load saved game
 func _on_load_game_button_pressed():
 	get_tree().change_scene_to_file(GAME_SCENE)
-	SaveSystem.load_game()
+	SaveManager.load_game()

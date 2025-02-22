@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=3 uid="uid://clfhfh54lg1nf"]
+
+[ext_resource type="Script" path="res://scripts/workers_hut.gd" id="1_dmtaq"]
+[ext_resource type="Texture2D" uid="uid://divfpcj4wyvog" path="res://art/WorkersHutSprite.png" id="2_l0p07"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_spwqx"]
+size = Vector2(64, 48)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gfnx2"]
+size = Vector2(15, 15)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w4a38"]
+size = Vector2(15, 15)
+
+[node name="WorkerHut" type="Area2D"]
+scale = Vector2(3, 3)
+script = ExtResource("1_dmtaq")
+
+[node name="BuildingSprite" type="Sprite2D" parent="."]
+position = Vector2(24, 24)
+texture = ExtResource("2_l0p07")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(32, 24)
+shape = SubResource("RectangleShape2D_spwqx")
+
+[node name="WoodTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="FoodTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="WorkerHutStats" type="VBoxContainer" parent="."]
+offset_left = 49.6667
+offset_right = 172.667
+offset_bottom = 54.0
+
+[node name="WoodButton" type="Button" parent="WorkerHutStats"]
+custom_minimum_size = Vector2(90, 25)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Wood: 0"
+icon = SubResource("PlaceholderTexture2D_gfnx2")
+
+[node name="FoodButton" type="Button" parent="WorkerHutStats"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Food: 0"
+icon = SubResource("PlaceholderTexture2D_w4a38")
+
+[node name="CollectButton" type="Button" parent="WorkerHutStats"]
+layout_mode = 2
+text = "COLLECT"
+
+[connection signal="timeout" from="WoodTimer" to="." method="_on_stat_1_timer_timeout"]
+[connection signal="timeout" from="FoodTimer" to="." method="_on_stat_2_timer_timeout"]
+[connection signal="pressed" from="WorkerHutStats/WoodButton" to="." method="_on_wood_button_pressed"]
+[connection signal="pressed" from="WorkerHutStats/FoodButton" to="." method="_on_food_button_pressed"]
+[connection signal="pressed" from="WorkerHutStats/CollectButton" to="." method="_on_collect_button_pressed"]

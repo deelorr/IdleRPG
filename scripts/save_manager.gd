@@ -18,7 +18,6 @@ func save_game(day: int, time: float):
 	else:
 		print("Failed to save game!")
 
-
 # Call this function to load the time, day, and calculate offline earnings
 func load_game():
 	if not FileAccess.file_exists(SAVE_PATH):
@@ -39,7 +38,7 @@ func load_game():
 		TimeManager.time_of_day = save_data.get("time")
 
 		# Load the last timestamp
-		var last_timestamp = save_data.get("timestamp", 0)
+		var last_timestamp = save_data.get("timestamp")
 		var current_timestamp = Time.get_unix_time_from_system()
 		
 		# Calculate time passed
@@ -53,6 +52,7 @@ func load_game():
 		print("Failed to load game!")
 		return null
 		
+
 func apply_offline_earnings(time_passed: int):
 	var gold_per_second = 5  # Adjust based on upgrades if needed
 	var offline_gold = gold_per_second * time_passed
