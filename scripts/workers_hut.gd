@@ -7,9 +7,11 @@ extends Area2D
 
 var wood: int = 0
 var wood_per_second: int = 5
+var max_wood: int = 25
 
 var food: int = 0
 var food_per_second: int = 5
+var max_food: int = 25
 
 func _ready():
 	connect("input_event", _on_input_event)
@@ -52,21 +54,15 @@ func _notification(what):
 		SaveManager.save_game(TimeManager.day_count, TimeManager.time_of_day)
 		get_tree().quit()
 
-func _on_stat_1_timer_timeout() -> void:
-	wood += wood_per_second
-	wood_button.text = "Wood: " + str(wood)
-
-func _on_stat_2_timer_timeout() -> void:
-	food += food_per_second
-	food_button.text = "Food: " + str(food)
-
 func _on_wood_button_pressed() -> void:
-	wood += 1
-	wood_button.text = "Wood: " + str(wood)
+	if wood <= max_wood:
+		wood += 1
+		wood_button.text = "Wood: " + str(wood)
 
 func _on_food_button_pressed() -> void:
-	food += 1
-	food_button.text = "Food: " + str(food)
+	if food <= max_food:
+		food += 1
+		food_button.text = "Food: " + str(food)
 
 func _on_collect_button_pressed() -> void:
 	Global.total_city_food += food
@@ -75,3 +71,13 @@ func _on_collect_button_pressed() -> void:
 	Global.total_city_wood += wood
 	wood = 0
 	wood_button.text = "Food: " + str(wood)
+
+func _on_food_timer_timeout() -> void:
+	if food < max_food:
+		food += food_per_second
+		food_button.text = "Food: " + str(food)
+
+func _on_wood_timer_timeout() -> void:
+	if wood < max_wood:
+		wood += wood_per_second
+		wood_button.text = "Wood: " + str(wood)
