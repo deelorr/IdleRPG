@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://ogv02rj6n4io"]
+
+[ext_resource type="Script" path="res://home_base.gd" id="1_hnk4e"]
+[ext_resource type="Texture2D" uid="uid://b3y3yrf0yppd6" path="res://art/HomeBaseSprite.png" id="2_twqqb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_spwqx"]
+size = Vector2(64.1666, 46)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gfnx2"]
+size = Vector2(15, 15)
+
+[node name="HomeBase" type="Area2D"]
+scale = Vector2(3, 3)
+script = ExtResource("1_hnk4e")
+
+[node name="BuildingSprite" type="Sprite2D" parent="."]
+position = Vector2(32, 23.3333)
+texture = ExtResource("2_twqqb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(31.9167, 23)
+shape = SubResource("RectangleShape2D_spwqx")
+
+[node name="HomeBaseStats" type="VBoxContainer" parent="."]
+visible = false
+offset_left = 49.6667
+offset_right = 172.667
+offset_bottom = 54.0
+
+[node name="GoldButton" type="Button" parent="HomeBaseStats"]
+custom_minimum_size = Vector2(90, 25)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Wood: 0"
+icon = SubResource("PlaceholderTexture2D_gfnx2")

@@ -4,7 +4,7 @@ extends Node
 @onready var sky_tint := $CanvasLayer/ColorRect
 @onready var world_env := $WorldEnvironment
 @onready var clock_label := $CanvasLayer/Control/MarginContainer/Buttons/ClockPanel/ClockLabel
-@onready var speed_label := $CanvasLayer/Control/MarginContainer/Buttons/SpeedButton
+#@onready var speed_label := $CanvasLayer/Control/MarginContainer/Buttons/SpeedButton
 @onready var city_wood := $CanvasLayer/Control/MarginContainer/Buttons/CityPanel/CityStats/CityWood
 @onready var city_food := $CanvasLayer/Control/MarginContainer/Buttons/CityPanel/CityStats/CityFood
 
@@ -76,13 +76,13 @@ func _input(event):
 			KEY_D:  # Skip 1 Full Day
 				TimeManager.skip_hours(24)
 
-func _on_speed_button_pressed() -> void:
-	if TimeManager.time_speed_multiplier == 1.0:
-		TimeManager.time_speed_multiplier = 2.0
-		speed_label.text = "Speed: x2"
-	else:
-		TimeManager.time_speed_multiplier = 1.0
-		speed_label.text = "Speed: x1"
+#func _on_speed_button_pressed() -> void: old function for time speed up
+	#if TimeManager.time_speed_multiplier == 1.0:
+		#TimeManager.time_speed_multiplier = 2.0
+		#speed_label.text = "Speed: x2"
+	#else:
+		#TimeManager.time_speed_multiplier = 1.0
+		#speed_label.text = "Speed: x1"
 
 func _on_skip_hour_pressed() -> void:
 	TimeManager.skip_hours(1)
