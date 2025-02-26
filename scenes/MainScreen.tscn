@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://cn3opsn1ip0s6"]
+[gd_scene load_steps=14 format=4 uid="uid://cn3opsn1ip0s6"]
 
 [ext_resource type="Script" path="res://scripts/main_screen.gd" id="1_5aeyp"]
 [ext_resource type="Texture2D" uid="uid://58rndofkpfve" path="res://art/TilesetGround.png" id="2_2skl6"]
@@ -877,61 +877,8 @@ texture = ExtResource("3_1xxi2")
 [sub_resource type="TileSet" id="TileSet_2go7f"]
 sources/0 = SubResource("TileSetAtlasSource_sjfn7")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q7ate"]
-border_width_left = 5
-border_width_right = 5
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4mjby"]
-border_width_left = 5
-border_width_right = 5
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ls0se"]
-border_width_left = 5
-border_width_right = 5
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4k0bi"]
-border_width_left = 5
-border_width_right = 5
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ax8fq"]
-border_width_left = 5
-border_width_right = 5
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ps3mo"]
-border_width_left = 5
-border_width_right = 5
-corner_radius_top_left = 50
-corner_radius_top_right = 50
-corner_radius_bottom_right = 50
-corner_radius_bottom_left = 50
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_46pve"]
-border_width_left = 5
-border_width_right = 5
-corner_radius_top_left = 50
-corner_radius_top_right = 50
-corner_radius_bottom_right = 50
-corner_radius_bottom_left = 50
+[sub_resource type="Theme" id="Theme_8hkp2"]
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
 
 [sub_resource type="Environment" id="Environment_nbial"]
 ambient_light_source = 3
@@ -978,169 +925,134 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+[node name="MenuContainer" type="MarginContainer" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -504.0
-offset_top = -307.0
-offset_right = 496.0
-offset_bottom = -7.0
+offset_left = -437.0
+offset_top = -290.0
+offset_right = -124.0
+offset_bottom = -197.0
 grow_horizontal = 2
 grow_vertical = 0
+scale = Vector2(3, 3)
+theme = SubResource("Theme_8hkp2")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MenuContainer"]
 layout_mode = 2
 
-[node name="Buttons" type="GridContainer" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MenuContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
-theme_override_constants/h_separation = -25
-theme_override_constants/v_separation = -75
-columns = 3
-
-[node name="TheWoods" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons"]
-custom_minimum_size = Vector2(350, 150)
-layout_mode = 2
-theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxFlat_q7ate")
-text = "The Woods"
-
-[node name="TopFiller" type="Control" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="TheDesert" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons"]
-custom_minimum_size = Vector2(350, 150)
-layout_mode = 2
-theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxFlat_4mjby")
-text = "The Desert"
-
-[node name="LeftFiller" type="Control" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="HomeBase" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons"]
-z_index = 1
-custom_minimum_size = Vector2(350, 150)
-layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxFlat_ls0se")
-text = "Home Base"
+theme_override_constants/separation = 10
 
-[node name="RightFiller" type="Control" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons"]
+[node name="TheWoodsButton" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("5_wyapv")
+text = "The Woods
+"
 
-[node name="Section 3" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons"]
-custom_minimum_size = Vector2(350, 150)
+[node name="Section3Button" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxFlat_4k0bi")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("5_wyapv")
 text = "Section 3"
 
-[node name="BottomFiller" type="Control" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Control/MenuContainer/HBoxContainer"]
 layout_mode = 2
-mouse_filter = 2
+theme_override_constants/separation = 10
 
-[node name="Section 4" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons"]
-custom_minimum_size = Vector2(350, 150)
+[node name="ClockPanel" type="PanelContainer" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxFlat_ax8fq")
-text = "Section 4"
-
-[node name="SkipHourButton" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons"]
-visible = false
-custom_minimum_size = Vector2(350, 150)
-layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "Skip Hour"
-
-[node name="SaveButton" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons"]
-visible = false
-custom_minimum_size = Vector2(350, 150)
-layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "Save"
-
-[node name="ClockLabel" type="Label" parent="CanvasLayer/Control"]
-custom_minimum_size = Vector2(350, 70)
-layout_mode = 2
-offset_left = 360.0
-offset_top = 1616.0
-offset_right = 710.0
-offset_bottom = 1686.0
-theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxFlat_ps3mo")
-text = "Day 0, 00:00"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MenuButton" type="Button" parent="CanvasLayer/Control"]
-custom_minimum_size = Vector2(350, 70)
-layout_mode = 2
-offset_left = 359.0
-offset_top = 1840.0
-offset_right = 709.0
-offset_bottom = 1915.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxFlat_46pve")
-text = "MENU"
-icon_alignment = 1
-
-[node name="MenuPanel" type="Panel" parent="CanvasLayer/Control/MenuButton"]
-visible = false
-z_index = 1
-custom_minimum_size = Vector2(700, 300)
-layout_mode = 0
-offset_left = -175.0
-offset_top = -303.0
-offset_right = 525.0
-offset_bottom = -3.0
 theme_override_styles/panel = ExtResource("5_wyapv")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MenuButton/MenuPanel"]
+[node name="ClockLabel" type="Label" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/ClockPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Day 0, 00:00"
+vertical_alignment = 1
+
+[node name="HomeBase" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("5_wyapv")
+text = "Home Base"
+
+[node name="Menu" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("5_wyapv")
+text = "Menu"
+
+[node name="MenuPanel" type="Panel" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu"]
+visible = false
+layout_mode = 0
+offset_left = -3.5
+offset_top = -124.667
+offset_right = 106.5
+offset_bottom = -8.66666
+theme_override_styles/panel = ExtResource("5_wyapv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 10
 
-[node name="SpeedButton" type="Button" parent="CanvasLayer/Control/MenuButton/MenuPanel/VBoxContainer"]
+[node name="SpeedButton" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = ExtResource("5_wyapv")
 text = "Speed x1"
 
-[node name="SkipHourButton" type="Button" parent="CanvasLayer/Control/MenuButton/MenuPanel/VBoxContainer"]
+[node name="SkipButton" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = ExtResource("5_wyapv")
 text = "Skip Hour"
 
-[node name="SaveButton" type="Button" parent="CanvasLayer/Control/MenuButton/MenuPanel/VBoxContainer"]
+[node name="SaveButton" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = ExtResource("5_wyapv")
 text = "Save"
 
-[node name="OfflinePopupPanel" type="PopupPanel" parent="CanvasLayer"]
+[node name="VBoxContainer3" type="VBoxContainer" parent="CanvasLayer/Control/MenuContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="TheDesertButton" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("5_wyapv")
+text = "The Desert"
+
+[node name="Section4Button" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("5_wyapv")
+text = "Section 4"
+
+[node name="OfflinePopupPanel" type="PopupPanel" parent="CanvasLayer/Control"]
+position = Vector2i(340, 720)
 size = Vector2i(409, 215)
-visible = true
 theme_override_styles/panel = ExtResource("5_wyapv")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/OfflinePopupPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/OfflinePopupPanel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1149,21 +1061,21 @@ offset_right = -5.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="OfflineEarnings" type="Label" parent="CanvasLayer/OfflinePopupPanel/VBoxContainer"]
+[node name="OfflineEarnings" type="Label" parent="CanvasLayer/Control/OfflinePopupPanel/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Offline Earnings:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="OfflineWoodLabel" type="Label" parent="CanvasLayer/OfflinePopupPanel/VBoxContainer"]
+[node name="OfflineWoodLabel" type="Label" parent="CanvasLayer/Control/OfflinePopupPanel/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Wood: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="OfflineFoodLabel" type="Label" parent="CanvasLayer/OfflinePopupPanel/VBoxContainer"]
+[node name="OfflineFoodLabel" type="Label" parent="CanvasLayer/Control/OfflinePopupPanel/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Food: 0"
@@ -1181,16 +1093,14 @@ environment = SubResource("Environment_nbial")
 position = Vector2(13, 1)
 
 [node name="HomeBase" parent="." instance=ExtResource("6_el83a")]
-position = Vector2(303, 715)
+position = Vector2(299, 715)
 
-[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons/TheWoods" to="Camera2D" method="_on_section_1_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons/TheDesert" to="Camera2D" method="_on_section_2_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons/HomeBase" to="Camera2D" method="_on_home_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons/Section 3" to="Camera2D" method="_on_section_3_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons/Section 4" to="Camera2D" method="_on_section_4_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons/SkipHourButton" to="." method="_on_skip_hour_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons/SaveButton" to="." method="_on_save_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MenuButton" to="." method="_on_menu_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MenuButton/MenuPanel/VBoxContainer/SpeedButton" to="." method="_on_speed_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MenuButton/MenuPanel/VBoxContainer/SkipHourButton" to="." method="_on_skip_hour_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MenuButton/MenuPanel/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer/TheWoodsButton" to="Camera2D" method="_on_the_woods_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer/Section3Button" to="Camera2D" method="_on_section_3_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/HomeBase" to="Camera2D" method="_on_home_base_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SpeedButton" to="." method="_on_speed_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SkipButton" to="." method="_on_skip_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer3/TheDesertButton" to="Camera2D" method="_on_the_desert_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer3/Section4Button" to="Camera2D" method="_on_section_4_button_pressed"]

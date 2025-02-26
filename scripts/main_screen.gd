@@ -5,14 +5,14 @@ const SAVE_PATH = "user://savegame.json"
 @onready var sun_light := $DirectionalLight2D
 @onready var sky_tint := $CanvasLayer/ColorRect
 @onready var world_env := $WorldEnvironment
-@onready var clock_label := $CanvasLayer/Control/ClockLabel
-@onready var menu := $CanvasLayer/Control/MenuButton/MenuPanel
-@onready var speed_button := $CanvasLayer/Control/MenuButton/MenuPanel/VBoxContainer/SpeedButton
+@onready var clock_label := $CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/ClockPanel/ClockLabel
+@onready var menu := $CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel
+@onready var speed_button := $CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SpeedButton
 
 # Nodes for the offline popup
-@onready var offline_food_label := $CanvasLayer/OfflinePopupPanel/VBoxContainer/OfflineFoodLabel
-@onready var offline_wood_label := $CanvasLayer/OfflinePopupPanel/VBoxContainer/OfflineWoodLabel
-@onready var offline_popup_panel := $CanvasLayer/OfflinePopupPanel
+@onready var offline_food_label := $CanvasLayer/Control/OfflinePopupPanel/VBoxContainer/OfflineFoodLabel
+@onready var offline_wood_label := $CanvasLayer/Control/OfflinePopupPanel/VBoxContainer/OfflineWoodLabel
+@onready var offline_popup_panel := $CanvasLayer/Control/OfflinePopupPanel
 
 func _ready():
 	# Connect the time update signal
@@ -115,14 +115,8 @@ func hide_menu():
 	await tween.finished
 	menu.visible = false
 
-func _on_menu_button_pressed() -> void:
-	toggle_menu()
-
 func _on_save_button_pressed() -> void:
 	SaveManager.save_game(TimeManager.day_count, TimeManager.time_of_day)
-
-func _on_skip_hour_button_pressed() -> void:
-	TimeManager.skip_hours(1)
 
 func _on_speed_button_pressed() -> void:
 	if TimeManager.time_speed_multiplier == 1.0:
@@ -131,3 +125,9 @@ func _on_speed_button_pressed() -> void:
 	else:
 		TimeManager.speed_up_time(1)
 		speed_button.text = "Speed x1"
+
+func _on_skip_button_pressed():
+	TimeManager.skip_hours(1)
+
+func _on_menu_pressed():
+	toggle_menu()

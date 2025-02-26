@@ -48,17 +48,17 @@ func _process(delta: float) -> void:
 	position = position.lerp(target_position, ease_factor)
 
 # Button press handlers
-func _on_section_1_pressed() -> void:
+func _on_the_woods_button_pressed():
 	target_position = section_positions["woods"]
 
-func _on_section_2_pressed() -> void:
+func _on_the_desert_button_pressed():
 	target_position = section_positions["desert"]
 
-func _on_section_3_pressed() -> void:
+func _on_section_3_button_pressed():
 	target_position = section_positions["section_3"]
 
-func _on_section_4_pressed() -> void:
+func _on_section_4_button_pressed():
 	target_position = section_positions["section_4"]
 
-func _on_home_button_pressed() -> void:
+func _on_home_base_pressed():
 	target_position = section_positions["home"]
