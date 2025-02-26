@@ -3,16 +3,16 @@ extends Area2D
 @onready var sprite = $BuildingSprite
 @onready var menu = $HomeBaseStats
 @onready var gold_button = $HomeBaseStats/GoldButton
-
-var gold = Global.total_city_gold
-var food = Global.total_city_food
-var wood = Global.total_city_wood
+@onready var food_button = $HomeBaseStats/FoodButton
+@onready var wood_button = $HomeBaseStats/WoodButton
 
 func _ready():
 	connect("input_event", _on_input_event)
 	
 func _process(_delta: float) -> void:
-	gold_button.text = "Gold: " + str(gold)
+	gold_button.text = "Gold: " + str(Global.total_city_gold)
+	wood_button.text = "Wood: " + str(Global.total_city_wood)
+	food_button.text = "Food: " + str(Global.total_city_food)
 
 func _on_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed:

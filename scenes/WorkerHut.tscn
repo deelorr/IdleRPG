@@ -2,15 +2,11 @@
 
 [ext_resource type="Script" path="res://scripts/workers_hut.gd" id="1_dmtaq"]
 [ext_resource type="Texture2D" uid="uid://divfpcj4wyvog" path="res://art/WorkersHutSprite.png" id="2_l0p07"]
+[ext_resource type="Texture2D" uid="uid://dts1voymurh7j" path="res://art/log.jpg" id="3_x7al1"]
+[ext_resource type="Texture2D" uid="uid://cddx7e4a6orm8" path="res://art/food.jpg" id="4_ulahn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_spwqx"]
 size = Vector2(48.3333, 48)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gfnx2"]
-size = Vector2(15, 15)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w4a38"]
-size = Vector2(15, 15)
 
 [node name="WorkerHut" type="Area2D"]
 scale = Vector2(3, 3)
@@ -32,23 +28,25 @@ wait_time = 3.0
 autostart = true
 
 [node name="WorkerHutStats" type="VBoxContainer" parent="."]
-visible = false
-offset_left = 49.6667
-offset_right = 172.667
-offset_bottom = 54.0
+offset_left = 50.0
+offset_top = -1.0
+offset_right = 140.0
+offset_bottom = 88.0
 
 [node name="WoodButton" type="Button" parent="WorkerHutStats"]
 custom_minimum_size = Vector2(90, 25)
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Wood: 0"
-icon = SubResource("PlaceholderTexture2D_gfnx2")
+icon = ExtResource("3_x7al1")
+expand_icon = true
 
 [node name="FoodButton" type="Button" parent="WorkerHutStats"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Food: 0"
-icon = SubResource("PlaceholderTexture2D_w4a38")
+icon = ExtResource("4_ulahn")
+expand_icon = true
 
 [node name="CollectButton" type="Button" parent="WorkerHutStats"]
 layout_mode = 2

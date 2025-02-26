@@ -1,13 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://ogv02rj6n4io"]
+[gd_scene load_steps=7 format=3 uid="uid://ogv02rj6n4io"]
 
 [ext_resource type="Script" path="res://home_base.gd" id="1_hnk4e"]
 [ext_resource type="Texture2D" uid="uid://b3y3yrf0yppd6" path="res://art/HomeBaseSprite.png" id="2_twqqb"]
+[ext_resource type="Texture2D" uid="uid://cddx7e4a6orm8" path="res://art/food.jpg" id="3_qqhq3"]
+[ext_resource type="Texture2D" uid="uid://u83ibn7do280" path="res://art/gold.jpg" id="3_r0i0a"]
+[ext_resource type="Texture2D" uid="uid://dts1voymurh7j" path="res://art/log.jpg" id="4_vm7n1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_spwqx"]
 size = Vector2(64.1666, 46)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gfnx2"]
-size = Vector2(15, 15)
 
 [node name="HomeBase" type="Area2D"]
 scale = Vector2(3, 3)
@@ -22,14 +22,26 @@ position = Vector2(31.9167, 23)
 shape = SubResource("RectangleShape2D_spwqx")
 
 [node name="HomeBaseStats" type="VBoxContainer" parent="."]
-visible = false
-offset_left = 49.6667
-offset_right = 172.667
-offset_bottom = 54.0
+offset_left = 65.3333
+offset_top = 0.333333
+offset_right = 188.334
+offset_bottom = 101.333
 
 [node name="GoldButton" type="Button" parent="HomeBaseStats"]
 custom_minimum_size = Vector2(90, 25)
 layout_mode = 2
-theme_override_font_sizes/font_size = 12
+text = "Gold: 0"
+icon = ExtResource("3_r0i0a")
+expand_icon = true
+
+[node name="FoodButton" type="Button" parent="HomeBaseStats"]
+layout_mode = 2
+text = "Food: 0"
+icon = ExtResource("3_qqhq3")
+expand_icon = true
+
+[node name="WoodButton" type="Button" parent="HomeBaseStats"]
+layout_mode = 2
 text = "Wood: 0"
-icon = SubResource("PlaceholderTexture2D_gfnx2")
+icon = ExtResource("4_vm7n1")
+expand_icon = true

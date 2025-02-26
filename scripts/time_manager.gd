@@ -8,7 +8,7 @@ const HOURS_IN_DAY: float = 24.0
 var time_of_day: float = 0.0  # 0.0 to 1.0 (midnight) to 1.0 (end of day)
 var day_count: int = 1
 var time_paused: bool = false
-#var time_speed_multiplier: float = 1.0
+var time_speed_multiplier: float = 1.0
 
 func _process(delta):
 	if not time_paused:
@@ -34,3 +34,6 @@ func skip_hours(hours: int):
 		time_of_day -= 1.0
 		day_count += 1
 	emit_time_update()
+	
+func speed_up_time(multiplier: int) -> void:
+	time_speed_multiplier = (multiplier) #1, 2, 3, 4, etc
