@@ -13,7 +13,7 @@ var time_speed_multiplier: float = 1.0
 func _process(delta):
 	if not time_paused:
 		# Update time progression
-		time_of_day += (delta * TIME_SCALE_FACTOR)  
+		time_of_day += (delta * TIME_SCALE_FACTOR * time_speed_multiplier)  
 		
 		# Ensure we loop time correctly
 		if time_of_day >= 1.0:

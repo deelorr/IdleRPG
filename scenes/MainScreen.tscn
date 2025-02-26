@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=4 uid="uid://cn3opsn1ip0s6"]
+[gd_scene load_steps=20 format=4 uid="uid://cn3opsn1ip0s6"]
 
 [ext_resource type="Script" path="res://scripts/main_screen.gd" id="1_5aeyp"]
 [ext_resource type="Texture2D" uid="uid://58rndofkpfve" path="res://art/TilesetGround.png" id="2_2skl6"]
 [ext_resource type="Texture2D" uid="uid://bj6n8nos5eudb" path="res://art/TilesetNature.png" id="3_1xxi2"]
 [ext_resource type="Script" path="res://scripts/camera_2d.gd" id="4_trvrf"]
+[ext_resource type="StyleBox" uid="uid://sugqjf8hn4gk" path="res://scenes/ButtonStyle.tres" id="5_wyapv"]
 [ext_resource type="PackedScene" uid="uid://clfhfh54lg1nf" path="res://scenes/WorkerHut.tscn" id="5_y448k"]
 [ext_resource type="PackedScene" uid="uid://ogv02rj6n4io" path="res://scenes/HomeBase.tscn" id="6_el83a"]
 
@@ -881,6 +882,7 @@ border_width_left = 5
 border_width_right = 5
 corner_radius_top_left = 100
 corner_radius_top_right = 100
+corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4mjby"]
@@ -889,6 +891,7 @@ border_width_right = 5
 corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ls0se"]
 border_width_left = 5
@@ -902,18 +905,33 @@ corner_radius_bottom_left = 100
 border_width_left = 5
 border_width_right = 5
 corner_radius_top_left = 100
+corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ax8fq"]
 border_width_left = 5
 border_width_right = 5
+corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xsu1j"]
-size = Vector2(40, 40)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ps3mo"]
+border_width_left = 5
+border_width_right = 5
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_46pve"]
+border_width_left = 5
+border_width_right = 5
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
 
 [sub_resource type="Environment" id="Environment_nbial"]
 ambient_light_source = 3
@@ -967,9 +985,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -529.0
-offset_top = -352.0
-offset_right = 529.0
+offset_left = -504.0
+offset_top = -307.0
+offset_right = 496.0
+offset_bottom = -7.0
 grow_horizontal = 2
 grow_vertical = 0
 
@@ -1052,23 +1071,102 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Save"
 
-[node name="MenuButton" type="MenuButton" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+[node name="ClockLabel" type="Label" parent="CanvasLayer/Control"]
+custom_minimum_size = Vector2(350, 70)
 layout_mode = 2
-icon = SubResource("PlaceholderTexture2D_xsu1j")
-flat = false
-icon_alignment = 1
-item_count = 1
-popup/item_0/text = "Speed Up"
-popup/item_0/checkable = 2
-
-[node name="ClockLabel" type="Label" parent="CanvasLayer/Control" groups=["clock_ui"]]
-layout_mode = 2
-offset_left = 362.0
-offset_top = 1570.0
-offset_right = 712.0
-offset_bottom = 1639.0
+offset_left = 360.0
+offset_top = 1616.0
+offset_right = 710.0
+offset_bottom = 1686.0
 theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_ps3mo")
 text = "Day 0, 00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuButton" type="Button" parent="CanvasLayer/Control"]
+custom_minimum_size = Vector2(350, 70)
+layout_mode = 2
+offset_left = 359.0
+offset_top = 1840.0
+offset_right = 709.0
+offset_bottom = 1915.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_46pve")
+text = "MENU"
+icon_alignment = 1
+
+[node name="MenuPanel" type="Panel" parent="CanvasLayer/Control/MenuButton"]
+visible = false
+z_index = 1
+custom_minimum_size = Vector2(700, 300)
+layout_mode = 0
+offset_left = -175.0
+offset_top = -303.0
+offset_right = 525.0
+offset_bottom = -3.0
+theme_override_styles/panel = ExtResource("5_wyapv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MenuButton/MenuPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpeedButton" type="Button" parent="CanvasLayer/Control/MenuButton/MenuPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = ExtResource("5_wyapv")
+text = "Speed x1"
+
+[node name="SkipHourButton" type="Button" parent="CanvasLayer/Control/MenuButton/MenuPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = ExtResource("5_wyapv")
+text = "Skip Hour"
+
+[node name="SaveButton" type="Button" parent="CanvasLayer/Control/MenuButton/MenuPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = ExtResource("5_wyapv")
+text = "Save"
+
+[node name="OfflinePopupPanel" type="PopupPanel" parent="CanvasLayer"]
+size = Vector2i(409, 215)
+visible = true
+theme_override_styles/panel = ExtResource("5_wyapv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/OfflinePopupPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_right = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OfflineEarnings" type="Label" parent="CanvasLayer/OfflinePopupPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Offline Earnings:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OfflineWoodLabel" type="Label" parent="CanvasLayer/OfflinePopupPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Wood: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OfflineFoodLabel" type="Label" parent="CanvasLayer/OfflinePopupPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Food: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1092,3 +1190,7 @@ position = Vector2(303, 715)
 [connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons/Section 4" to="Camera2D" method="_on_section_4_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons/SkipHourButton" to="." method="_on_skip_hour_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/Buttons/SaveButton" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MenuButton/MenuPanel/VBoxContainer/SpeedButton" to="." method="_on_speed_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MenuButton/MenuPanel/VBoxContainer/SkipHourButton" to="." method="_on_skip_hour_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MenuButton/MenuPanel/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]

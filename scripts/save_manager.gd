@@ -58,7 +58,7 @@ func load_game():
 
 # Apply offline earnings to gold, wood, and food based on offline time
 func apply_offline_earnings(time_passed: int):
-	# Define production rates per second for each resource
+	# Production rates per second
 	var wood_per_second = 5  
 	var food_per_second = 5  
 
@@ -66,7 +66,7 @@ func apply_offline_earnings(time_passed: int):
 	var offline_wood = wood_per_second * time_passed
 	var offline_food = food_per_second * time_passed
 	
-	# Optional: Cap offline earnings (e.g., maximum income for 10 hours)
+	# Optional: Cap offline earnings (e.g., maximum for 5 hours)
 	var max_hours = 5
 	offline_wood = min(offline_wood, wood_per_second * (max_hours * 3600))
 	offline_food = min(offline_food, food_per_second * (max_hours * 3600))
@@ -74,5 +74,9 @@ func apply_offline_earnings(time_passed: int):
 	# Add the offline earnings to the current totals
 	Global.total_city_wood += offline_wood
 	Global.total_city_food += offline_food
+
+	# Store the offline earnings for the popup (make sure these variables exist in your Global script)
+	Global.offline_wood = offline_wood
+	Global.offline_food = offline_food
 
 	print("Offline earnings applied: +", offline_wood, "wood, and", offline_food, "food")
