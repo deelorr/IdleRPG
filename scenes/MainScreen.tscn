@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://cn3opsn1ip0s6"]
+[gd_scene load_steps=18 format=4 uid="uid://cn3opsn1ip0s6"]
 
 [ext_resource type="Script" path="res://scripts/main_screen.gd" id="1_5aeyp"]
 [ext_resource type="Texture2D" uid="uid://58rndofkpfve" path="res://art/TilesetGround.png" id="2_2skl6"]
@@ -915,9 +915,6 @@ corner_radius_bottom_left = 100
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xsu1j"]
 size = Vector2(40, 40)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ufe1"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-
 [sub_resource type="Environment" id="Environment_nbial"]
 ambient_light_source = 3
 ambient_light_color = Color(1, 0.792157, 0, 0.396078)
@@ -1064,20 +1061,12 @@ item_count = 1
 popup/item_0/text = "Speed Up"
 popup/item_0/checkable = 2
 
-[node name="ClockPanel" type="Panel" parent="CanvasLayer/Control"]
+[node name="ClockLabel" type="Label" parent="CanvasLayer/Control" groups=["clock_ui"]]
 layout_mode = 2
-offset_left = 365.0
-offset_top = 1526.0
-offset_right = 715.0
-offset_bottom = 1676.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_3ufe1")
-
-[node name="ClockLabel" type="Label" parent="CanvasLayer/Control/ClockPanel" groups=["clock_ui"]]
-layout_mode = 2
-offset_left = -3.0
-offset_top = 44.0
-offset_right = 347.0
-offset_bottom = 113.0
+offset_left = 362.0
+offset_top = 1570.0
+offset_right = 712.0
+offset_bottom = 1639.0
 theme_override_font_sizes/font_size = 50
 text = "Day 0, 00:00"
 horizontal_alignment = 1
