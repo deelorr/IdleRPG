@@ -16,14 +16,14 @@ func _process(_delta: float) -> void:
 
 func _on_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed:
-		if event.button_index == MOUSE_BUTTON_LEFT:  # Only reacts to left-click
+		if event.button_index == MOUSE_BUTTON_LEFT:
 			highlight()
 			toggle_menu()
 
 func highlight():
-	sprite.modulate = Color(1.2, 1.2, 1.2, 1)  # Lighten the sprite
-	await get_tree().create_timer(0.2).timeout  # Keep it lit briefly
-	sprite.modulate = Color(1, 1, 1, 1)  # Reset to normal
+	sprite.modulate = Color(1.2, 1.2, 1.2, 1)  #Lighten
+	await get_tree().create_timer(0.2).timeout
+	sprite.modulate = Color(1, 1, 1, 1)  #Reset
 
 func toggle_menu():
 	if menu.visible:
@@ -45,5 +45,4 @@ func hide_menu():
 		
 func _notification(what):
 	if what == NOTIFICATION_APPLICATION_PAUSED:
-		# Save the game state when the app goes to the background
 		SaveManager.save_game(TimeManager.day_count, TimeManager.time_of_day)

@@ -20,13 +20,6 @@ texture = ExtResource("2_l0p07")
 position = Vector2(24, 24)
 shape = SubResource("RectangleShape2D_spwqx")
 
-[node name="WoodTimer" type="Timer" parent="."]
-autostart = true
-
-[node name="FoodTimer" type="Timer" parent="."]
-wait_time = 3.0
-autostart = true
-
 [node name="WorkerHutStats" type="VBoxContainer" parent="."]
 visible = false
 offset_left = 50.0
@@ -53,8 +46,6 @@ expand_icon = true
 layout_mode = 2
 text = "COLLECT"
 
-[connection signal="timeout" from="WoodTimer" to="." method="_on_wood_timer_timeout"]
-[connection signal="timeout" from="FoodTimer" to="." method="_on_food_timer_timeout"]
 [connection signal="pressed" from="WorkerHutStats/WoodButton" to="." method="_on_wood_button_pressed"]
 [connection signal="pressed" from="WorkerHutStats/FoodButton" to="." method="_on_food_button_pressed"]
 [connection signal="pressed" from="WorkerHutStats/CollectButton" to="." method="_on_collect_button_pressed"]

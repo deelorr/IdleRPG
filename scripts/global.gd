@@ -6,3 +6,4 @@ var total_city_food: int = 0
 
 var offline_wood: int = 0
 var offline_food: int = 0
+var offline_gold: int = 0
