@@ -28,6 +28,7 @@ wait_time = 3.0
 autostart = true
 
 [node name="WorkerHutStats" type="VBoxContainer" parent="."]
+visible = false
 offset_left = 50.0
 offset_top = -1.0
 offset_right = 140.0

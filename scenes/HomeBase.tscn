@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://ogv02rj6n4io"]
 
-[ext_resource type="Script" path="res://home_base.gd" id="1_hnk4e"]
+[ext_resource type="Script" path="res://scripts/home_base.gd" id="1_hnk4e"]
 [ext_resource type="Texture2D" uid="uid://b3y3yrf0yppd6" path="res://art/HomeBaseSprite.png" id="2_twqqb"]
 [ext_resource type="Texture2D" uid="uid://cddx7e4a6orm8" path="res://art/food.jpg" id="3_qqhq3"]
 [ext_resource type="Texture2D" uid="uid://u83ibn7do280" path="res://art/gold.jpg" id="3_r0i0a"]
@@ -22,6 +22,7 @@ position = Vector2(31.9167, 23)
 shape = SubResource("RectangleShape2D_spwqx")
 
 [node name="HomeBaseStats" type="VBoxContainer" parent="."]
+visible = false
 offset_left = 65.3333
 offset_top = 0.333333
 offset_right = 188.334
