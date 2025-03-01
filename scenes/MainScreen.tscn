@@ -899,7 +899,7 @@ tile_map_data = PackedByteArray("AAADAAMAAAAGAAgAAAAEAAMAAAAGAAgAAAAFAAMAAAAGAAg
 tile_set = SubResource("TileSet_2go7f")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(291, 434)
+position = Vector2(302, 329)
 anchor_mode = 0
 zoom = Vector2(2, 2)
 limit_left = 0
@@ -1057,7 +1057,8 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 5.0
-offset_right = -5.0
+offset_right = 404.0
+offset_bottom = 215.0
 grow_horizontal = 2
 grow_vertical = 2
 
