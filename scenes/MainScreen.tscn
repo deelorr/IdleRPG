@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://cn3opsn1ip0s6"]
+[gd_scene load_steps=16 format=4 uid="uid://cn3opsn1ip0s6"]
 
 [ext_resource type="Script" path="res://scripts/main_screen.gd" id="1_5aeyp"]
 [ext_resource type="Texture2D" uid="uid://58rndofkpfve" path="res://art/TilesetGround.png" id="2_2skl6"]
@@ -7,6 +7,7 @@
 [ext_resource type="StyleBox" uid="uid://sugqjf8hn4gk" path="res://scenes/ButtonStyle.tres" id="5_wyapv"]
 [ext_resource type="PackedScene" uid="uid://clfhfh54lg1nf" path="res://scenes/WorkerHut.tscn" id="5_y448k"]
 [ext_resource type="PackedScene" uid="uid://ogv02rj6n4io" path="res://scenes/HomeBase.tscn" id="6_el83a"]
+[ext_resource type="PackedScene" uid="uid://drwwji61qlf4y" path="res://scenes/worker.tscn" id="8_0p6lc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_y4gqh"]
 texture = ExtResource("2_2skl6")
@@ -884,6 +885,11 @@ Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
 ambient_light_source = 3
 ambient_light_color = Color(1, 0.792157, 0, 0.396078)
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_jjefs"]
+vertices = PackedVector2Array(526.039, 812.469, 21.4219, 811.023, 15.0781, 15, 529.461, 15)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(539.5, 5, 536, 822.5, 11.5, 821, 5, 5)])
+
 [node name="MainScreen" type="Node2D"]
 script = ExtResource("1_5aeyp")
 
@@ -1057,8 +1063,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 5.0
-offset_right = 404.0
-offset_bottom = 215.0
+offset_right = -5.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -1095,6 +1100,14 @@ position = Vector2(13, 1)
 
 [node name="HomeBase" parent="." instance=ExtResource("6_el83a")]
 position = Vector2(299, 715)
+
+[node name="Worker" parent="." instance=ExtResource("8_0p6lc")]
+position = Vector2(85, 140)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+position = Vector2(-3, 0)
+scale = Vector2(2, 2)
+navigation_polygon = SubResource("NavigationPolygon_jjefs")
 
 [connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer/TheWoodsButton" to="Camera2D" method="_on_the_woods_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer/Section3Button" to="Camera2D" method="_on_section_3_button_pressed"]
