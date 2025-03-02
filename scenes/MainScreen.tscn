@@ -650,7 +650,9 @@ texture = ExtResource("3_1xxi2")
 5:8/0 = 0
 6:8/size_in_atlas = Vector2i(2, 2)
 6:8/0 = 0
-6:8/0/texture_origin = Vector2i(0, 8)
+6:8/0/texture_origin = Vector2i(0, 7)
+6:8/0/y_sort_origin = 5
+6:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-1.625, -2.75, 1.5, -2.75, 1.5, 0.5, -1.125, 0.5)
 9:8/0 = 0
 10:8/0 = 0
 11:8/0 = 0
@@ -876,6 +878,7 @@ texture = ExtResource("3_1xxi2")
 11:20/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_2go7f"]
+physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_sjfn7")
 
 [sub_resource type="Theme" id="Theme_8hkp2"]
@@ -894,6 +897,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(539.5, 5, 536, 822.5, 1
 script = ExtResource("1_5aeyp")
 
 [node name="Tilemap" type="Node2D" parent="."]
+y_sort_enabled = true
 scale = Vector2(4, 4)
 
 [node name="Ground" type="TileMapLayer" parent="Tilemap"]
