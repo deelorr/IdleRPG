@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+signal gathered_wood(wood)
+signal gathered_food(food)
+
 @onready var agent = $NavigationAgent2D
 
 @export var speed: float = 50.0
@@ -37,5 +40,6 @@ func _on_reach_destination():
 		move_to_target(worker_hut_position)  # Return to hut
 	else:
 		await get_tree().create_timer(2).timeout  # Simulate dropping off wood
-		Global.total_city_wood += 1 # Add to city total
+		gathered_wood.emit(5)
+		#Global.total_city_wood += 5 # Add to city total
 		move_to_target(forest_position)  # Go back to the forest

@@ -4,32 +4,33 @@ extends Area2D
 @onready var menu = $WorkerHutStats
 @onready var wood_button = $WorkerHutStats/WoodButton
 @onready var food_button = $WorkerHutStats/FoodButton
+@onready var worker = $Worker
 
-var wood: float = 0.0
-var wood_per_second: float = 0.5
+var hut_wood: float = 0.0
 var max_wood: float = 250.0
 
-var food: float = 0.0
-var food_per_second: float = 0.75
+var hut_food: float = 0.0
 var max_food: float = 250.0
 
 func _ready():
 	connect("input_event", _on_input_event)
+	worker.gathered_wood.connect(_on_gathered_wood)
 
 func _process(delta):
-	wood = clamp(wood + wood_per_second * delta, 0, max_wood)
-	food = clamp(food + food_per_second * delta, 0, max_food)
 	update_labels()
 
 func update_labels():
-	wood_button.text = "Wood: " + str(int(wood))
-	food_button.text = "Food: " + str(int(food))
+	wood_button.text = "Wood: " + str(int(hut_wood))
+	food_button.text = "Food: " + str(int(hut_food))
 
 func _on_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		highlight()
 		toggle_menu()
-
+		
+func _on_gathered_wood(wood):
+	hut_wood += wood
+	
 func highlight():
 	sprite.modulate = Color(1.2, 1.2, 1.2, 1)  #Lighten
 	await get_tree().create_timer(0.2).timeout
@@ -57,17 +58,9 @@ func _notification(what):
 	if what == NOTIFICATION_APPLICATION_PAUSED:
 		SaveManager.save_game(TimeManager.day_count, TimeManager.time_of_day)
 
-func _on_wood_button_pressed() -> void:
-	wood = clamp(wood + 1, 0, max_wood)
-	update_labels()
-
-func _on_food_button_pressed() -> void:
-	food = clamp(food + 1, 0, max_food)
-	update_labels()
-
 func _on_collect_button_pressed() -> void:
-	Global.total_city_food += food
-	Global.total_city_wood += wood
-	food = 0
-	wood = 0
+	Global.total_city_food += hut_food
+	Global.total_city_wood += hut_wood
+	hut_food = 0
+	hut_wood = 0
 	update_labels()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://cn3opsn1ip0s6"]
+[gd_scene load_steps=15 format=4 uid="uid://cn3opsn1ip0s6"]
 
 [ext_resource type="Script" path="res://scripts/main_screen.gd" id="1_5aeyp"]
 [ext_resource type="Texture2D" uid="uid://58rndofkpfve" path="res://art/TilesetGround.png" id="2_2skl6"]
@@ -7,7 +7,6 @@
 [ext_resource type="StyleBox" uid="uid://sugqjf8hn4gk" path="res://scenes/ButtonStyle.tres" id="5_wyapv"]
 [ext_resource type="PackedScene" uid="uid://clfhfh54lg1nf" path="res://scenes/WorkerHut.tscn" id="5_y448k"]
 [ext_resource type="PackedScene" uid="uid://ogv02rj6n4io" path="res://scenes/HomeBase.tscn" id="6_el83a"]
-[ext_resource type="PackedScene" uid="uid://drwwji61qlf4y" path="res://scenes/worker.tscn" id="8_0p6lc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_y4gqh"]
 texture = ExtResource("2_2skl6")
@@ -1104,9 +1103,6 @@ position = Vector2(13, 1)
 
 [node name="HomeBase" parent="." instance=ExtResource("6_el83a")]
 position = Vector2(299, 715)
-
-[node name="Worker" parent="." instance=ExtResource("8_0p6lc")]
-position = Vector2(85, 140)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 position = Vector2(-3, 0)
