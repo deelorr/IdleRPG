@@ -18,6 +18,9 @@ func _ready():
 
 func _process(_delta):
 	update_labels()
+	
+func change_worker_speed(multiplier: int):
+	worker.speed = worker.base_speed * multiplier
 
 func update_labels():
 	wood_button.text = "Wood: " + str(int(hut_wood))

@@ -12,6 +12,8 @@ const SAVE_PATH = "user://savegame.json"
 @onready var offline_wood_label := $CanvasLayer/Control/OfflinePopupPanel/VBoxContainer/OfflineWoodLabel
 @onready var offline_popup_panel := $CanvasLayer/Control/OfflinePopupPanel
 
+@onready var worker_hut := $WorkerHut
+
 func _ready():
 	TimeManager.time_updated.connect(_on_time_changed)
 	_on_time_changed(int(TimeManager.time_of_day * TimeManager.HOURS_IN_DAY), 0, TimeManager.day_count)
@@ -113,18 +115,19 @@ func _on_speed_button_pressed() -> void:
 	if TimeManager.time_speed_multiplier == 1.0:
 		TimeManager.speed_up_time(2)
 		speed_button.text = "Speed x2"
+		worker_hut.change_worker_speed(2)
 	elif TimeManager.time_speed_multiplier == 2.0:
 		TimeManager.speed_up_time(5)
 		speed_button.text = "Speed x5"
+		worker_hut.change_worker_speed(5)
 	elif TimeManager.time_speed_multiplier == 5.0:
 		TimeManager.speed_up_time(10)
 		speed_button.text = "Speed x10"
-	elif TimeManager.time_speed_multiplier == 10.0:
-		TimeManager.speed_up_time(50)
-		speed_button.text = "Speed x50"
+		worker_hut.change_worker_speed(10)
 	else:
 		TimeManager.speed_up_time(1)
 		speed_button.text = "Speed x1"
+		worker_hut.change_worker_speed(1)
 
 func _on_skip_button_pressed():
 	TimeManager.skip_hours(1)

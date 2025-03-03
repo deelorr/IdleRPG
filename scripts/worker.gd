@@ -5,7 +5,8 @@ signal gathered_wood(wood)
 
 @onready var agent = $NavigationAgent2D
 
-@export var speed: float = 50.0
+@export var base_speed: float = 50.0
+var speed: float = base_speed
 @export var forest_position: Vector2 = Vector2(300, 320)
 @export var worker_hut_position: Vector2 = Vector2(85, 140)  # Ensure inside NavigationRegion2D
 
@@ -25,7 +26,7 @@ func _ready():
 
 func _physics_process(_delta):
 	if agent.is_navigation_finished():
-		_on_reach_destination()
+		_on_reach_destination(2.0)
 		return
 
 	# Move worker towards next path position
@@ -33,18 +34,17 @@ func _physics_process(_delta):
 	var direction = (next_position - global_position).normalized()
 	velocity = direction * speed
 	move_and_slide()
-
+	
 func move_to_target(target: Vector2):
 	current_target = target
 	agent.set_target_position(target)
 
-func _on_reach_destination():
-	velocity = Vector2.ZERO  # Stop movement
+func _on_reach_destination(delay: float):
+	velocity = Vector2.ZERO
 	if current_target == forest_position:
-		await get_tree().create_timer(2).timeout  # Simulate collecting wood
-		move_to_target(worker_hut_position)  # Return to hut
+		await get_tree().create_timer(delay).timeout  # Simulate collecting wood
+		move_to_target(worker_hut_position)
 	else:
-		await get_tree().create_timer(2).timeout  # Simulate dropping off wood
+		await get_tree().create_timer(delay).timeout  # Simulate dropping off wood
 		gathered_wood.emit(5)
-		#Global.total_city_wood += 5 # Add to city total
-		move_to_target(forest_position)  # Go back to the forest
+		move_to_target(forest_position)
