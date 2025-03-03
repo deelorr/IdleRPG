@@ -6,17 +6,17 @@ extends Area2D
 @onready var food_button = $WorkerHutStats/FoodButton
 @onready var worker = $Worker
 
-var hut_wood: float = 0.0
-var max_wood: float = 250.0
+var hut_wood: int = 0
+var max_wood: int = 250
 
-var hut_food: float = 0.0
-var max_food: float = 250.0
+var hut_food: int = 0
+var max_food: int = 250
 
 func _ready():
 	connect("input_event", _on_input_event)
 	worker.gathered_wood.connect(_on_gathered_wood)
 
-func _process(delta):
+func _process(_delta):
 	update_labels()
 
 func update_labels():

@@ -103,7 +103,7 @@ _data = {
 "walk_up": SubResource("Animation_e4gc4")
 }
 
-[node name="Worker" type="CharacterBody2D"]
+[node name="Worker" type="CharacterBody2D" groups=["workers"]]
 script = ExtResource("1_mk28a")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

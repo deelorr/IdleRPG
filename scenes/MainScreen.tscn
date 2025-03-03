@@ -999,11 +999,12 @@ text = "Menu"
 
 [node name="MenuPanel" type="Panel" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu"]
 visible = false
+z_index = 1
 layout_mode = 0
-offset_left = -3.5
-offset_top = -124.667
-offset_right = 106.5
-offset_bottom = -8.66666
+offset_left = -4.00001
+offset_top = -125.667
+offset_right = 106.0
+offset_bottom = -9.66634
 theme_override_styles/panel = ExtResource("5_wyapv")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel"]
@@ -1038,6 +1039,13 @@ size_flags_vertical = 0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = ExtResource("5_wyapv")
 text = "Save"
+
+[node name="Reset" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_styles/normal = ExtResource("5_wyapv")
+text = "Reset"
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="CanvasLayer/Control/MenuContainer/HBoxContainer"]
 layout_mode = 2
@@ -1098,7 +1106,7 @@ color = Color(1, 1, 0.545098, 0.443137)
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_nbial")
 
-[node name="StoreScene" parent="." instance=ExtResource("5_y448k")]
+[node name="WorkerHut" parent="." instance=ExtResource("5_y448k")]
 position = Vector2(13, 1)
 
 [node name="HomeBase" parent="." instance=ExtResource("6_el83a")]
@@ -1116,5 +1124,6 @@ navigation_polygon = SubResource("NavigationPolygon_jjefs")
 [connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SpeedButton" to="." method="_on_speed_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SkipButton" to="." method="_on_skip_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/Reset" to="." method="_on_reset_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer3/TheDesertButton" to="Camera2D" method="_on_the_desert_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer3/Section4Button" to="Camera2D" method="_on_section_4_button_pressed"]

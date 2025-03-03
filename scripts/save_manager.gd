@@ -20,6 +20,28 @@ func save_game(day: int, time: float):
 	else:
 		print("Failed to save game!")
 
+func reset_save():
+	if FileAccess.file_exists(SAVE_PATH):
+		var dir = DirAccess.open("user://")
+		if dir:
+			var result = dir.remove(SAVE_PATH)
+			if result == OK:
+				print("Save file deleted successfully.")
+			else:
+				print("Failed to delete save file! Error code:", result)
+
+	# Reset all relevant global variables
+	Global.total_city_wood = 0
+	Global.total_city_food = 0
+	TimeManager.day_count = 1
+	TimeManager.time_of_day = 0
+
+	# Force a full scene reload
+	await get_tree().process_frame  # Ensure the deletion completes before reloading
+	get_tree().reload_current_scene()
+	
+	print("New game started: Save data cleared and scene reloaded.")
+
 func load_game():
 	if not FileAccess.file_exists(SAVE_PATH):
 		print("No save file found!")
@@ -52,8 +74,8 @@ func load_game():
 		return null
 
 func apply_offline_earnings(time_passed: int):
-	var wood_per_second = 5  
-	var food_per_second = 5  
+	var wood_per_second = 5
+	var food_per_second = 5
 
 	var offline_wood = wood_per_second * time_passed
 	var offline_food = food_per_second * time_passed

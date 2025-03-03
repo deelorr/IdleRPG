@@ -106,12 +106,22 @@ func hide_menu():
 	menu.visible = false
 
 func _on_save_button_pressed() -> void:
+	toggle_menu()
 	SaveManager.save_game(TimeManager.day_count, TimeManager.time_of_day)
 
 func _on_speed_button_pressed() -> void:
 	if TimeManager.time_speed_multiplier == 1.0:
 		TimeManager.speed_up_time(2)
 		speed_button.text = "Speed x2"
+	elif TimeManager.time_speed_multiplier == 2.0:
+		TimeManager.speed_up_time(5)
+		speed_button.text = "Speed x5"
+	elif TimeManager.time_speed_multiplier == 5.0:
+		TimeManager.speed_up_time(10)
+		speed_button.text = "Speed x10"
+	elif TimeManager.time_speed_multiplier == 10.0:
+		TimeManager.speed_up_time(50)
+		speed_button.text = "Speed x50"
 	else:
 		TimeManager.speed_up_time(1)
 		speed_button.text = "Speed x1"
@@ -121,3 +131,8 @@ func _on_skip_button_pressed():
 
 func _on_menu_pressed():
 	toggle_menu()
+
+func _on_reset_pressed():
+	toggle_menu()  # Start closing the menu
+	await get_tree().create_timer(0.3).timeout  # Wait for the animation to finish
+	SaveManager.reset_save()  # Now reset the game

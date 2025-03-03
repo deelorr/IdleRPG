@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 signal gathered_wood(wood)
-signal gathered_food(food)
+#signal gathered_food(food)
 
 @onready var agent = $NavigationAgent2D
 
@@ -16,9 +16,14 @@ func _ready():
 	agent.path_desired_distance = 4.0  # Prevent jittering
 	agent.target_desired_distance = 4.0  # Avoid stopping too early
 
+	# Wait until NavigationServer has updated before setting target
+	await get_tree().process_frame  # Ensures one frame passes for the nav system to sync
+	await get_tree().process_frame  # Sometimes requires two frames for safe sync
+
 	move_to_target(forest_position)
 
-func _physics_process(delta):
+
+func _physics_process(_delta):
 	if agent.is_navigation_finished():
 		_on_reach_destination()
 		return
