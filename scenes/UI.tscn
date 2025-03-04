@@ -1,0 +1,197 @@
+[gd_scene load_steps=4 format=3 uid="uid://cf6wems303amh"]
+
+[ext_resource type="StyleBox" uid="uid://sugqjf8hn4gk" path="res://scenes/ButtonStyle.tres" id="1_dj8aq"]
+[ext_resource type="Script" uid="uid://dw27mfl60waj5" path="res://scripts/ui.gd" id="1_ro3t7"]
+
+[sub_resource type="Theme" id="Theme_8hkp2"]
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_ro3t7")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MenuContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -437.0
+offset_top = -290.0
+offset_right = -124.0
+offset_bottom = -197.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(3, 3)
+theme = SubResource("Theme_8hkp2")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MenuContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MenuContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="TheWoodsButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("1_dj8aq")
+text = "The Woods
+"
+
+[node name="Section3Button" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("1_dj8aq")
+text = "Section 3"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/MenuContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ClockPanel" type="PanelContainer" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("1_dj8aq")
+
+[node name="ClockLabel" type="Label" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/ClockPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Day 0, 00:00"
+vertical_alignment = 1
+
+[node name="HomeBase" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("1_dj8aq")
+text = "Home Base"
+
+[node name="Menu" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("1_dj8aq")
+text = "Menu"
+
+[node name="MenuPanel" type="Panel" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu"]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_left = -4.00001
+offset_top = -125.667
+offset_right = 106.0
+offset_bottom = -9.66634
+theme_override_styles/panel = ExtResource("1_dj8aq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="SpeedButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("1_dj8aq")
+text = "Speed x1"
+
+[node name="SkipButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("1_dj8aq")
+text = "Skip Hour"
+
+[node name="SaveButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("1_dj8aq")
+text = "Save"
+
+[node name="Reset" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_styles/normal = ExtResource("1_dj8aq")
+text = "Reset"
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Control/MenuContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="TheDesertButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("1_dj8aq")
+text = "The Desert"
+
+[node name="Section4Button" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("1_dj8aq")
+text = "Section 4"
+
+[node name="OfflinePopupPanel" type="PopupPanel" parent="Control"]
+auto_translate_mode = 1
+position = Vector2i(340, 720)
+size = Vector2i(409, 215)
+theme_override_styles/panel = ExtResource("1_dj8aq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/OfflinePopupPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_right = 404.0
+offset_bottom = 215.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OfflineEarnings" type="Label" parent="Control/OfflinePopupPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Offline Earnings:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OfflineWoodLabel" type="Label" parent="Control/OfflinePopupPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Wood: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OfflineFoodLabel" type="Label" parent="Control/OfflinePopupPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Food: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer/TheWoodsButton" to="." method="_on_the_woods_button_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer/Section3Button" to="." method="_on_section_3_button_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/HomeBase" to="." method="_on_home_base_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SpeedButton" to="." method="_on_speed_button_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SkipButton" to="." method="_on_skip_button_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/Reset" to="." method="_on_reset_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer3/TheDesertButton" to="." method="_on_the_desert_button_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer3/Section4Button" to="." method="_on_section_4_button_pressed"]

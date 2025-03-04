@@ -1,17 +1,17 @@
-[gd_scene load_steps=15 format=4 uid="uid://cn3opsn1ip0s6"]
+[gd_scene load_steps=14 format=4 uid="uid://cn3opsn1ip0s6"]
 
 [ext_resource type="Script" uid="uid://cgr0gbaww5a8g" path="res://scripts/main_screen.gd" id="1_5aeyp"]
 [ext_resource type="Texture2D" uid="uid://58rndofkpfve" path="res://art/TilesetGround.png" id="2_2skl6"]
 [ext_resource type="Texture2D" uid="uid://bj6n8nos5eudb" path="res://art/TilesetNature.png" id="3_1xxi2"]
 [ext_resource type="Script" uid="uid://xab4nkr3xaen" path="res://scripts/camera_2d.gd" id="4_trvrf"]
-[ext_resource type="StyleBox" uid="uid://sugqjf8hn4gk" path="res://scenes/ButtonStyle.tres" id="5_wyapv"]
+[ext_resource type="PackedScene" uid="uid://cf6wems303amh" path="res://scenes/UI.tscn" id="5_1agfe"]
 [ext_resource type="PackedScene" uid="uid://clfhfh54lg1nf" path="res://scenes/WorkerHut.tscn" id="5_y448k"]
 [ext_resource type="PackedScene" uid="uid://ogv02rj6n4io" path="res://scenes/HomeBase.tscn" id="6_el83a"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_jjefs"]
-vertices = PackedVector2Array(255, 10.9609, 255, 343.133, 226.312, 277.719, 226.312, 245.719, 207.969, 292.93, 10, 346.359, 193.219, 276.711, 111.969, 292.93, 209.578, 259.594, 209.578, 227.594, 226.312, 213.719, 209.578, 195.594, 226.312, 181.719, 209.578, 163.594, 226.312, 149.719, 209.578, 131.594, 226.312, 117.719, 208.383, 98.2891, 10, 10.0312, 193.219, 116.711, 112.383, 98.2891, 130.312, 277.719, 113.578, 259.594, 130.312, 245.719, 193.219, 244.711, 207.039, 259.906, 113.578, 227.594, 130.312, 213.719, 193.219, 212.711, 207.039, 227.906, 113.578, 195.594, 130.312, 181.719, 193.219, 180.711, 207.039, 195.906, 113.578, 163.594, 130.312, 149.719, 193.219, 148.711, 207.039, 163.906, 113.578, 131.594, 130.312, 117.719, 207.039, 131.906, 97.2188, 116.711, 111.039, 131.906, 97.2188, 148.711, 111.039, 163.906, 97.2188, 180.711, 111.039, 195.906, 97.2188, 212.711, 111.039, 227.906, 97.2188, 244.711, 111.039, 259.906, 97.2188, 276.711)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 2, 1), PackedInt32Array(4, 1, 5), PackedInt32Array(6, 4, 5, 7), PackedInt32Array(2, 8, 3), PackedInt32Array(3, 9, 10), PackedInt32Array(0, 3, 10), PackedInt32Array(10, 11, 12), PackedInt32Array(0, 10, 12), PackedInt32Array(12, 13, 14), PackedInt32Array(0, 12, 14), PackedInt32Array(14, 15, 16), PackedInt32Array(0, 14, 16), PackedInt32Array(0, 16, 17), PackedInt32Array(18, 0, 17, 19, 20), PackedInt32Array(6, 21, 22, 23, 24, 25), PackedInt32Array(24, 23, 26, 27, 28, 29), PackedInt32Array(28, 27, 30, 31, 32, 33), PackedInt32Array(32, 31, 34, 35, 36, 37), PackedInt32Array(36, 35, 38, 39, 19, 40), PackedInt32Array(41, 42, 43), PackedInt32Array(43, 44, 45), PackedInt32Array(45, 46, 47), PackedInt32Array(47, 48, 49, 5), PackedInt32Array(49, 50, 51, 5), PackedInt32Array(19, 39, 20), PackedInt32Array(18, 20, 41), PackedInt32Array(5, 18, 41, 43), PackedInt32Array(5, 43, 45), PackedInt32Array(5, 45, 47), PackedInt32Array(5, 51, 7), PackedInt32Array(6, 7, 21)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(265, 353, 0, 356.5, 0, 0, 265, 1)])
+vertices = PackedVector2Array(532.563, 10.4922, 537.93, 821.477, 226.313, 277.719, 226.313, 245.719, 9.5, 820.508, 207.969, 292.93, 209.578, 259.594, 209.578, 227.594, 226.313, 213.719, 209.578, 195.594, 226.313, 181.719, 209.578, 163.594, 226.313, 149.719, 209.578, 131.594, 226.313, 117.719, 193.219, 276.711, 130.313, 277.719, 113.578, 259.594, 130.313, 245.719, 193.219, 244.711, 207.039, 259.906, 113.578, 227.594, 130.313, 213.719, 193.219, 212.711, 207.039, 227.906, 113.578, 195.594, 130.313, 181.719, 193.219, 180.711, 207.039, 195.906, 113.578, 163.594, 130.313, 149.719, 193.219, 148.711, 207.039, 163.906, 113.578, 131.594, 130.313, 117.719, 193.219, 116.711, 207.039, 131.906, 97.2188, 116.711, 111.039, 131.906, 97.2188, 148.711, 111.039, 163.906, 97.2188, 180.711, 111.039, 195.906, 97.2188, 212.711, 111.039, 227.906, 97.2188, 244.711, 111.039, 259.906, 97.2188, 276.711, 208.383, 98.2891, 9.99219, 10, 112.383, 98.2891, 111.969, 292.93)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(2, 1, 4, 5), PackedInt32Array(2, 6, 3), PackedInt32Array(3, 7, 8, 0), PackedInt32Array(8, 9, 10, 0), PackedInt32Array(10, 11, 12, 0), PackedInt32Array(12, 13, 14, 0), PackedInt32Array(15, 16, 17, 18, 19, 20), PackedInt32Array(19, 18, 21, 22, 23, 24), PackedInt32Array(23, 22, 25, 26, 27, 28), PackedInt32Array(27, 26, 29, 30, 31, 32), PackedInt32Array(31, 30, 33, 34, 35, 36), PackedInt32Array(37, 38, 39), PackedInt32Array(39, 40, 41), PackedInt32Array(41, 42, 43), PackedInt32Array(43, 44, 45), PackedInt32Array(45, 46, 47), PackedInt32Array(0, 14, 48), PackedInt32Array(49, 0, 48), PackedInt32Array(49, 48, 35, 50), PackedInt32Array(16, 15, 5, 4, 51), PackedInt32Array(47, 51, 4), PackedInt32Array(47, 4, 49, 45), PackedInt32Array(43, 45, 49), PackedInt32Array(41, 43, 49), PackedInt32Array(39, 41, 49), PackedInt32Array(37, 39, 49), PackedInt32Array(50, 37, 49), PackedInt32Array(50, 35, 34)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(548, 831.5, -0.5, 830.5, 0, 0, 542.5, 0.5)])
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_y4gqh"]
 texture = ExtResource("2_2skl6")
@@ -885,9 +885,6 @@ texture = ExtResource("3_1xxi2")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_sjfn7")
 
-[sub_resource type="Theme" id="Theme_8hkp2"]
-Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
-
 [sub_resource type="Environment" id="Environment_nbial"]
 ambient_light_source = 3
 ambient_light_color = Color(1, 0.792157, 0, 0.396078)
@@ -895,23 +892,25 @@ ambient_light_color = Color(1, 0.792157, 0, 0.396078)
 [node name="MainScreen" type="Node2D"]
 script = ExtResource("1_5aeyp")
 
-[node name="Tilemap" type="Node2D" parent="."]
-y_sort_enabled = true
-scale = Vector2(4, 4)
-
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="Tilemap"]
-scale = Vector2(0.5, 0.5)
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+scale = Vector2(2, 2)
 navigation_polygon = SubResource("NavigationPolygon_jjefs")
 
-[node name="Ground" type="TileMapLayer" parent="Tilemap/NavigationRegion2D"]
+[node name="Ground" type="TileMapLayer" parent="NavigationRegion2D"]
 scale = Vector2(2, 2)
 tile_map_data = PackedByteArray("AAAAAAAAAAALAAcAAAABAAAAAAAMAAcAAAACAAAAAAAMAAcAAAADAAAAAAAMAAcAAAAEAAAAAAAMAAcAAAAFAAAAAAAMAAcAAAAGAAAAAAAMAAcAAAAHAAAAAAANAAcAAAAIAAAAAAALAAwAAAAJAAAAAAAMAAYAAwAKAAAAAAALAAYAAwALAAAAAAALAAYAAwAMAAAAAAALAAYAAwANAAAAAAALAAYAAwAOAAAAAAALAAYAAwAPAAAAAAALAAYAAwAQAAAAAAAMAAYAAAAQAAEAAAALAAYAAAAQAAIAAAALAAYAAAAQAAMAAAALAAYAAAAQAAQAAAALAAYAAAAQAAUAAAALAAYAAAAQAAYAAAALAAYAAAAQAAcAAAALAAYAAAAQAAgAAAALAAYAAAAQAAkAAAALAAYAAAAQAAoAAAAMAAYAAgAQAAsAAAANAAcAAAAQAAwAAAANAAgAAAAQAA0AAAANAAgAAAAQAA4AAAANAAkAAAAQAA8AAAANAAcAAAAQABAAAAANAAgAAAAQABEAAAANAAgAAAAQABIAAAANAAgAAAAQABMAAAANAAgAAAAQABQAAAANAAgAAAAQABUAAAANAAgAAAAQABYAAAANAAgAAAAQABcAAAANAAgAAAAQABgAAAANAAgAAAAQABkAAAANAAkAAAAQABoAAAANAAcAAAAQABsAAAANAAgAAAAQABwAAAANAAgAAAAQAB0AAAANAAkAAAAPAB0AAAAMAAkAAAAOAB0AAAAMAAkAAAANAB0AAAAMAAkAAAAMAB0AAAAMAAkAAAALAB0AAAAMAAkAAAAKAB0AAAAMAAkAAAAJAB0AAAAMAAkAAAAIAB0AAAAMAAkAAAAHAB0AAAAMAAkAAAAGAB0AAAAMAAkAAAAFAB0AAAAMAAkAAAAEAB0AAAAMAAkAAAADAB0AAAAMAAkAAAACAB0AAAAMAAkAAAABAB0AAAAMAAkAAAAAAB0AAAALAAkAAAAAABwAAAALAAgAAAAAABsAAAALAAgAAAAAABoAAAALAAcAAAAAABkAAAALAAkAAAAAABgAAAALAAgAAAAAABYAAAALAAgAAAAAABUAAAALAAgAAAAAABQAAAALAAgAAAAAABcAAAALAAgAAAAAABMAAAALAAgAAAAAABIAAAALAAgAAAAAABEAAAALAAgAAAAAABAAAAALAAgAAAAAAA8AAAALAAcAAAAAAA4AAAALAAkAAAAAAA0AAAALAAgAAAAAAAwAAAALAAgAAAAAAAsAAAALAAcAAAAAAAoAAAALAAkAAAAAAAkAAAALAAgAAAAAAAgAAAALAAgAAAAAAAcAAAALAAgAAAAAAAYAAAALAAgAAAAAAAUAAAALAAgAAAAAAAQAAAALAAgAAAAAAAMAAAALAAgAAAAAAAIAAAALAAgAAAAAAAEAAAALAAgAAAAHAAUAAAAOAAgAAAAHAAQAAAAOAAgAAAAHAAMAAAAOAAgAAAAHAAIAAAASAAgAAAAHAAEAAAANAAgAAAAGAAEAAAAMAAgAAAAFAAEAAAAMAAgAAAAEAAEAAAAMAAgAAAADAAEAAAAMAAgAAAACAAEAAAAMAAgAAAABAAEAAAAMAAsAAAABAAIAAAAMAAgAAAABAAMAAAAMAAgAAAABAAQAAAAMAAgAAAABAAUAAAAMAAgAAAABAAYAAAAMAAgAAAABAAcAAAAMAAgAAAABAAgAAAAMAAgAAAABAAkAAAAMAAgAAAABAAoAAAAMAAkAAAABAAsAAAAMAAcAAAABAAwAAAAMAAgAAAABAA0AAAAMAAgAAAABAA4AAAAMAAkAAAABAA8AAAAMAAcAAAABABAAAAAMAAgAAAABABEAAAAMAAgAAAABABIAAAAMAAgAAAABABMAAAAMAAgAAAABABQAAAAMAAgAAAABABUAAAAMAAgAAAABABYAAAAMAAgAAAABABcAAAAMAAgAAAABABgAAAAMAAgAAAABABkAAAAMAAkAAAABABoAAAAMAAcAAAABABsAAAAMAAgAAAABABwAAAAMAAgAAAACABwAAAAMAAgAAAACABsAAAAMAAgAAAACABoAAAAMAAcAAAACABkAAAAMAAkAAAACABgAAAAMAAgAAAACABcAAAAMAAgAAAACABYAAAAMAAgAAAACABUAAAAMAAgAAAACABQAAAAMAAgAAAACABMAAAAMAAgAAAACABIAAAAMAAgAAAACABEAAAAMAAgAAAACABAAAAAMAAgAAAACAA8AAAAMAAcAAAACAA4AAAAMAAkAAAACAA0AAAAMAAgAAAACAAwAAAAMAAgAAAACAAsAAAAMAAcAAAACAAoAAAAMAAkAAAACAAkAAAAQAAkAAAACAAgAAAANAAgAAAACAAcAAAANAAgAAAACAAYAAAANAAgAAAACAAUAAAANAAgAAAACAAQAAAANAAgAAAACAAMAAAANAAgAAAACAAIAAAAQAAgAAAADAAIAAAAMAAkAAAADAAMAAAALAAwAAAADAAQAAAALAAwAAAADAAUAAAALAAwAAAADAAYAAAALAAwAAAADAAcAAAALAAwAAAADAAgAAAALAAwAAAADAAkAAAAMAAcAAAADAAoAAAAMAAkAAAADAAsAAAAMAAcAAAADAAwAAAAMAAgAAAADAA0AAAAMAAgAAAADAA4AAAAMAAkAAAADAA8AAAAMAAcAAAADABAAAAAMAAgAAAADABEAAAAMAAgAAAADABIAAAAMAAgAAAADABMAAAAMAAgAAAADABQAAAAMAAgAAAADABUAAAAMAAgAAAADABYAAAAMAAgAAAADABcAAAAMAAgAAAADABgAAAAMAAgAAAADABkAAAAMAAkAAAADABoAAAAMAAcAAAADABsAAAAMAAgAAAADABwAAAAMAAgAAAAEABwAAAAMAAgAAAAEABsAAAAMAAgAAAAEABoAAAAMAAcAAAAEABkAAAAMAAkAAAAEABgAAAAMAAgAAAAEABcAAAAMAAgAAAAEABYAAAAMAAgAAAAEABUAAAAMAAgAAAAEABQAAAAMAAgAAAAEABMAAAAMAAgAAAAEABIAAAAMAAgAAAAEABEAAAAMAAgAAAAEABAAAAAMAAgAAAAEAA8AAAAMAAcAAAAEAA4AAAAMAAkAAAAEAA0AAAAMAAgAAAAEAAwAAAAMAAgAAAAEAAsAAAAMAAcAAAAEAAoAAAAMAAkAAAAEAAkAAAAMAAcAAAAEAAgAAAALAAwAAAAEAAcAAAALAAwAAAAEAAYAAAALAAwAAAAEAAUAAAALAAwAAAAEAAQAAAALAAwAAAAEAAMAAAALAAwAAAAEAAIAAAAMAAkAAAAFAAIAAAAMAAkAAAAFAAMAAAALAAwAAAAFAAQAAAALAAwAAAAFAAUAAAALAAwAAAAFAAYAAAALAAwAAAAFAAcAAAALAAwAAAAFAAgAAAALAAwAAAAFAAkAAAAMAAcAAAAFAAoAAAAMAAkAAAAFAAsAAAAMAAcAAAAFAAwAAAAMAAgAAAAFAA0AAAAMAAgAAAAFAA4AAAAMAAkAAAAFAA8AAAAMAAcAAAAFABAAAAAMAAgAAAAFABEAAAAMAAgAAAAFABIAAAAMAAgAAAAFABMAAAAMAAgAAAAFABQAAAAMAAgAAAAFABUAAAAMAAgAAAAFABYAAAAMAAgAAAAFABcAAAAMAAgAAAAFABgAAAAMAAgAAAAFABkAAAAMAAkAAAAFABoAAAAMAAcAAAAFABsAAAAMAAgAAAAFABwAAAAMAAgAAAAGABwAAAAMAAgAAAAGABsAAAAMAAgAAAAGABoAAAAMAAcAAAAGABkAAAAMAAkAAAAGABgAAAAMAAgAAAAGABcAAAAMAAgAAAAGABYAAAAMAAgAAAAGABUAAAAMAAgAAAAGABQAAAAMAAgAAAAGABMAAAAMAAgAAAAGABIAAAAMAAgAAAAGABEAAAAMAAgAAAAGABAAAAAMAAgAAAAGAA8AAAAMAAcAAAAGAA4AAAAMAAkAAAAGAA0AAAAMAAgAAAAGAAwAAAAMAAgAAAAGAAsAAAAMAAcAAAAGAAoAAAAMAAkAAAAGAAkAAAAMAAcAAAAGAAgAAAALAAwAAAAGAAcAAAALAAwAAAAGAAYAAAALAAwAAAAGAAUAAAALAAwAAAAGAAQAAAALAAwAAAAGAAMAAAALAAwAAAAGAAIAAAAMAAkAAAAHAAYAAAAOAAgAAAAHAAcAAAAOAAgAAAAHAAgAAAAOAAgAAAAHAAkAAAASAAkAAAAHAAoAAAANAAkAAAAHAAsAAAAMAAcAAAAHAAwAAAAMAAgAAAAHAA0AAAAMAAgAAAAHAA4AAAAMAAkAAAAHAA8AAAANAAcAAAAHABAAAAANAAgAAAAHABEAAAANAAgAAAAHABIAAAANAAgAAAAHABMAAAANAAgAAAAHABQAAAANAAgAAAAHABUAAAANAAgAAAAHABYAAAANAAgAAAAHABcAAAANAAgAAAAHABgAAAANAAgAAAAHABkAAAANAAkAAAAHABoAAAAMAAcAAAAHABsAAAAMAAgAAAAHABwAAAAMAAgAAAAIABwAAAAMAAgAAAAIABsAAAAMAAgAAAAIABoAAAAMAAcAAAAIABkAAAALAAwAAAAIABgAAAALAAwAAAAIABcAAAALAAwAAAAIABYAAAALAAwAAAAIABUAAAALAAwAAAAIABQAAAALAAwAAAAIABMAAAALAAwAAAAIABIAAAALAAwAAAAIABEAAAALAAwAAAAIABAAAAALAAwAAAAIAA8AAAALAAwAAAAIAA4AAAAMAAkAAAAIAA0AAAAMAAgAAAAIAAwAAAAMAAgAAAAIAAsAAAAMAAcAAAAIAAoAAAALAAwAAAAIAAkAAAALAAwAAAAIAAgAAAALAAwAAAAIAAcAAAALAAwAAAAIAAYAAAALAAwAAAAIAAUAAAALAAwAAAAIAAQAAAALAAwAAAAIAAMAAAALAAwAAAAIAAIAAAALAAwAAAAIAAEAAAALAAwAAAAJAAEAAAALAAYAAQAJAAIAAAALAAYAAQAJAAMAAAALAAYAAQAJAAQAAAALAAYAAQAJAAUAAAALAAYAAQAJAAYAAAALAAYAAQAJAAcAAAALAAYAAQAJAAgAAAALAAYAAQAJAAkAAAALAAYAAQAJAAoAAAAMAAYAAQAJAAsAAAAMAAcAAAAJAAwAAAAMAAgAAAAJAA0AAAAMAAgAAAAJAA4AAAAMAAkAAAAJAA8AAAALAAcAAAAJABAAAAALAAgAAAAJABEAAAALAAgAAAAJABIAAAALAAgAAAAJABMAAAALAAgAAAAJABQAAAALAAgAAAAJABUAAAALAAgAAAAJABYAAAALAAgAAAAJABcAAAALAAgAAAAJABgAAAALAAgAAAAJABkAAAALAAkAAAAJABoAAAAMAAcAAAAJABsAAAAMAAgAAAAJABwAAAAMAAgAAAAKABwAAAAMAAgAAAAKABsAAAAMAAgAAAAKABoAAAAMAAcAAAAKABkAAAAMAAkAAAAKABgAAAAMAAgAAAAKABcAAAAMAAgAAAAKABYAAAAMAAgAAAAKABUAAAAMAAgAAAAKABQAAAAMAAgAAAAKABMAAAAMAAgAAAAKABIAAAAMAAgAAAAKABEAAAAMAAgAAAAKABAAAAAMAAgAAAAKAA8AAAAMAAcAAAAKAA4AAAAMAAkAAAAKAA0AAAAMAAgAAAAKAAwAAAAMAAgAAAAKAAsAAAAMAAcAAAAKAAoAAAALAAYAAgAKAAkAAAALAAUAAAAKAAgAAAALAAUAAAAKAAcAAAALAAUAAAAKAAYAAAALAAUAAAAKAAUAAAALAAUAAAAKAAQAAAALAAUAAAAKAAMAAAALAAUAAAAKAAIAAAALAAUAAAAKAAEAAAALAAUAAAALAAEAAAALAAUAAAALAAIAAAALAAUAAAALAAMAAAALAAUAAAALAAQAAAALAAUAAAALAAUAAAALAAUAAAALAAYAAAALAAUAAAALAAcAAAALAAUAAAALAAgAAAALAAUAAAALAAkAAAALAAUAAAALAAoAAAALAAYAAgALAAsAAAAMAAcAAAALAAwAAAAMAAgAAAALAA0AAAAMAAgAAAALAA4AAAAMAAkAAAALAA8AAAAMAAcAAAALABAAAAAMAAgAAAALABEAAAAMAAgAAAALABIAAAAMAAgAAAALABMAAAAMAAgAAAALABQAAAAMAAgAAAALABUAAAAMAAgAAAALABYAAAAMAAgAAAALABcAAAAMAAgAAAALABgAAAAMAAgAAAALABkAAAAMAAkAAAALABoAAAAMAAcAAAALABwAAAAMAAgAAAAMABwAAAAMAAgAAAAMABoAAAAMAAcAAAAMABkAAAAMAAkAAAAMABgAAAAMAAgAAAAMABcAAAAMAAgAAAAMABYAAAAMAAgAAAAMABUAAAAMAAgAAAAMABQAAAAMAAgAAAAMABMAAAAMAAgAAAAMABIAAAAMAAgAAAAMABEAAAAMAAgAAAAMABAAAAAMAAgAAAAMAA8AAAAMAAcAAAAMAA4AAAAMAAkAAAAMAA0AAAAMAAgAAAAMAAwAAAAMAAgAAAAMAAsAAAAMAAcAAAAMAAoAAAALAAYAAgAMAAkAAAALAAUAAAAMAAgAAAALAAUAAAAMAAcAAAALAAUAAAAMAAYAAAALAAUAAAAMAAUAAAALAAUAAAAMAAQAAAALAAUAAAAMAAMAAAALAAUAAAAMAAIAAAALAAUAAAAMAAEAAAALAAUAAAANAAEAAAALAAUAAAANAAIAAAALAAUAAAANAAMAAAALAAUAAAANAAQAAAALAAUAAAANAAUAAAALAAUAAAANAAYAAAALAAUAAAANAAcAAAALAAUAAAANAAgAAAALAAUAAAANAAkAAAALAAUAAAANAAoAAAALAAYAAgANAAsAAAAMAAcAAAANAAwAAAAMAAgAAAANAA0AAAAMAAgAAAANAA4AAAAMAAkAAAANAA8AAAAMAAcAAAANABAAAAAMAAgAAAANABEAAAAMAAgAAAANABIAAAAMAAgAAAANABMAAAAMAAgAAAANABQAAAAMAAgAAAANABUAAAAMAAgAAAANABYAAAAMAAgAAAANABcAAAAMAAgAAAANABgAAAAMAAgAAAANABkAAAAMAAkAAAANABoAAAAMAAcAAAANABwAAAAMAAgAAAAOABwAAAAMAAgAAAAOABsAAAAMAAgAAAAOABoAAAAMAAcAAAAOABkAAAAMAAkAAAAOABgAAAAMAAgAAAAOABcAAAAMAAgAAAAOABYAAAAMAAgAAAAOABUAAAAMAAgAAAAOABQAAAAMAAgAAAAOABMAAAAMAAgAAAAOABIAAAAMAAgAAAAOABEAAAAMAAgAAAAOABAAAAAMAAgAAAAOAA8AAAAMAAcAAAAOAA4AAAAMAAkAAAAOAA0AAAAMAAgAAAAOAAwAAAAMAAgAAAAOAAsAAAAMAAcAAAAOAAoAAAALAAYAAgAOAAkAAAALAAUAAAAOAAgAAAALAAUAAAAOAAcAAAALAAUAAAAOAAYAAAALAAUAAAAOAAUAAAALAAUAAAAOAAQAAAALAAUAAAAOAAMAAAALAAUAAAAOAAIAAAALAAUAAAAOAAEAAAALAAUAAAAPAAEAAAALAAUAAAAPAAIAAAALAAUAAAAPAAMAAAALAAUAAAAPAAQAAAALAAUAAAAPAAUAAAALAAUAAAAPAAYAAAALAAUAAAAPAAcAAAALAAUAAAAPAAgAAAALAAUAAAAPAAkAAAALAAUAAAAPAAoAAAALAAYAAgAPAAsAAAAMAAcAAAAPAAwAAAAMAAgAAAAPAA0AAAAMAAgAAAAPAA4AAAAMAAkAAAAPAA8AAAAMAAcAAAAPABAAAAAMAAgAAAAPABEAAAAMAAgAAAAPABIAAAAMAAgAAAAPABMAAAAMAAgAAAAPABQAAAAMAAgAAAAPABUAAAAMAAgAAAAPABYAAAAMAAgAAAAPABcAAAAMAAgAAAAPABgAAAAMAAgAAAAPABkAAAAMAAkAAAAPABoAAAAMAAcAAAAPABsAAAAMAAgAAAAPABwAAAAMAAgAAAANABsAAAAMAAgAAAAMABsAAAAMAAgAAAALABsAAAAMAAgAAAA=")
 tile_set = SubResource("TileSet_rrqh5")
 
-[node name="Nature" type="TileMapLayer" parent="Tilemap/NavigationRegion2D"]
+[node name="Nature" type="TileMapLayer" parent="NavigationRegion2D"]
 scale = Vector2(2, 2)
 tile_map_data = PackedByteArray("AAADAAMAAAAGAAgAAAADAAQAAAAGAAgAAAADAAgAAAAGAAgAAAAGAAcAAAAGAAgAAAAGAAYAAAAGAAgAAAAGAAMAAAAGAAgAAAADAAcAAAAGAAgAAAADAAYAAAAGAAgAAAADAAUAAAAGAAgAAAAGAAgAAAAGAAgAAAAGAAUAAAAGAAgAAAAGAAQAAAAGAAgAAAA=")
 tile_set = SubResource("TileSet_2go7f")
+
+[node name="ColorRect" type="ColorRect" parent="NavigationRegion2D"]
+offset_right = 544.0
+offset_bottom = 959.0
+mouse_filter = 2
+color = Color(1, 1, 0.717647, 0.243137)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(302, 329)
@@ -923,188 +922,7 @@ limit_right = 1088
 limit_bottom = 1920
 script = ExtResource("4_trvrf")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-offset_right = 1088.0
-offset_bottom = 1920.0
-mouse_filter = 2
-color = Color(1, 1, 0.717647, 0.243137)
-
-[node name="Control" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="MenuContainer" type="MarginContainer" parent="CanvasLayer/Control"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -437.0
-offset_top = -290.0
-offset_right = -124.0
-offset_bottom = -197.0
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(3, 3)
-theme = SubResource("Theme_8hkp2")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MenuContainer"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MenuContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_constants/separation = 10
-
-[node name="TheWoodsButton" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = ExtResource("5_wyapv")
-text = "The Woods
-"
-
-[node name="Section3Button" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = ExtResource("5_wyapv")
-text = "Section 3"
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Control/MenuContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="ClockPanel" type="PanelContainer" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-theme_override_styles/panel = ExtResource("5_wyapv")
-
-[node name="ClockLabel" type="Label" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/ClockPanel"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "Day 0, 00:00"
-vertical_alignment = 1
-
-[node name="HomeBase" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = ExtResource("5_wyapv")
-text = "Home Base"
-
-[node name="Menu" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = ExtResource("5_wyapv")
-text = "Menu"
-
-[node name="MenuPanel" type="Panel" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu"]
-visible = false
-z_index = 1
-layout_mode = 0
-offset_left = -4.00001
-offset_top = -125.667
-offset_right = 106.0
-offset_bottom = -9.66634
-theme_override_styles/panel = ExtResource("5_wyapv")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 10
-
-[node name="SpeedButton" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = ExtResource("5_wyapv")
-text = "Speed x1"
-
-[node name="SkipButton" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = ExtResource("5_wyapv")
-text = "Skip Hour"
-
-[node name="SaveButton" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = ExtResource("5_wyapv")
-text = "Save"
-
-[node name="Reset" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_styles/normal = ExtResource("5_wyapv")
-text = "Reset"
-
-[node name="VBoxContainer3" type="VBoxContainer" parent="CanvasLayer/Control/MenuContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_constants/separation = 10
-
-[node name="TheDesertButton" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer3"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = ExtResource("5_wyapv")
-text = "The Desert"
-
-[node name="Section4Button" type="Button" parent="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer3"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = ExtResource("5_wyapv")
-text = "Section 4"
-
-[node name="OfflinePopupPanel" type="PopupPanel" parent="CanvasLayer/Control"]
-position = Vector2i(340, 720)
-size = Vector2i(409, 215)
-theme_override_styles/panel = ExtResource("5_wyapv")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/OfflinePopupPanel"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 5.0
-offset_right = 404.0
-offset_bottom = 215.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="OfflineEarnings" type="Label" parent="CanvasLayer/Control/OfflinePopupPanel/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "Offline Earnings:"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="OfflineWoodLabel" type="Label" parent="CanvasLayer/Control/OfflinePopupPanel/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "Wood: 0"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="OfflineFoodLabel" type="Label" parent="CanvasLayer/Control/OfflinePopupPanel/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "Food: 0"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="UI" parent="." instance=ExtResource("5_1agfe")]
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 rotation = 1.5708
@@ -1118,14 +936,3 @@ position = Vector2(13, 1)
 
 [node name="HomeBase" parent="." instance=ExtResource("6_el83a")]
 position = Vector2(299, 715)
-
-[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer/TheWoodsButton" to="Camera2D" method="_on_the_woods_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer/Section3Button" to="Camera2D" method="_on_section_3_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/HomeBase" to="Camera2D" method="_on_home_base_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu" to="." method="_on_menu_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SpeedButton" to="." method="_on_speed_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SkipButton" to="." method="_on_skip_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/Reset" to="." method="_on_reset_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer3/TheDesertButton" to="Camera2D" method="_on_the_desert_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer3/Section4Button" to="Camera2D" method="_on_section_4_button_pressed"]

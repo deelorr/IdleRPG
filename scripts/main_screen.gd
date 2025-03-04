@@ -1,18 +1,24 @@
 extends Node
 
-const SAVE_PATH = "user://savegame.json"
+# Constants with typing
+const SAVE_PATH: String = "user://savegame.json"
 
-@onready var sun_light := $DirectionalLight2D
-@onready var sky_tint := $CanvasLayer/ColorRect
-@onready var world_env := $WorldEnvironment
-@onready var clock_label := $CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/ClockPanel/ClockLabel
-@onready var menu := $CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel
-@onready var speed_button := $CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SpeedButton
-@onready var offline_food_label := $CanvasLayer/Control/OfflinePopupPanel/VBoxContainer/OfflineFoodLabel
-@onready var offline_wood_label := $CanvasLayer/Control/OfflinePopupPanel/VBoxContainer/OfflineWoodLabel
-@onready var offline_popup_panel := $CanvasLayer/Control/OfflinePopupPanel
+# Typed node references
+@onready var sun_light: DirectionalLight2D = $DirectionalLight2D
+@onready var sky_tint: ColorRect = $NavigationRegion2D/ColorRect
+@onready var world_env: WorldEnvironment = $WorldEnvironment
+@onready var clock_label: Label = $UI/Control/MenuContainer/HBoxContainer/VBoxContainer2/ClockPanel/ClockLabel
+@onready var offline_food_label: Label = $UI/Control/OfflinePopupPanel/VBoxContainer/OfflineFoodLabel
+@onready var offline_wood_label: Label = $UI/Control/OfflinePopupPanel/VBoxContainer/OfflineWoodLabel
+@onready var offline_popup_panel: PopupPanel = $UI/Control/OfflinePopupPanel
 
-func _ready():
+# Exported variables for editor tweaking
+@export var day_brightness: float = 1.2
+@export var night_brightness: float = 0.4
+
+func _ready() -> void:
+	# Connect signals with validation
+	assert(TimeManager.time_updated, "TimeManager.time_updated signal not found!")
 	TimeManager.time_updated.connect(_on_time_changed)
 	_on_time_changed(int(TimeManager.time_of_day * TimeManager.HOURS_IN_DAY), 0, TimeManager.day_count)
 	
@@ -21,118 +27,46 @@ func _ready():
 		if Global.offline_wood > 0 or Global.offline_food > 0:
 			show_offline_earnings_popup()
 
-func show_offline_earnings_popup():
-	offline_wood_label.text = "Wood Earned: " + str(Global.offline_wood)
-	offline_food_label.text = "Food Earned: " + str(Global.offline_food)
+func show_offline_earnings_popup() -> void:
+	offline_wood_label.text = "Wood Earned: %d" % Global.offline_wood
+	offline_food_label.text = "Food Earned: %d" % Global.offline_food
 	offline_popup_panel.popup_centered()
 
 func _on_time_changed(in_game_hours: int, in_game_minutes: int, new_day: int) -> void:
 	clock_label.text = "Day %d, %02d:%02d" % [new_day, in_game_hours, in_game_minutes]
 	update_lighting(in_game_hours)
 
-func update_lighting(in_game_hours: int):
-	#Time ranges for transitions
-	var sunrise_start = 5.0
-	var sunrise_end = 8.0
-	var sunset_start = 18.0
-	var sunset_end = 21.0
-
-	#Light intensities
-	var day_brightness = 1.2
-	var night_brightness = 0.4
-
-	if in_game_hours >= sunrise_start and in_game_hours <= sunrise_end:
-		#Morning transition
-		var t = (in_game_hours - sunrise_start) / (sunrise_end - sunrise_start)
+func update_lighting(in_game_hours: int) -> void:
+	const SUNRISE_START: float = 5.0
+	const SUNRISE_END: float = 8.0
+	const SUNSET_START: float = 18.0
+	const SUNSET_END: float = 21.0
+	
+	var t: float
+	if in_game_hours >= SUNRISE_START and in_game_hours <= SUNRISE_END:
+		t = (in_game_hours - SUNRISE_START) / (SUNRISE_END - SUNRISE_START)
 		sun_light.energy = lerp(night_brightness, day_brightness, t)
 		world_env.environment.ambient_light_energy = lerp(0.3, 1.0, t)
 		sky_tint.color = Color(0.1, 0.1, 0.3, 0.6).lerp(Color(0.2, 0.6, 1.0, 0.3), t)
-	elif in_game_hours >= sunset_start and in_game_hours <= sunset_end:
-		#Evening transition
-		var t = (in_game_hours - sunset_start) / (sunset_end - sunset_start)
+	elif in_game_hours >= SUNSET_START and in_game_hours <= SUNSET_END:
+		t = (in_game_hours - SUNSET_START) / (SUNSET_END - SUNSET_START)
 		sun_light.energy = lerp(day_brightness, night_brightness, t)
 		world_env.environment.ambient_light_energy = lerp(1.0, 0.3, t)
 		sky_tint.color = Color(0.2, 0.6, 1.0, 0.3).lerp(Color(0.1, 0.1, 0.3, 0.6), t)
 	else:
-		#Set brightness directly outside transition times
-		if in_game_hours < sunrise_start or in_game_hours > sunset_end:
-			#Night settings
-			sun_light.energy = night_brightness
-			world_env.environment.ambient_light_energy = 0.3
-			sky_tint.color = Color(0.1, 0.1, 0.3, 0.6)
-		else:
-			#Day settings
-			sun_light.energy = day_brightness
-			world_env.environment.ambient_light_energy = 1.0
-			sky_tint.color = Color(0.2, 0.6, 1.0, 0.3)
-
-	#Update sun position to reflect the time of day
-	sun_light.rotation_degrees = lerp(-90, 90, TimeManager.time_of_day)
-
-func _input(event):
-	if event is InputEventKey and event.pressed:
-		match event.keycode:
-			KEY_P:  #Pause/Resume Time
-				TimeManager.time_paused = !TimeManager.time_paused
-				print("Time Paused: ", TimeManager.time_paused)
-			KEY_H:  #Skip 1 Hour
-				TimeManager.skip_hours(1)
-			KEY_D:  #Skip 1 Full Day
-				TimeManager.skip_hours(24)
-
-func _on_skip_hour_pressed() -> void:
-	TimeManager.skip_hours(1)
-
-func _on_save_pressed():
-	SaveManager.save_game(TimeManager.day_count, TimeManager.time_of_day)
-	print("SAVED GAME AT DAY ", TimeManager.day_count, TimeManager.time_of_day)
+		sun_light.energy = night_brightness if (in_game_hours < SUNRISE_START or in_game_hours > SUNSET_END) else day_brightness
+		world_env.environment.ambient_light_energy = 0.3 if (in_game_hours < SUNRISE_START or in_game_hours > SUNSET_END) else 1.0
+		sky_tint.color = Color(0.1, 0.1, 0.3, 0.6) if (in_game_hours < SUNRISE_START or in_game_hours > SUNSET_END) else Color(0.2, 0.6, 1.0, 0.3)
 	
-func toggle_menu():
-	if menu.visible:
-		hide_menu()
-	else:
-		show_menu()
+	sun_light.rotation_degrees = lerp(-90.0, 90.0, TimeManager.time_of_day)
 
-func show_menu():
-	menu.visible = true
-	menu.scale = Vector2(0, 0)
-	var tween = get_tree().create_tween()
-	tween.tween_property(menu, "scale", Vector2(1, 1), 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-
-func hide_menu():
-	var tween = get_tree().create_tween()
-	tween.tween_property(menu, "scale", Vector2(0, 0), 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-	await tween.finished
-	menu.visible = false
-
-func _on_save_button_pressed() -> void:
-	toggle_menu()
-	SaveManager.save_game(TimeManager.day_count, TimeManager.time_of_day)
-
-func _on_speed_button_pressed() -> void:
-	if TimeManager.time_speed_multiplier == 1.0:
-		TimeManager.speed_up_time(2)
-		speed_button.text = "Speed x2"
-	elif TimeManager.time_speed_multiplier == 2.0:
-		TimeManager.speed_up_time(5)
-		speed_button.text = "Speed x5"
-	elif TimeManager.time_speed_multiplier == 5.0:
-		TimeManager.speed_up_time(10)
-		speed_button.text = "Speed x10"
-	elif TimeManager.time_speed_multiplier == 10.0:
-		TimeManager.speed_up_time(50)
-		speed_button.text = "Speed x50"
-	else:
-		TimeManager.speed_up_time(1)
-		speed_button.text = "Speed x1"
-
-func _on_skip_button_pressed():
-	TimeManager.skip_hours(1)
-
-func _on_menu_pressed():
-	toggle_menu()
-
-func _on_reset_pressed():
-	toggle_menu()  # Start closing the menu
-	await get_tree().create_timer(0.3).timeout  # Wait for the animation to finish
-	SaveManager.reset_save()  # Now reset the game
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.is_pressed():
+		match event.keycode:
+			KEY_P:
+				TimeManager.time_paused = !TimeManager.time_paused
+				print("Time Paused: %s" % TimeManager.time_paused)
+			KEY_H:
+				TimeManager.skip_hours(1)
+			KEY_D:
+				TimeManager.skip_hours(24)

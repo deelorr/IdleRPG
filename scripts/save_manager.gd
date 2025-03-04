@@ -49,7 +49,8 @@ func load_game():
 
 	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
 	if file:
-		var save_data = JSON.parse_string(file.get_as_text())
+		# Explicitly cast to Dictionary to avoid Variant inference
+		var save_data = JSON.parse_string(file.get_as_text()) as Dictionary
 		file.close()
 		
 		if save_data == null:

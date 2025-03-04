@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://eeiumum23bc" path="res://scripts/workers_hut.gd" id="1_dmtaq"]
 [ext_resource type="Texture2D" uid="uid://divfpcj4wyvog" path="res://art/WorkersHutSprite.png" id="2_l0p07"]
-[ext_resource type="PackedScene" uid="uid://drwwji61qlf4y" path="res://scenes/worker.tscn" id="2_o80hl"]
+[ext_resource type="PackedScene" uid="uid://drwwji61qlf4y" path="res://scenes/Worker.tscn" id="2_o80hl"]
 [ext_resource type="Texture2D" uid="uid://dts1voymurh7j" path="res://art/log.jpg" id="3_x7al1"]
 [ext_resource type="Texture2D" uid="uid://cddx7e4a6orm8" path="res://art/food.jpg" id="4_ulahn"]
 
@@ -51,3 +51,4 @@ text = "COLLECT"
 [connection signal="pressed" from="WorkerHutStats/WoodButton" to="." method="_on_wood_button_pressed"]
 [connection signal="pressed" from="WorkerHutStats/FoodButton" to="." method="_on_food_button_pressed"]
 [connection signal="pressed" from="WorkerHutStats/CollectButton" to="." method="_on_collect_button_pressed"]
+[connection signal="toggled" from="WorkerHutStats/CollectButton" to="." method="_on_collect_button_toggled"]

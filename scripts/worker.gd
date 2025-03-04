@@ -1,9 +1,12 @@
 extends CharacterBody2D
 
-signal gathered_wood(wood)
+# Signal with typed parameter
+signal gathered_wood(wood: int)
 
-@onready var agent = $NavigationAgent2D
+# Typed node reference
+@onready var agent: NavigationAgent2D = $NavigationAgent2D
 
+# Exported variable for editor tweaking
 @export var base_speed: float = 50.0
 var speed: float = base_speed
 
@@ -14,7 +17,7 @@ var hut_waypoint: Vector2
 var is_waiting: bool = false  # Prevent movement during collection/unloading
 var current_target: Vector2
 
-func _ready():
+func _ready() -> void:
 	agent.path_desired_distance = 4.0
 	agent.target_desired_distance = 4.0
 
@@ -24,23 +27,24 @@ func _ready():
 
 	move_to_target(forest_waypoint)
 
-func _physics_process(_delta):
-	if is_waiting: return  # Stop movement during collection/unloading
+func _physics_process(_delta: float) -> void:
+	if is_waiting:
+		return  # Stop movement during collection/unloading
 
 	if agent.is_navigation_finished():
 		_on_reach_destination()
 		return
 
-	var next_position = agent.get_next_path_position()
-	var direction = (next_position - global_position).normalized()
+	var next_position := agent.get_next_path_position()
+	var direction := (next_position - global_position).normalized()
 	velocity = direction * speed
 	move_and_slide()
 
-func move_to_target(target: Vector2):
+func move_to_target(target: Vector2) -> void:
 	current_target = target
 	agent.set_target_position(target)
 
-func _on_reach_destination():
+func _on_reach_destination() -> void:
 	velocity = Vector2.ZERO
 	
 	# Worker actions at waypoints
