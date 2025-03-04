@@ -1,141 +1,73 @@
-extends Node
+extends Node2D
 
-const SAVE_PATH = "user://savegame.json"
+@onready var sprite = $BuildingSprite
+@onready var menu = $WorkerHutStats
+@onready var wood_button = $WorkerHutStats/WoodButton
 
-@onready var sun_light := $DirectionalLight2D
-@onready var sky_tint := $CanvasLayer/ColorRect
-@onready var world_env := $WorldEnvironment
-@onready var clock_label := $CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/ClockPanel/ClockLabel
-@onready var menu := $CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel
-@onready var speed_button := $CanvasLayer/Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SpeedButton
-@onready var offline_food_label := $CanvasLayer/Control/OfflinePopupPanel/VBoxContainer/OfflineFoodLabel
-@onready var offline_wood_label := $CanvasLayer/Control/OfflinePopupPanel/VBoxContainer/OfflineWoodLabel
-@onready var offline_popup_panel := $CanvasLayer/Control/OfflinePopupPanel
+@export var max_workers: int = 3  # Allow multiple workers per hut
+@export var worker_scene: PackedScene  # Assign Worker.tscn in the Inspector
 
-@onready var worker_hut := $WorkerHut
+var workers: Array = []
+var hut_wood: int = 0
+var max_wood: int = 250
+
+@export var forest_waypoint: Vector2 = Vector2(300, 320)
+@export var hut_waypoint: Vector2 = Vector2(85, 140)
 
 func _ready():
-	TimeManager.time_updated.connect(_on_time_changed)
-	_on_time_changed(int(TimeManager.time_of_day * TimeManager.HOURS_IN_DAY), 0, TimeManager.day_count)
+	connect("input_event", _on_input_event)
+
+	# Spawn initial workers
+	for i in range(max_workers):
+		spawn_worker()
+
+func spawn_worker():
+	if workers.size() >= max_workers:
+		print("Worker hut is full!")
+		return
 	
-	if FileAccess.file_exists(SAVE_PATH):
-		SaveManager.load_game()
-		if Global.offline_wood > 0 or Global.offline_food > 0:
-			show_offline_earnings_popup()
+	var worker = worker_scene.instantiate()
 
-func show_offline_earnings_popup():
-	offline_wood_label.text = "Wood Earned: " + str(Global.offline_wood)
-	offline_food_label.text = "Food Earned: " + str(Global.offline_food)
-	offline_popup_panel.popup_centered()
+	# Randomized spawn offset (prevents stacking)
+	var spawn_offset = Vector2(randi_range(-5, 5), randi_range(-5, 5))
+	worker.global_position = hut_waypoint + spawn_offset  
 
-func _on_time_changed(in_game_hours: int, in_game_minutes: int, new_day: int) -> void:
-	clock_label.text = "Day %d, %02d:%02d" % [new_day, in_game_hours, in_game_minutes]
-	update_lighting(in_game_hours)
+	# Assign movement waypoints dynamically
+	worker.hut_waypoint = hut_waypoint
+	worker.forest_waypoint = forest_waypoint + spawn_offset  # Prevent exact overlap
 
-func update_lighting(in_game_hours: int):
-	#Time ranges for transitions
-	var sunrise_start = 5.0
-	var sunrise_end = 8.0
-	var sunset_start = 18.0
-	var sunset_end = 21.0
+	worker.gathered_wood.connect(_on_gathered_wood)
 
-	#Light intensities
-	var day_brightness = 1.2
-	var night_brightness = 0.4
+	get_parent().add_child.call_deferred(worker)  # Add worker to scene
+	workers.append(worker)
 
-	if in_game_hours >= sunrise_start and in_game_hours <= sunrise_end:
-		#Morning transition
-		var t = (in_game_hours - sunrise_start) / (sunrise_end - sunrise_start)
-		sun_light.energy = lerp(night_brightness, day_brightness, t)
-		world_env.environment.ambient_light_energy = lerp(0.3, 1.0, t)
-		sky_tint.color = Color(0.1, 0.1, 0.3, 0.6).lerp(Color(0.2, 0.6, 1.0, 0.3), t)
-	elif in_game_hours >= sunset_start and in_game_hours <= sunset_end:
-		#Evening transition
-		var t = (in_game_hours - sunset_start) / (sunset_end - sunset_start)
-		sun_light.energy = lerp(day_brightness, night_brightness, t)
-		world_env.environment.ambient_light_energy = lerp(1.0, 0.3, t)
-		sky_tint.color = Color(0.2, 0.6, 1.0, 0.3).lerp(Color(0.1, 0.1, 0.3, 0.6), t)
-	else:
-		#Set brightness directly outside transition times
-		if in_game_hours < sunrise_start or in_game_hours > sunset_end:
-			#Night settings
-			sun_light.energy = night_brightness
-			world_env.environment.ambient_light_energy = 0.3
-			sky_tint.color = Color(0.1, 0.1, 0.3, 0.6)
-		else:
-			#Day settings
-			sun_light.energy = day_brightness
-			world_env.environment.ambient_light_energy = 1.0
-			sky_tint.color = Color(0.2, 0.6, 1.0, 0.3)
+func _on_gathered_wood(wood):
+	hut_wood += wood
+	update_labels()
 
-	#Update sun position to reflect the time of day
-	sun_light.rotation_degrees = lerp(-90, 90, TimeManager.time_of_day)
+func update_labels():
+	wood_button.text = "Wood: " + str(hut_wood)
 
-func _input(event):
-	if event is InputEventKey and event.pressed:
-		match event.keycode:
-			KEY_P:  #Pause/Resume Time
-				TimeManager.time_paused = !TimeManager.time_paused
-				print("Time Paused: ", TimeManager.time_paused)
-			KEY_H:  #Skip 1 Hour
-				TimeManager.skip_hours(1)
-			KEY_D:  #Skip 1 Full Day
-				TimeManager.skip_hours(24)
+func change_worker_speed(multiplier: int):
+	# Ensure all workers update their speed
+	for worker in workers:
+		if worker != null:
+			worker.speed = worker.base_speed * multiplier
 
-func _on_skip_hour_pressed() -> void:
-	TimeManager.skip_hours(1)
+func _on_input_event(_viewport, event, _shape_idx):
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		highlight()
+		toggle_menu()
 
-func _on_save_pressed():
-	SaveManager.save_game(TimeManager.day_count, TimeManager.time_of_day)
-	print("SAVED GAME AT DAY ", TimeManager.day_count, TimeManager.time_of_day)
-	
+func highlight():
+	sprite.modulate = Color(1.2, 1.2, 1.2, 1)
+	await get_tree().create_timer(0.2).timeout
+	sprite.modulate = Color(1, 1, 1, 1)
+
 func toggle_menu():
-	if menu.visible:
-		hide_menu()
-	else:
-		show_menu()
+	menu.visible = !menu.visible
 
-func show_menu():
-	menu.visible = true
-	menu.scale = Vector2(0, 0)
-	var tween = get_tree().create_tween()
-	tween.tween_property(menu, "scale", Vector2(1, 1), 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-
-func hide_menu():
-	var tween = get_tree().create_tween()
-	tween.tween_property(menu, "scale", Vector2(0, 0), 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-	await tween.finished
-	menu.visible = false
-
-func _on_save_button_pressed() -> void:
-	toggle_menu()
-	SaveManager.save_game(TimeManager.day_count, TimeManager.time_of_day)
-
-func _on_speed_button_pressed() -> void:
-	if TimeManager.time_speed_multiplier == 1.0:
-		TimeManager.speed_up_time(2)
-		speed_button.text = "Speed x2"
-		worker_hut.change_worker_speed(2)
-	elif TimeManager.time_speed_multiplier == 2.0:
-		TimeManager.speed_up_time(5)
-		speed_button.text = "Speed x5"
-		worker_hut.change_worker_speed(5)
-	elif TimeManager.time_speed_multiplier == 5.0:
-		TimeManager.speed_up_time(10)
-		speed_button.text = "Speed x10"
-		worker_hut.change_worker_speed(10)
-	else:
-		TimeManager.speed_up_time(1)
-		speed_button.text = "Speed x1"
-		worker_hut.change_worker_speed(1)
-
-func _on_skip_button_pressed():
-	TimeManager.skip_hours(1)
-
-func _on_menu_pressed():
-	toggle_menu()
-
-func _on_reset_pressed():
-	toggle_menu()  # Start closing the menu
-	await get_tree().create_timer(0.3).timeout  # Wait for the animation to finish
-	SaveManager.reset_save()  # Now reset the game
+func _on_collect_button_pressed():
+	Global.total_city_wood += hut_wood
+	hut_wood = 0
+	update_labels()
