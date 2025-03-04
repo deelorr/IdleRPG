@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://drwwji61qlf4y"]
 
 [ext_resource type="Texture2D" uid="uid://djsp02jphs5ma" path="res://art/WorkerSpriteSheet.png" id="1_krgcu"]
-[ext_resource type="Script" path="res://scripts/worker.gd" id="1_mk28a"]
+[ext_resource type="Script" uid="uid://mp568a6nawgw" path="res://scripts/worker.gd" id="1_mk28a"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uqacy"]
 radius = 5.0
@@ -96,11 +96,11 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_74vtg"]
 _data = {
-"RESET": SubResource("Animation_7i2gc"),
-"walk_down": SubResource("Animation_xmawd"),
-"walk_left": SubResource("Animation_rpaye"),
-"walk_right": SubResource("Animation_5vmo0"),
-"walk_up": SubResource("Animation_e4gc4")
+&"RESET": SubResource("Animation_7i2gc"),
+&"walk_down": SubResource("Animation_xmawd"),
+&"walk_left": SubResource("Animation_rpaye"),
+&"walk_right": SubResource("Animation_5vmo0"),
+&"walk_up": SubResource("Animation_e4gc4")
 }
 
 [node name="Worker" type="CharacterBody2D" groups=["workers"]]
@@ -119,7 +119,7 @@ shape = SubResource("CapsuleShape2D_uqacy")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_74vtg")
+&"": SubResource("AnimationLibrary_74vtg")
 }
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
