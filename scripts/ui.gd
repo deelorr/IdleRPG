@@ -64,7 +64,7 @@ func toggle_menu() -> void:
 func show_menu() -> void:
 	menu.visible = true
 	menu.scale = Vector2(0, 0)
-	var tween = create_tween()  # Use local tween
+	var tween = create_tween()
 	tween.tween_property(menu, "scale", Vector2(1, 1), 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func hide_menu() -> void:

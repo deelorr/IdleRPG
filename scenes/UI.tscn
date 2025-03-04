@@ -1,10 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cf6wems303amh"]
+[gd_scene load_steps=3 format=3 uid="uid://cf6wems303amh"]
 
 [ext_resource type="StyleBox" uid="uid://sugqjf8hn4gk" path="res://scenes/ButtonStyle.tres" id="1_dj8aq"]
 [ext_resource type="Script" uid="uid://dw27mfl60waj5" path="res://scripts/ui.gd" id="1_ro3t7"]
-
-[sub_resource type="Theme" id="Theme_8hkp2"]
-Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_ro3t7")
@@ -25,17 +22,24 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -437.0
-offset_top = -290.0
-offset_right = -124.0
-offset_bottom = -197.0
+offset_left = -528.0
+offset_top = -296.0
+offset_right = -176.0
+offset_bottom = -203.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(3, 3)
-theme = SubResource("Theme_8hkp2")
+
+[node name="MenuPanel" type="Panel" parent="Control/MenuContainer"]
+z_index = -1
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("1_dj8aq")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/MenuContainer"]
 layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/MenuContainer/HBoxContainer"]
 layout_mode = 2

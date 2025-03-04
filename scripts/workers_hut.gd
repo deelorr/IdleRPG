@@ -1,4 +1,4 @@
-extends Area2D
+extends StaticBody2D
 
 # Typed node references
 @onready var sprite: Sprite2D = $BuildingSprite
@@ -11,14 +11,15 @@ extends Area2D
 @export var max_wood: int = 250
 
 # Waypoints (Forest & Hut)
-@export var forest_waypoint: Vector2 = Vector2(300, 320)
-@export var hut_waypoint: Vector2 = Vector2(85, 140)
+@export var forest_waypoint: Vector2 = Vector2(150, 635)
+@export var hut_waypoint: Vector2 = Vector2(65, 120)
 
 var workers: Array = []
 var hut_wood: int = 0
 
 func _ready() -> void:
 	input_event.connect(_on_input_event)  # Modern signal connection
+	print("Menu node: ", menu, " Initial visibility: ", menu.visible)  # Check if menu is valid
 	# Spawn initial workers
 	for i in range(max_workers):
 		spawn_worker()
@@ -33,9 +34,9 @@ func spawn_worker() -> void:
 	worker.global_position = hut_waypoint + spawn_offset
 	
 	# Unique waypoints for each worker
-	var worker_hut_offset = Vector2(randi_range(-10, 10), randi_range(-10, 10))
-	var worker_forest_offset = Vector2(randi_range(-20, 20), randi_range(-20, 20))
-	worker.hut_waypoint = hut_waypoint + worker_hut_offset
+	#var worker_hut_offset = Vector2(randi_range(-10, 10), randi_range(-10, 10))
+	var worker_forest_offset = Vector2(randi_range(-30, 30), randi_range(-30, 30))
+	worker.hut_waypoint = hut_waypoint 
 	worker.forest_waypoint = forest_waypoint + worker_forest_offset
 	
 	worker.gathered_wood.connect(_on_gathered_wood)
@@ -52,6 +53,7 @@ func update_labels() -> void:
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
+		print("Input event triggered")
 		highlight()
 		toggle_menu()
 
@@ -61,7 +63,22 @@ func highlight() -> void:
 	sprite.modulate = Color(1, 1, 1, 1)
 
 func toggle_menu() -> void:
-	menu.visible = !menu.visible
+	if menu.visible:
+		hide_menu()
+	else:
+		show_menu()
+
+func show_menu() -> void:
+	menu.visible = true
+	menu.scale = Vector2.ZERO
+	var tween := create_tween()
+	tween.tween_property(menu, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+func hide_menu() -> void:
+	var tween := create_tween()
+	tween.tween_property(menu, "scale", Vector2.ZERO, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	await tween.finished
+	menu.visible = false
 
 func _on_collect_button_pressed() -> void:
 	Global.total_city_wood += hut_wood

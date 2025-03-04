@@ -1,4 +1,4 @@
-extends Area2D
+extends StaticBody2D
 
 # Typed node references
 @onready var sprite: Sprite2D = $BuildingSprite

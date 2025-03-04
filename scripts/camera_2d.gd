@@ -14,7 +14,7 @@ var section_positions: Dictionary = {
 	"desert": Vector2(548, 0),
 	"section_3": Vector2(0, 960),
 	"section_4": Vector2(548, 960),
-	"home": Vector2(290, 430)
+	"home": Vector2(275, 480)
 }
 
 # Typed variables

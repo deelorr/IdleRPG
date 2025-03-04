@@ -9,8 +9,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_spwqx"]
 size = Vector2(64.1666, 46)
 
-[node name="HomeBase" type="Area2D"]
-scale = Vector2(3, 3)
+[node name="HomeBase" type="StaticBody2D"]
+input_pickable = true
 script = ExtResource("1_hnk4e")
 
 [node name="BuildingSprite" type="Sprite2D" parent="."]
