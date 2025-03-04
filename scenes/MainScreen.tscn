@@ -9,8 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://ogv02rj6n4io" path="res://scenes/HomeBase.tscn" id="6_el83a"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_jjefs"]
-vertices = PackedVector2Array(532.563, 10.4922, 537.93, 821.477, 226.313, 277.719, 226.313, 245.719, 9.5, 820.508, 207.969, 292.93, 209.578, 259.594, 209.578, 227.594, 226.313, 213.719, 209.578, 195.594, 226.313, 181.719, 209.578, 163.594, 226.313, 149.719, 209.578, 131.594, 226.313, 117.719, 193.219, 276.711, 130.313, 277.719, 113.578, 259.594, 130.313, 245.719, 193.219, 244.711, 207.039, 259.906, 113.578, 227.594, 130.313, 213.719, 193.219, 212.711, 207.039, 227.906, 113.578, 195.594, 130.313, 181.719, 193.219, 180.711, 207.039, 195.906, 113.578, 163.594, 130.313, 149.719, 193.219, 148.711, 207.039, 163.906, 113.578, 131.594, 130.313, 117.719, 193.219, 116.711, 207.039, 131.906, 97.2188, 116.711, 111.039, 131.906, 97.2188, 148.711, 111.039, 163.906, 97.2188, 180.711, 111.039, 195.906, 97.2188, 212.711, 111.039, 227.906, 97.2188, 244.711, 111.039, 259.906, 97.2188, 276.711, 208.383, 98.2891, 9.99219, 10, 112.383, 98.2891, 111.969, 292.93)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(2, 1, 4, 5), PackedInt32Array(2, 6, 3), PackedInt32Array(3, 7, 8, 0), PackedInt32Array(8, 9, 10, 0), PackedInt32Array(10, 11, 12, 0), PackedInt32Array(12, 13, 14, 0), PackedInt32Array(15, 16, 17, 18, 19, 20), PackedInt32Array(19, 18, 21, 22, 23, 24), PackedInt32Array(23, 22, 25, 26, 27, 28), PackedInt32Array(27, 26, 29, 30, 31, 32), PackedInt32Array(31, 30, 33, 34, 35, 36), PackedInt32Array(37, 38, 39), PackedInt32Array(39, 40, 41), PackedInt32Array(41, 42, 43), PackedInt32Array(43, 44, 45), PackedInt32Array(45, 46, 47), PackedInt32Array(0, 14, 48), PackedInt32Array(49, 0, 48), PackedInt32Array(49, 48, 35, 50), PackedInt32Array(16, 15, 5, 4, 51), PackedInt32Array(47, 51, 4), PackedInt32Array(47, 4, 49, 45), PackedInt32Array(43, 45, 49), PackedInt32Array(41, 43, 49), PackedInt32Array(39, 41, 49), PackedInt32Array(37, 39, 49), PackedInt32Array(50, 37, 49), PackedInt32Array(50, 35, 34)])
+vertices = PackedVector2Array(161.844, 216.969, 218.656, 130.5, 225.844, 120.969, 532.563, 10.4922, 537.93, 821.477, 193.844, 280.969, 187.688, 268.711, 209.422, 135.648, 175.023, 262.859, 154.656, 226.5, 161.844, 152.969, 198.648, 131.328, 155.688, 204.711, 154.656, 162.5, 9.5, 820.508, 186.656, 290.5, 177.422, 295.648, 145.422, 167.648, 143.023, 198.859, 191.148, 120.641, 155.688, 140.711, 129.844, 120.969, 123.688, 108.711, 143.023, 134.859, 132.211, 141.367, 122.656, 130.5, 145.422, 231.648, 164.211, 269.367, 129.844, 280.969, 123.688, 268.711, 166.648, 291.328, 122.656, 290.5, 219.688, 108.711, 9.99219, 10, 207.023, 102.859, 196.211, 109.367, 111.023, 102.859, 113.422, 135.648, 127.148, 152.641, 134.648, 163.328, 132.211, 205.367, 159.148, 280.641, 134.648, 227.328, 111.023, 262.859, 127.148, 216.641, 100.211, 109.367, 95.1484, 120.641, 102.648, 131.328, 95.1484, 280.641, 113.422, 295.648, 102.648, 291.328, 100.211, 269.367)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5, 6), PackedInt32Array(7, 1, 0), PackedInt32Array(0, 6, 8, 9), PackedInt32Array(10, 11, 7, 0, 12, 13), PackedInt32Array(5, 4, 14, 15), PackedInt32Array(16, 15, 14), PackedInt32Array(17, 13, 12, 18), PackedInt32Array(19, 11, 10, 20), PackedInt32Array(21, 22, 19, 20, 23), PackedInt32Array(21, 23, 24, 25), PackedInt32Array(26, 9, 8, 27, 28, 29), PackedInt32Array(28, 30, 16, 14, 31), PackedInt32Array(3, 2, 32), PackedInt32Array(33, 3, 32, 34), PackedInt32Array(33, 34, 35), PackedInt32Array(33, 35, 19, 22, 36), PackedInt32Array(37, 25, 24, 38), PackedInt32Array(39, 17, 18, 40), PackedInt32Array(27, 41, 28), PackedInt32Array(42, 26, 29, 43), PackedInt32Array(44, 42, 43), PackedInt32Array(33, 36, 45), PackedInt32Array(33, 45, 46), PackedInt32Array(14, 33, 46, 47), PackedInt32Array(14, 47, 37, 48), PackedInt32Array(28, 41, 30), PackedInt32Array(49, 31, 14), PackedInt32Array(50, 49, 14), PackedInt32Array(48, 50, 14), PackedInt32Array(51, 48, 37, 38), PackedInt32Array(43, 51, 38, 44), PackedInt32Array(40, 44, 38, 39)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(548, 831.5, -0.5, 830.5, 0, 0, 542.5, 0.5)])
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_y4gqh"]
@@ -656,7 +656,7 @@ texture = ExtResource("3_1xxi2")
 6:8/0 = 0
 6:8/0/texture_origin = Vector2i(0, 7)
 6:8/0/y_sort_origin = 5
-6:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(0.40625, 0.75, 1.90625, 2.375, 0.46875, 3.5625, -0.78125, 2.1875)
+6:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-0.179859, 1.07915, 2.1583, 2.1583, 3.0576, 3.95689, 1.97845, 5.39576, 0.359718, 6.29506, -1.43887, 5.57562, -2.69788, 3.77703, -1.97845, 2.1583)
 9:8/0 = 0
 10:8/0 = 0
 11:8/0 = 0
@@ -903,7 +903,7 @@ tile_set = SubResource("TileSet_rrqh5")
 
 [node name="Nature" type="TileMapLayer" parent="NavigationRegion2D"]
 scale = Vector2(2, 2)
-tile_map_data = PackedByteArray("AAADAAMAAAAGAAgAAAADAAQAAAAGAAgAAAADAAgAAAAGAAgAAAAGAAcAAAAGAAgAAAAGAAYAAAAGAAgAAAAGAAMAAAAGAAgAAAADAAcAAAAGAAgAAAADAAYAAAAGAAgAAAADAAUAAAAGAAgAAAAGAAgAAAAGAAgAAAAGAAUAAAAGAAgAAAAGAAQAAAAGAAgAAAA=")
+tile_map_data = PackedByteArray("AAAEAAQAAAAGAAgAAAAEAAYAAAAGAAgAAAAFAAgAAAAGAAgAAAADAAgAAAAGAAgAAAADAAMAAAAGAAgAAAAGAAMAAAAGAAgAAAA=")
 tile_set = SubResource("TileSet_2go7f")
 
 [node name="ColorRect" type="ColorRect" parent="NavigationRegion2D"]

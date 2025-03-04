@@ -19,7 +19,6 @@ var hut_wood: int = 0
 
 func _ready() -> void:
 	input_event.connect(_on_input_event)  # Modern signal connection
-	
 	# Spawn initial workers
 	for i in range(max_workers):
 		spawn_worker()
@@ -29,19 +28,18 @@ func spawn_worker() -> void:
 		print("Worker hut is full!")
 		return
 	
-	var worker = worker_scene.instantiate() as CharacterBody2D  # Type cast for safety
-	
-	# Randomized spawn offset (prevents stacking)
-	var spawn_offset := Vector2(randi_range(-5, 5), randi_range(-5, 5))
+	var worker = worker_scene.instantiate() as CharacterBody2D
+	var spawn_offset := Vector2(randi_range(-20, 20), randi_range(-20, 20))
 	worker.global_position = hut_waypoint + spawn_offset
 	
-	# Assign movement waypoints dynamically
-	worker.hut_waypoint = hut_waypoint
-	worker.forest_waypoint = forest_waypoint + spawn_offset  # Prevent exact overlap
+	# Unique waypoints for each worker
+	var worker_hut_offset = Vector2(randi_range(-10, 10), randi_range(-10, 10))
+	var worker_forest_offset = Vector2(randi_range(-20, 20), randi_range(-20, 20))
+	worker.hut_waypoint = hut_waypoint + worker_hut_offset
+	worker.forest_waypoint = forest_waypoint + worker_forest_offset
 	
 	worker.gathered_wood.connect(_on_gathered_wood)
-	
-	get_parent().add_child.call_deferred(worker)  # Add worker to scene
+	get_parent().add_child.call_deferred(worker)
 	workers.append(worker)
 
 func _on_gathered_wood(wood: int) -> void:
