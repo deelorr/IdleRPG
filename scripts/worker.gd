@@ -4,9 +4,9 @@ signal gathered_wood(wood_amount: int)
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 
-var target_waypoint: Vector2
-var hut_waypoint: Vector2
-var forest_waypoint: Vector2
+var target_waypoint
+var hut_waypoint
+var forest_waypoint
 var speed: float = 100.0
 var wood_per_trip: int = 10
 

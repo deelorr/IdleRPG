@@ -35,6 +35,7 @@ func reset_save():
 	Global.total_city_food = 0
 	TimeManager.day_count = 1
 	TimeManager.time_of_day = 0
+	TimeManager.time_speed_multiplier = 1.0
 
 	# Force a full scene reload
 	await get_tree().process_frame  # Ensure the deletion completes before reloading

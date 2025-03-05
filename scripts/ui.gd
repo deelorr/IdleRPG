@@ -28,19 +28,19 @@ func _on_menu_pressed() -> void:
 func _on_speed_button_pressed() -> void:
 	if TimeManager.time_speed_multiplier == 1.0:
 		TimeManager.speed_up_time(2)
-		speed_button.text = "Speed x2"
+		speed_button.text = "Speed x" + str(TimeManager.time_speed_multiplier)
 	elif TimeManager.time_speed_multiplier == 2.0:
 		TimeManager.speed_up_time(5)
-		speed_button.text = "Speed x5"
+		speed_button.text = "Speed x" + str(TimeManager.time_speed_multiplier)
 	elif TimeManager.time_speed_multiplier == 5.0:
 		TimeManager.speed_up_time(10)
-		speed_button.text = "Speed x10"
+		speed_button.text = "Speed x" + str(TimeManager.time_speed_multiplier)
 	elif TimeManager.time_speed_multiplier == 10.0:
 		TimeManager.speed_up_time(50)
-		speed_button.text = "Speed x50"
+		speed_button.text = "Speed x" + str(TimeManager.time_speed_multiplier)
 	else:
 		TimeManager.speed_up_time(1)
-		speed_button.text = "Speed x1"
+		speed_button.text = "Speed x" + str(TimeManager.time_speed_multiplier)
 
 func _on_skip_button_pressed() -> void:
 	TimeManager.skip_hours(1)

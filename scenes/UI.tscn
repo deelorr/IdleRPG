@@ -38,6 +38,7 @@ theme_override_styles/panel = ExtResource("1_dj8aq")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/MenuContainer"]
 layout_mode = 2
+size_flags_vertical = 4
 theme_override_constants/separation = 10
 alignment = 1
 
@@ -46,18 +47,20 @@ layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 10
 
-[node name="TheWoodsButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer"]
+[node name="WoodsButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(63, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = ExtResource("1_dj8aq")
-text = "The Woods
+text = "Woods
 "
 
-[node name="Section3Button" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer"]
+[node name="SnowButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(63, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = ExtResource("1_dj8aq")
-text = "Section 3"
+text = "Snow"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="Control/MenuContainer/HBoxContainer"]
 layout_mode = 2
@@ -70,14 +73,15 @@ theme_override_styles/panel = ExtResource("1_dj8aq")
 [node name="ClockLabel" type="Label" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/ClockPanel"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "Day 0, 00:00"
+text = "00:00"
+horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HomeBase" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2"]
+[node name="HomeButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = ExtResource("1_dj8aq")
-text = "Home Base"
+text = "Home"
 
 [node name="Menu" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
@@ -89,10 +93,10 @@ text = "Menu"
 visible = false
 z_index = 1
 layout_mode = 0
-offset_left = -4.00001
-offset_top = -125.667
-offset_right = 106.0
-offset_bottom = -9.66634
+offset_left = -33.0
+offset_top = -128.0
+offset_right = 90.0
+offset_bottom = -12.0
 theme_override_styles/panel = ExtResource("1_dj8aq")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel"]
@@ -106,32 +110,28 @@ theme_override_constants/separation = 10
 
 [node name="SpeedButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
+size_flags_vertical = 4
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = ExtResource("1_dj8aq")
-text = "Speed x1"
+text = "Speed x1.0"
 
 [node name="SkipButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
+size_flags_vertical = 4
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = ExtResource("1_dj8aq")
 text = "Skip Hour"
 
 [node name="SaveButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
+size_flags_vertical = 4
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = ExtResource("1_dj8aq")
 text = "Save"
 
-[node name="Reset" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer"]
+[node name="ResetButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
+size_flags_vertical = 4
 theme_override_styles/normal = ExtResource("1_dj8aq")
 text = "Reset"
 
@@ -140,17 +140,19 @@ layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 10
 
-[node name="TheDesertButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer3"]
+[node name="DesertButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(63, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = ExtResource("1_dj8aq")
-text = "The Desert"
+text = "Desert"
 
-[node name="Section4Button" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer3"]
+[node name="CaveButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(63, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = ExtResource("1_dj8aq")
-text = "Section 4"
+text = "Cave"
 
 [node name="OfflinePopupPanel" type="PopupPanel" parent="Control"]
 auto_translate_mode = 1
@@ -189,13 +191,13 @@ text = "Food: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer/TheWoodsButton" to="." method="_on_the_woods_button_pressed"]
-[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer/Section3Button" to="." method="_on_section_3_button_pressed"]
-[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/HomeBase" to="." method="_on_home_base_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer/WoodsButton" to="." method="_on_the_woods_button_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer/SnowButton" to="." method="_on_section_3_button_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/HomeButton" to="." method="_on_home_base_pressed"]
 [connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu" to="." method="_on_menu_pressed"]
 [connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SpeedButton" to="." method="_on_speed_button_pressed"]
 [connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SkipButton" to="." method="_on_skip_button_pressed"]
 [connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
-[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/Reset" to="." method="_on_reset_pressed"]
-[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer3/TheDesertButton" to="." method="_on_the_desert_button_pressed"]
-[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer3/Section4Button" to="." method="_on_section_4_button_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/ResetButton" to="." method="_on_reset_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer3/DesertButton" to="." method="_on_the_desert_button_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer3/CaveButton" to="." method="_on_section_4_button_pressed"]
