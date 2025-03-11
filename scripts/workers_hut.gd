@@ -1,5 +1,7 @@
 extends StaticBody2D
 
+class_name WorkerHut
+
 @onready var sprite: Sprite2D = $WorkerHutSprite
 @onready var menu: Control = $WorkerHutStats
 @onready var wood_button: Button = $WorkerHutStats/WoodButton
@@ -12,6 +14,7 @@ extends StaticBody2D
 var hut_waypoint: Vector2 # Where workers return to
 
 var workers: Array = []       # List of spawned workers
+var current_workers: int = 1
 var max_workers: int = 3      # Maximum number of workers
 
 var hut_wood: int = 0         # Wood stored in the hut
@@ -20,14 +23,13 @@ var max_wood: int = 30        # Maximum wood capacity (not enforced here)
 var hut_food: int = 0
 var max_food: int = 30
 
-# Called when the node enters the scene tree
 func _ready() -> void:
 	hut_waypoint = tilemap.map_to_local(tile_position)
-	print("Hut tile position:", tile_position)
-	print("Hut waypoint (world position):", hut_waypoint)
-	#hut_waypoint = global_position  # Set waypoint to hut's position
-	for i in range(max_workers):
-		spawn_worker()              # Spawn initial workers
+	for i in range(current_workers):
+		spawn_worker()       # Spawn initial workers
+
+func _physics_process(delta):
+	update_labels()
 
 # Spawn a new worker
 func spawn_worker() -> void:
@@ -38,7 +40,7 @@ func spawn_worker() -> void:
 	var worker = worker_scene.instantiate() as CharacterBody2D
 	var spawn_offset := Vector2(randi_range(-5, 5), randi_range(-5, 5))
 	worker.global_position = hut_waypoint + spawn_offset  # Spawn near hut
-	worker.hut_reference = self                          # Link worker to this hut
+	worker.workers_hut = self                            # Link worker to this hut
 	get_parent().add_child.call_deferred(worker)         # Add to scene
 	workers.append(worker)                               # Track worker
 

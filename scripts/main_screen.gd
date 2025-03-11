@@ -5,7 +5,7 @@ const SAVE_PATH: String = "user://savegame.json"
 
 # Typed node references
 @onready var sun_light: DirectionalLight2D = $DirectionalLight2D
-@onready var sky_tint: ColorRect = $NavigationRegion2D/ColorRect
+@onready var sky_tint: ColorRect = $TilemapLayers/ColorRect
 @onready var world_env: WorldEnvironment = $WorldEnvironment
 @onready var clock_label: Label = $UI/Control/MenuContainer/HBoxContainer/VBoxContainer2/ClockPanel/ClockLabel
 @onready var offline_food_label: Label = $UI/Control/OfflinePopupPanel/VBoxContainer/OfflineFoodLabel

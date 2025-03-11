@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://dts1voymurh7j" path="res://art/log.jpg" id="3_x7al1"]
 [ext_resource type="Texture2D" uid="uid://cddx7e4a6orm8" path="res://art/food.jpg" id="4_ulahn"]
 
-[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_xp4s3"]
-points = PackedVector2Array(43, 6, 43, 41, -5, 41, -5, 6, 16, -6, 22, -6)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yrk0c"]
+size = Vector2(46, 46)
 
 [node name="WorkerHut" type="StaticBody2D"]
 z_index = 1
@@ -19,12 +19,10 @@ position = Vector2(24, 24)
 texture = ExtResource("2_l0p07")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(5, 6)
-shape = SubResource("ConvexPolygonShape2D_xp4s3")
-debug_color = Color(0.109936, 0.583178, 0.767554, 0.42)
+position = Vector2(24, 23)
+shape = SubResource("RectangleShape2D_yrk0c")
 
 [node name="WorkerHutStats" type="VBoxContainer" parent="."]
-visible = false
 offset_left = 50.0
 offset_top = -1.0
 offset_right = 140.0
