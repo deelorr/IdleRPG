@@ -5,7 +5,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_nbyt5"]
 radius = 4.0
 
-[node name="StaticBody2D" type="StaticBody2D"]
+[node name="StaticBody2D" type="StaticBody2D" groups=["tree"]]
 
 [node name="Node2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_2cic4")

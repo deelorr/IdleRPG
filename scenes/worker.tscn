@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://drwwji61qlf4y"]
+[gd_scene load_steps=11 format=3 uid="uid://drwwji61qlf4y"]
 
 [ext_resource type="Texture2D" uid="uid://djsp02jphs5ma" path="res://art/WorkerSpriteSheet.png" id="1_krgcu"]
 [ext_resource type="Script" uid="uid://mp568a6nawgw" path="res://scripts/worker.gd" id="1_mk28a"]
@@ -102,6 +102,9 @@ _data = {
 &"walk_up": SubResource("Animation_e4gc4")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ujfku"]
+radius = 47.0106
+
 [node name="Worker" type="CharacterBody2D" groups=["workers"]]
 collision_layer = 2
 script = ExtResource("1_mk28a")
@@ -123,3 +126,13 @@ libraries = {
 }
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="FOV" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FOV"]
+shape = SubResource("CircleShape2D_ujfku")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="body_entered" from="FOV" to="." method="_on_area_2d_body_entered"]

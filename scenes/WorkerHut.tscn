@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://clfhfh54lg1nf"]
+[gd_scene load_steps=6 format=3 uid="uid://clfhfh54lg1nf"]
 
 [ext_resource type="Script" uid="uid://eeiumum23bc" path="res://scripts/workers_hut.gd" id="1_dmtaq"]
 [ext_resource type="Texture2D" uid="uid://divfpcj4wyvog" path="res://art/WorkersHutSprite.png" id="2_l0p07"]
-[ext_resource type="PackedScene" uid="uid://drwwji61qlf4y" path="res://scenes/Worker.tscn" id="2_o80hl"]
 [ext_resource type="Texture2D" uid="uid://dts1voymurh7j" path="res://art/log.jpg" id="3_x7al1"]
 [ext_resource type="Texture2D" uid="uid://cddx7e4a6orm8" path="res://art/food.jpg" id="4_ulahn"]
 
@@ -13,9 +12,9 @@ points = PackedVector2Array(43, 6, 43, 41, -5, 41, -5, 6, 16, -6, 22, -6)
 z_index = 1
 input_pickable = true
 script = ExtResource("1_dmtaq")
-worker_scene = ExtResource("2_o80hl")
+tile_position = Vector2(8, 8)
 
-[node name="BuildingSprite" type="Sprite2D" parent="."]
+[node name="WorkerHutSprite" type="Sprite2D" parent="."]
 position = Vector2(24, 24)
 texture = ExtResource("2_l0p07")
 
