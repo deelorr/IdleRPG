@@ -8,6 +8,7 @@ const SAVE_PATH: String = "user://savegame.json"
 @onready var sky_tint: ColorRect = $TilemapLayers/ColorRect
 @onready var world_env: WorldEnvironment = $WorldEnvironment
 @onready var clock_label: Label = $UI/Control/MenuContainer/HBoxContainer/VBoxContainer2/ClockPanel/ClockLabel
+
 @onready var offline_food_label: Label = $UI/Control/OfflinePopupPanel/VBoxContainer/OfflineFoodLabel
 @onready var offline_wood_label: Label = $UI/Control/OfflinePopupPanel/VBoxContainer/OfflineWoodLabel
 @onready var offline_popup_panel: PopupPanel = $UI/Control/OfflinePopupPanel
@@ -25,7 +26,7 @@ func _ready() -> void:
 	for i in 15:
 		spawn_tree()
 	# Connect signals with validation
-	assert(TimeManager.time_updated, "TimeManager.time_updated signal not found!")
+	#assert(TimeManager.time_updated, "TimeManager.time_updated signal not found!")
 	TimeManager.time_updated.connect(_on_time_changed)
 	_on_time_changed(int(TimeManager.time_of_day * TimeManager.HOURS_IN_DAY), 0, TimeManager.day_count)
 	

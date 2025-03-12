@@ -1,24 +1,19 @@
 extends CharacterBody2D
 
-# Signal emitted when wood is deposited (optional, for future use)
-signal gathered_wood(wood_amount: int)
-
-# Node references
-#@onready var sprite: Sprite2D = $WorkerSprite
 @onready var face_sprite: Sprite2D = $FaceSprite
 @onready var tree_chop_timer: Timer = $TreeChopTimer
 @onready var animations: AnimationPlayer = $AnimationPlayer
 @onready var action_label: Label = $ActionLabel
 
-var workers_hut: WorkerHut  #Reference to the hut the worker belongs to
-var target_tree: TreeClass   #Current target tree to chop
-var speed: float = 50.0                # Movement speed
-var wood_per_trip: int = 6             # Wood gathered per tree
+var workers_hut: WorkerHut
+var target_tree: TreeClass
+var speed: float = 50.0                 # Movement speed
+var wood_per_trip: int = 6              # Wood gathered per tree
 var carried_wood: int = 0               # Wood currently carried
-var current_state: String = "idle"      # States: "idle", "going_to_tree", "returning_to_hut"
+var current_state: String = "idle"      # States: "chopping", idle", "finding", "returning"
 
 # Physics process for movement and state management
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	match current_state:
 		"going_to_tree":
 			if target_tree:
@@ -26,18 +21,20 @@ func _physics_process(delta: float) -> void:
 		"chopping_tree":
 			velocity = Vector2.ZERO
 		"returning_to_hut":
-			move_to_target(workers_hut.global_position)
+			move_to_target(workers_hut.marker.global_position)
 		"idle":
 			find_target_tree()
 			if target_tree:
 				current_state = "going_to_tree"
+			else:
+				velocity = Vector2.ZERO
 	move_and_slide()
 	update_animation()
 
 # Update animations based on velocity
 func update_animation() -> void:
 	if current_state == "chopping_tree":
-		animations.play("RESET") # Placeholder for chop
+		animations.play("RESET") # Placeholder for chopping animation later
 	if velocity.length() > 0:
 		var anim_direction = velocity.normalized()
 		if abs(anim_direction.x) > abs(anim_direction.y):

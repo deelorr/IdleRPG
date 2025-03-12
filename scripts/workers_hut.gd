@@ -17,42 +17,39 @@ class_name WorkerHut
 @onready var worker3_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3Button
 @onready var worker3_state_lable: Label = $MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3StateLabel
 
-@onready var worker_scene = preload("res://scenes/Worker.tscn")
+@onready var worker_scene = preload("res://scenes/worker.tscn")
 
-#@onready var tilemap: TileMapLayer = $TilemapLayers/Ground
-#@export var tile_position: Vector2
-#var hut_waypoint: Vector2 # Where workers return to
+@onready var marker: Marker2D = $Marker2D
 
-var workers: Array = []       # List of spawned workers
+var workers: Array = []
 var current_workers: int = 1
-var max_workers: int = 3      # Maximum number of workers
+var max_workers: int = 3
 
-var hut_wood: int = 0         # Wood stored in the hut
-var max_wood: int = 30        # Maximum wood capacity (not enforced here)
+var hut_wood: int = 0
+var max_wood: int = 30
 
 var hut_food: int = 0
 var max_food: int = 30
 
 func _ready() -> void:
-	#hut_waypoint = tilemap.map_to_local(tile_position)
 	worker1_button.disabled = true
 	worker2_button.disabled = false
 	worker3_button.disabled = true
 	for i in range(current_workers):
-		spawn_worker()       # Spawn initial workers
+		spawn_worker()
+	update_worker_spawn_buttons()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	update_labels()
 
-# Spawn a new worker
 func spawn_worker() -> void:
 	if workers.size() >= max_workers:
 		print("Worker hut is full!")
 		return
 	
 	var worker = worker_scene.instantiate() as CharacterBody2D
-	var spawn_offset := Vector2(randi_range(-20, 20), randi_range(-20, 20))
-	worker.global_position = self.global_position  # Spawn near hut
+	worker.global_position = marker.global_position   # Spawn near hut
+	worker.scale = Vector2(2.0, 2.0)
 	worker.workers_hut = self                            # Link worker to this hut
 	get_parent().add_child.call_deferred(worker)         # Add to scene
 	workers.append(worker)                               # Track worker
@@ -60,30 +57,49 @@ func spawn_worker() -> void:
 # Update UI labels
 func update_labels() -> void:
 	wood_button.text = "Wood: " + str(hut_wood)
-
-	for i in workers.size():
-		var worker = workers[i]
-
-		# Adjusted paths considering your real UI structure:
+	
+	# Loop through each worker slot (assuming max_workers is the total number of slots)
+	for i in range(max_workers):
 		var button_path = "MenuPanel/VBoxContainer/WorkerButtons/Worker%d/Worker%dButton" % [i + 1, i + 1]
 		var label_path = "MenuPanel/VBoxContainer/WorkerButtons/Worker%d/Worker%dStateLabel" % [i + 1, i + 1]
-
+		var fire_button_path = "MenuPanel/VBoxContainer/WorkerButtons/Worker%d/Worker%dFireButton" % [i + 1, i + 1]
+		
 		var worker_button = get_node_or_null(button_path) as Button
 		var worker_state_label = get_node_or_null(label_path) as Label
+		var worker_fire_button = get_node_or_null(fire_button_path) as Button
+		
+		if i < workers.size():
+			# A worker exists in this slot
+			var worker = workers[i]
+			if worker_button:
+				# Set the icon from the worker and clear text
+				if worker.face_sprite and worker.face_sprite.texture:
+					worker_button.icon = worker.face_sprite.texture
+					worker_button.text = ""
+			if worker_state_label:
+				match worker.current_state:
+					"chopping_tree":
+						worker_state_label.text = "Chopping"
+					"going_to_tree":
+						worker_state_label.text = "Finding"
+					"returning_to_hut":
+						worker_state_label.text = "Returning"
+					_:
+						worker_state_label.text = "Idle"
+			# Make the fire button visible when a worker exists in this slot
+			if worker_fire_button:
+				worker_fire_button.visible = true
+		else:
+			# No worker in this slot, so set the button text to "Add Worker"
+			if worker_button:
+				worker_button.icon = null
+				worker_button.text = "Add Worker"
+			if worker_state_label:
+				worker_state_label.text = ""
+			if worker_fire_button:
+				worker_fire_button.visible = false
 
-		if worker_button and worker.face_sprite and worker.face_sprite.texture:
-			worker_button.icon = worker.face_sprite.texture
 
-		if worker_state_label:
-			match worker.current_state:
-				"chopping_tree":
-					worker_state_label.text = "Chopping"
-				"going_to_tree":
-					worker_state_label.text = "Finding"
-				"returning_to_hut":
-					worker_state_label.text = "Returning"
-				_:
-					worker_state_label.text = "Idle"
 
 # Handle input events (e.g., clicking the hut)
 func _input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
@@ -130,26 +146,78 @@ func _on_collect_button_pressed() -> void:
 	hut_wood = 0                       # Reset hut wood
 	update_labels()                    # Update UI
 
-func _on_worker_2_button_pressed():
-	spawn_worker()
-	await get_tree().process_frame  # Wait one frame to ensure nodes are initialized
-	await get_tree().process_frame  # Wait one frame to ensure nodes are initialized
-	worker2_button.disabled = true
-	
-	if workers.size() > 1 and workers[1].face_sprite and workers[1].face_sprite.texture:
-		worker2_button.icon = workers[1].face_sprite.texture
+func _on_worker_1_button_pressed() -> void:
+	if workers.size() == 0:
+		spawn_worker()
+		update_worker_spawn_buttons()
+		update_labels()
 	else:
-		print("Worker2 face_sprite or texture not ready yet.")
-	
-	worker3_button.disabled = false
+		print("Worker slot 1 is already filled.")
 
-func _on_worker_3_button_pressed():
-	spawn_worker()
-	await get_tree().process_frame  # Wait one frame to ensure nodes are initialized
-	await get_tree().process_frame  # Wait one frame to ensure nodes are initialized
-	worker3_button.disabled = true
-
-	if workers.size() > 2 and workers[2].face_sprite and workers[2].face_sprite.texture:
-		worker3_button.icon = workers[2].face_sprite.texture
+func _on_worker_2_button_pressed() -> void:
+	if workers.size() == 1:
+		spawn_worker()
+		update_worker_spawn_buttons()
+		update_labels()
 	else:
-		print("Worker3 face_sprite or texture not ready yet.")
+		print("Worker slot 2 cannot be filled right now. Current worker count: ", workers.size())
+
+func _on_worker_3_button_pressed() -> void:
+	if workers.size() == 2:
+		spawn_worker()
+		update_worker_spawn_buttons()
+		update_labels()
+	else:
+		print("Worker slot 3 cannot be filled right now. Current worker count: ", workers.size())
+
+func _on_worker_1_fire_button_pressed() -> void:
+	# Fire the worker at index 0 if it exists.
+	if workers.size() > 0:
+		fire_worker(0)
+		update_worker_spawn_buttons()
+
+func _on_worker_2_fire_button_pressed() -> void:
+	# Fire the worker at index 1 if it exists.
+	if workers.size() > 1:
+		fire_worker(1)
+		update_worker_spawn_buttons()
+
+func _on_worker_3_fire_button_pressed() -> void:
+	# Fire the worker at index 2 if it exists.
+	if workers.size() > 2:
+		fire_worker(2)
+		update_worker_spawn_buttons()
+
+func fire_worker(index: int) -> void:
+	if index < 0 or index >= workers.size():
+		print("Invalid worker index!")
+		return
+
+	var worker_to_fire = workers[index]
+	if worker_to_fire and is_instance_valid(worker_to_fire):
+		worker_to_fire.queue_free()  # Remove worker from scene
+	workers.remove_at(index)  # Remove worker from the array
+	update_labels()  # Update your UI, if needed
+	
+func update_worker_spawn_buttons() -> void:
+	match workers.size():
+		0:
+			worker1_button.disabled = false
+			worker2_button.disabled = true
+			worker3_button.disabled = true
+		1:
+			worker1_button.disabled = true
+			worker2_button.disabled = false
+			worker3_button.disabled = true
+		2:
+			worker1_button.disabled = true
+			worker2_button.disabled = true
+			worker3_button.disabled = false
+		3:
+			worker1_button.disabled = true
+			worker2_button.disabled = true
+			worker3_button.disabled = true
+		_:
+			worker1_button.disabled = true
+			worker2_button.disabled = true
+			worker3_button.disabled = true
