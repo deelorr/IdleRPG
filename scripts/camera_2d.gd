@@ -11,10 +11,9 @@ const MOVE_THRESHOLD: float = 5.0
 # Typed dictionary for clarity and safety
 var section_positions: Dictionary = {
 	"woods": Vector2.ZERO,
-	"desert": Vector2(548, 0),
-	"section_3": Vector2(0, 960),
-	"section_4": Vector2(548, 960),
-	"home": Vector2(275, 480)
+	"home": Vector2(544, 0),
+	"section_3": Vector2(0, 1008),
+	"section_4": Vector2(544, 1008),
 }
 
 # Typed variables

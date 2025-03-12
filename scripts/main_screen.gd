@@ -40,8 +40,8 @@ func show_offline_earnings_popup() -> void:
 	offline_food_label.text = "Food Earned: %d" % Global.offline_food
 	offline_popup_panel.popup_centered()
 
-func _on_time_changed(in_game_hours: int, in_game_minutes: int, new_day: int) -> void:
-	clock_label.text = "Day %d, %02d:%02d" % [new_day, in_game_hours, in_game_minutes]
+func _on_time_changed(in_game_hours: int, in_game_minutes: int, _new_day: int) -> void:
+	clock_label.text = "%02d:%02d" % [in_game_hours, in_game_minutes]
 	update_lighting(in_game_hours)
 
 func update_lighting(in_game_hours: int) -> void:
