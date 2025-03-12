@@ -4,16 +4,15 @@ extends CharacterBody2D
 signal gathered_wood(wood_amount: int)
 
 # Node references
-@onready var sprite: Sprite2D = $Sprite2D
-@onready var tree_search_timer: Timer = $TreeSearchTimer
+#@onready var sprite: Sprite2D = $WorkerSprite
+@onready var face_sprite: Sprite2D = $FaceSprite
 @onready var tree_chop_timer: Timer = $TreeChopTimer
 @onready var animations: AnimationPlayer = $AnimationPlayer
 @onready var action_label: Label = $ActionLabel
 
-# Variables
-var workers_hut: WorkerHut   #Reference to the hut the worker belongs to
+var workers_hut: WorkerHut  #Reference to the hut the worker belongs to
 var target_tree: TreeClass   #Current target tree to chop
-var speed: float = 20.0                # Movement speed
+var speed: float = 50.0                # Movement speed
 var wood_per_trip: int = 6             # Wood gathered per tree
 var carried_wood: int = 0               # Wood currently carried
 var current_state: String = "idle"      # States: "idle", "going_to_tree", "returning_to_hut"
@@ -27,7 +26,7 @@ func _physics_process(delta: float) -> void:
 		"chopping_tree":
 			velocity = Vector2.ZERO
 		"returning_to_hut":
-			move_to_target(workers_hut.hut_waypoint)
+			move_to_target(workers_hut.global_position)
 		"idle":
 			find_target_tree()
 			if target_tree:
@@ -103,16 +102,20 @@ func find_target_tree() -> void:
 	var closest_tree: Node2D = null
 	var closest_dist: float = INF
 
-	# Search through all nodes in the "tree" group
 	for tree in get_tree().get_nodes_in_group("tree"):
+		# Skip trees already targeted by other workers
+		if tree.is_targeted:
+			continue
+
 		var dist = global_position.distance_to(tree.global_position)
 		if dist < closest_dist:
 			closest_dist = dist
 			closest_tree = tree
 
-	# Set the closest tree as the target
 	if closest_tree:
 		target_tree = closest_tree
+		target_tree.is_targeted = true  # Mark tree as targeted immediately
+
 
 func _on_tree_chop_timer_timeout():
 	action_label.text = ""
@@ -120,6 +123,3 @@ func _on_tree_chop_timer_timeout():
 	carried_wood += wood_per_trip    # Add wood to carried amount
 	target_tree = null               # Clear the target
 	current_state = "returning_to_hut"
-
-func _on_tree_search_timer_timeout():
-	find_target_tree()

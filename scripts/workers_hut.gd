@@ -3,15 +3,25 @@ extends StaticBody2D
 class_name WorkerHut
 
 @onready var sprite: Sprite2D = $WorkerHutSprite
-@onready var menu: Control = $WorkerHutStats
-@onready var wood_button: Button = $WorkerHutStats/WoodButton
-@onready var food_button: Button = $WorkerHutStats/FoodButton
+@onready var menu: Control = $MenuPanel
+
+@onready var wood_button: Button = $MenuPanel/VBoxContainer/WorkerHutStats/WoodButton
+@onready var food_button: Button = $MenuPanel/VBoxContainer/WorkerHutStats/FoodButton
+
+@onready var worker1_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1Button
+@onready var worker1_state_lable: Label = $MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1StateLabel
+
+@onready var worker2_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2Button
+@onready var worker2_state_lable: Label = $MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2StateLabel
+
+@onready var worker3_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3Button
+@onready var worker3_state_lable: Label = $MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3StateLabel
+
 @onready var worker_scene = preload("res://scenes/Worker.tscn")
-@onready var tilemap: TileMapLayer = get_parent()
 
-@export var tile_position: Vector2
-
-var hut_waypoint: Vector2 # Where workers return to
+#@onready var tilemap: TileMapLayer = $TilemapLayers/Ground
+#@export var tile_position: Vector2
+#var hut_waypoint: Vector2 # Where workers return to
 
 var workers: Array = []       # List of spawned workers
 var current_workers: int = 1
@@ -24,7 +34,10 @@ var hut_food: int = 0
 var max_food: int = 30
 
 func _ready() -> void:
-	hut_waypoint = tilemap.map_to_local(tile_position)
+	#hut_waypoint = tilemap.map_to_local(tile_position)
+	worker1_button.disabled = true
+	worker2_button.disabled = false
+	worker3_button.disabled = true
 	for i in range(current_workers):
 		spawn_worker()       # Spawn initial workers
 
@@ -38,8 +51,8 @@ func spawn_worker() -> void:
 		return
 	
 	var worker = worker_scene.instantiate() as CharacterBody2D
-	var spawn_offset := Vector2(randi_range(-5, 5), randi_range(-5, 5))
-	worker.global_position = hut_waypoint + spawn_offset  # Spawn near hut
+	var spawn_offset := Vector2(randi_range(-20, 20), randi_range(-20, 20))
+	worker.global_position = self.global_position  # Spawn near hut
 	worker.workers_hut = self                            # Link worker to this hut
 	get_parent().add_child.call_deferred(worker)         # Add to scene
 	workers.append(worker)                               # Track worker
@@ -47,6 +60,30 @@ func spawn_worker() -> void:
 # Update UI labels
 func update_labels() -> void:
 	wood_button.text = "Wood: " + str(hut_wood)
+
+	for i in workers.size():
+		var worker = workers[i]
+
+		# Adjusted paths considering your real UI structure:
+		var button_path = "MenuPanel/VBoxContainer/WorkerButtons/Worker%d/Worker%dButton" % [i + 1, i + 1]
+		var label_path = "MenuPanel/VBoxContainer/WorkerButtons/Worker%d/Worker%dStateLabel" % [i + 1, i + 1]
+
+		var worker_button = get_node_or_null(button_path) as Button
+		var worker_state_label = get_node_or_null(label_path) as Label
+
+		if worker_button and worker.face_sprite and worker.face_sprite.texture:
+			worker_button.icon = worker.face_sprite.texture
+
+		if worker_state_label:
+			match worker.current_state:
+				"chopping_tree":
+					worker_state_label.text = "Chopping"
+				"going_to_tree":
+					worker_state_label.text = "Finding"
+				"returning_to_hut":
+					worker_state_label.text = "Returning"
+				_:
+					worker_state_label.text = "Idle"
 
 # Handle input events (e.g., clicking the hut)
 func _input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
@@ -92,3 +129,27 @@ func _on_collect_button_pressed() -> void:
 	Global.total_city_wood += hut_wood  # Add to global wood (assumes Global script exists)
 	hut_wood = 0                       # Reset hut wood
 	update_labels()                    # Update UI
+
+func _on_worker_2_button_pressed():
+	spawn_worker()
+	await get_tree().process_frame  # Wait one frame to ensure nodes are initialized
+	await get_tree().process_frame  # Wait one frame to ensure nodes are initialized
+	worker2_button.disabled = true
+	
+	if workers.size() > 1 and workers[1].face_sprite and workers[1].face_sprite.texture:
+		worker2_button.icon = workers[1].face_sprite.texture
+	else:
+		print("Worker2 face_sprite or texture not ready yet.")
+	
+	worker3_button.disabled = false
+
+func _on_worker_3_button_pressed():
+	spawn_worker()
+	await get_tree().process_frame  # Wait one frame to ensure nodes are initialized
+	await get_tree().process_frame  # Wait one frame to ensure nodes are initialized
+	worker3_button.disabled = true
+
+	if workers.size() > 2 and workers[2].face_sprite and workers[2].face_sprite.texture:
+		worker3_button.icon = workers[2].face_sprite.texture
+	else:
+		print("Worker3 face_sprite or texture not ready yet.")

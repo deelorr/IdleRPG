@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://drwwji61qlf4y"]
+[gd_scene load_steps=12 format=3 uid="uid://drwwji61qlf4y"]
 
 [ext_resource type="Texture2D" uid="uid://djsp02jphs5ma" path="res://art/WorkerSpriteSheet.png" id="1_krgcu"]
 [ext_resource type="Script" uid="uid://mp568a6nawgw" path="res://scripts/worker.gd" id="1_mk28a"]
+[ext_resource type="Texture2D" uid="uid://cdrgi07ti5bms" path="res://art/WorkerFaceSprite.png" id="3_ujfku"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rnx45"]
 radius = 6.00925
@@ -11,7 +12,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/path = NodePath("WorkerSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -29,7 +30,7 @@ step = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/path = NodePath("WorkerSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -47,7 +48,7 @@ step = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/path = NodePath("WorkerSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -65,7 +66,7 @@ step = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/path = NodePath("WorkerSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -83,7 +84,7 @@ step = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/path = NodePath("WorkerSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -109,12 +110,16 @@ radius = 47.0106
 collision_layer = 2
 script = ExtResource("1_mk28a")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="WorkerSprite" type="Sprite2D" parent="."]
 y_sort_enabled = true
 texture = ExtResource("1_krgcu")
 offset = Vector2(0, -6)
 hframes = 4
 vframes = 7
+
+[node name="FaceSprite" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_ujfku")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -6.33333)
@@ -132,9 +137,6 @@ libraries = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FOV"]
 shape = SubResource("CircleShape2D_ujfku")
 
-[node name="TreeSearchTimer" type="Timer" parent="."]
-autostart = true
-
 [node name="TreeChopTimer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
@@ -146,5 +148,4 @@ offset_right = 20.0
 offset_bottom = -13.0
 
 [connection signal="body_entered" from="FOV" to="." method="_on_area_2d_body_entered"]
-[connection signal="timeout" from="TreeSearchTimer" to="." method="_on_tree_search_timer_timeout"]
 [connection signal="timeout" from="TreeChopTimer" to="." method="_on_tree_chop_timer_timeout"]
