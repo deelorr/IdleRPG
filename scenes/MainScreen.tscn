@@ -524,7 +524,6 @@ limit_bottom = 2220
 script = ExtResource("4_trvrf")
 
 [node name="UI" parent="." instance=ExtResource("5_1agfe")]
-visible = false
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 rotation = 1.5708
