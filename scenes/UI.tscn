@@ -45,12 +45,14 @@ theme_override_styles/panel = ExtResource("1_dj8aq")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/MenuContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 10
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/MenuContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_constants/separation = 10
 
@@ -65,22 +67,14 @@ text = "Woods
 custom_minimum_size = Vector2(63, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+disabled = true
 text = "Snow"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="Control/MenuContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
 theme_override_constants/separation = 10
-
-[node name="ClockPanel" type="PanelContainer" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2"]
-custom_minimum_size = Vector2(63, 30)
-layout_mode = 2
-
-[node name="ClockLabel" type="Label" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/ClockPanel"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "00:00"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Menu" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2"]
 custom_minimum_size = Vector2(63, 30)
@@ -92,10 +86,10 @@ text = "Menu"
 visible = false
 z_index = 1
 layout_mode = 0
-offset_left = -33.0
-offset_top = -168.0
-offset_right = 90.0
-offset_bottom = -12.0
+offset_left = -29.0
+offset_top = -192.333
+offset_right = 94.0
+offset_bottom = -36.3333
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel"]
 layout_mode = 1
@@ -131,6 +125,7 @@ text = "Reset"
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="Control/MenuContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_constants/separation = 10
 
@@ -143,6 +138,7 @@ text = "Home"
 custom_minimum_size = Vector2(63, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+disabled = true
 text = "Cave"
 
 [node name="OfflinePopupPanel" type="PopupPanel" parent="Control"]
@@ -194,6 +190,23 @@ mouse_filter = 2
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ro3t7")
+
+[node name="ClockPanel" type="PanelContainer" parent="Overlay/Panel"]
+custom_minimum_size = Vector2(63, 30)
+layout_mode = 2
+offset_left = 745.0
+offset_top = 33.0
+offset_right = 808.0
+offset_bottom = 63.0
+scale = Vector2(3, 3)
+size_flags_vertical = 0
+
+[node name="ClockLabel" type="Label" parent="Overlay/Panel/ClockPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer/WoodsButton" to="." method="_on_the_woods_button_pressed"]
 [connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer/SnowButton" to="." method="_on_section_3_button_pressed"]

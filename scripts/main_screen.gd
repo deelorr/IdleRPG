@@ -7,7 +7,7 @@ const SAVE_PATH: String = "user://savegame.json"
 @onready var sun_light: DirectionalLight2D = $DirectionalLight2D
 @onready var sky_tint: ColorRect = $TilemapLayers/ColorRect
 @onready var world_env: WorldEnvironment = $WorldEnvironment
-@onready var clock_label: Label = $UI/Control/MenuContainer/HBoxContainer/VBoxContainer2/ClockPanel/ClockLabel
+@onready var clock_label: Label = $UI/Overlay/Panel/ClockPanel/ClockLabel
 
 @onready var offline_food_label: Label = $UI/Control/OfflinePopupPanel/VBoxContainer/OfflineFoodLabel
 @onready var offline_wood_label: Label = $UI/Control/OfflinePopupPanel/VBoxContainer/OfflineWoodLabel

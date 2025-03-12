@@ -524,6 +524,7 @@ limit_bottom = 2220
 script = ExtResource("4_trvrf")
 
 [node name="UI" parent="." instance=ExtResource("5_1agfe")]
+visible = false
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 rotation = 1.5708
@@ -537,9 +538,10 @@ wait_time = 10.0
 autostart = true
 
 [node name="TheWoods" type="Polygon2D" parent="."]
-position = Vector2(-503, 51)
+position = Vector2(-426.155, 99.2087)
+scale = Vector2(0.890863, 0.924419)
 color = Color(0, 0.435294, 0.215686, 0)
-polygon = PackedVector2Array(700, 40, 973, 36, 971, 356, 715, 356, 718, 672, 586, 670, 588, 198, 703, 195)
+polygon = PackedVector2Array(977.878, 59.271, 979, 876, 585, 876, 585, 194, 707.353, 192.956, 707.353, 59.271)
 
 [node name="WorkerHut" parent="." instance=ExtResource("5_y448k")]
 position = Vector2(48, 96)
@@ -548,8 +550,5 @@ scale = Vector2(2, 2)
 [node name="HomeBase" parent="." instance=ExtResource("6_el83a")]
 position = Vector2(592, 96)
 scale = Vector2(2, 2)
-
-[node name="Node2D" type="Node2D" parent="."]
-position = Vector2(325, 1920)
 
 [connection signal="timeout" from="TreeTimer" to="." method="_on_tree_timer_timeout"]
