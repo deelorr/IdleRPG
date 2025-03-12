@@ -40,10 +40,11 @@ position = Vector2(24, 23)
 shape = SubResource("RectangleShape2D_yrk0c")
 
 [node name="MenuPanel" type="Panel" parent="."]
+visible = false
 offset_left = 4.0
 offset_top = 50.0
-offset_right = 248.0
-offset_bottom = 381.0
+offset_right = 225.0
+offset_bottom = 321.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
@@ -81,7 +82,6 @@ icon = SubResource("PlaceholderTexture2D_2chc0")
 custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 size_flags_horizontal = 6
-text = "Current State"
 horizontal_alignment = 1
 
 [node name="Worker1FireButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker1"]
@@ -102,7 +102,6 @@ icon = SubResource("PlaceholderTexture2D_orf8p")
 custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 size_flags_horizontal = 6
-text = "Current State"
 horizontal_alignment = 1
 
 [node name="Worker2FireButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker2"]
@@ -123,7 +122,6 @@ icon = SubResource("PlaceholderTexture2D_r17t8")
 custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 size_flags_horizontal = 6
-text = "Current State"
 horizontal_alignment = 1
 
 [node name="Worker3FireButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker3"]
