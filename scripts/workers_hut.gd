@@ -9,13 +9,8 @@ class_name WorkerHut
 @onready var food_button: Button = $MenuPanel/VBoxContainer/WorkerHutStats/FoodButton
 
 @onready var worker1_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1Button
-@onready var worker1_state_lable: Label = $MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1StateLabel
-
 @onready var worker2_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2Button
-@onready var worker2_state_lable: Label = $MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2StateLabel
-
 @onready var worker3_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3Button
-@onready var worker3_state_lable: Label = $MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3StateLabel
 
 @onready var worker_scene = preload("res://scenes/worker.tscn")
 
@@ -32,9 +27,6 @@ var hut_food: int = 0
 var max_food: int = 30
 
 func _ready() -> void:
-	worker1_button.disabled = true
-	worker2_button.disabled = false
-	worker3_button.disabled = true
 	for i in range(current_workers):
 		spawn_worker()
 	update_worker_spawn_buttons()
@@ -79,13 +71,13 @@ func update_labels() -> void:
 			if worker_state_label:
 				match worker.current_state:
 					"chopping_tree":
-						worker_state_label.text = "Chopping"
+						worker_state_label.text = "CHOP"
 					"going_to_tree":
-						worker_state_label.text = "Finding"
+						worker_state_label.text = "SEARCH"
 					"returning_to_hut":
-						worker_state_label.text = "Returning"
+						worker_state_label.text = "RETURN"
 					_:
-						worker_state_label.text = "Idle"
+						worker_state_label.text = "IDLE"
 			# Make the fire button visible when a worker exists in this slot
 			if worker_fire_button:
 				worker_fire_button.visible = true
@@ -98,8 +90,6 @@ func update_labels() -> void:
 				worker_state_label.text = ""
 			if worker_fire_button:
 				worker_fire_button.visible = false
-
-
 
 # Handle input events (e.g., clicking the hut)
 func _input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
@@ -175,18 +165,21 @@ func _on_worker_1_fire_button_pressed() -> void:
 	if workers.size() > 0:
 		fire_worker(0)
 		update_worker_spawn_buttons()
+		update_labels()
 
 func _on_worker_2_fire_button_pressed() -> void:
 	# Fire the worker at index 1 if it exists.
 	if workers.size() > 1:
 		fire_worker(1)
 		update_worker_spawn_buttons()
+		update_labels()
 
 func _on_worker_3_fire_button_pressed() -> void:
 	# Fire the worker at index 2 if it exists.
 	if workers.size() > 2:
 		fire_worker(2)
 		update_worker_spawn_buttons()
+		update_labels()
 
 func fire_worker(index: int) -> void:
 	if index < 0 or index >= workers.size():

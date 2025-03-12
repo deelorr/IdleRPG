@@ -9,19 +9,19 @@
 size = Vector2(46, 46)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2chc0"]
-size = Vector2(32, 32)
+size = Vector2(25, 25)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_svdfu"]
 size = Vector2(16, 16)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_orf8p"]
-size = Vector2(32, 32)
+size = Vector2(25, 25)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_yrk0c"]
 size = Vector2(16, 16)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_r17t8"]
-size = Vector2(32, 32)
+size = Vector2(25, 25)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xp4s3"]
 size = Vector2(16, 16)
@@ -43,8 +43,8 @@ shape = SubResource("RectangleShape2D_yrk0c")
 visible = false
 offset_left = 4.0
 offset_top = 50.0
-offset_right = 225.0
-offset_bottom = 321.0
+offset_right = 220.0
+offset_bottom = 428.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
@@ -53,14 +53,14 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -4.0
+offset_bottom = -58.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 0
 
 [node name="WorkerButtons" type="VBoxContainer" parent="MenuPanel/VBoxContainer"]
 custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 6
 
 [node name="WorkersLabel" type="Label" parent="MenuPanel/VBoxContainer/WorkerButtons"]
@@ -79,7 +79,7 @@ text = "Worker"
 icon = SubResource("PlaceholderTexture2D_2chc0")
 
 [node name="Worker1StateLabel" type="Label" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker1"]
-custom_minimum_size = Vector2(90, 0)
+custom_minimum_size = Vector2(63, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 horizontal_alignment = 1
@@ -99,7 +99,7 @@ text = "Worker"
 icon = SubResource("PlaceholderTexture2D_orf8p")
 
 [node name="Worker2StateLabel" type="Label" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker2"]
-custom_minimum_size = Vector2(90, 0)
+custom_minimum_size = Vector2(63, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 horizontal_alignment = 1
@@ -119,7 +119,7 @@ text = "Worker"
 icon = SubResource("PlaceholderTexture2D_r17t8")
 
 [node name="Worker3StateLabel" type="Label" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker3"]
-custom_minimum_size = Vector2(90, 0)
+custom_minimum_size = Vector2(63, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 horizontal_alignment = 1
@@ -131,7 +131,6 @@ icon = SubResource("PlaceholderTexture2D_xp4s3")
 [node name="WorkerHutStats" type="VBoxContainer" parent="MenuPanel/VBoxContainer"]
 custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 6
 
 [node name="StatsLabel" type="Label" parent="MenuPanel/VBoxContainer/WorkerHutStats"]
@@ -142,24 +141,32 @@ horizontal_alignment = 1
 [node name="WoodButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerHutStats"]
 custom_minimum_size = Vector2(90, 25)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
 theme_override_font_sizes/font_size = 12
 text = "Wood: 0"
 icon = ExtResource("3_x7al1")
+flat = true
 expand_icon = true
 
 [node name="FoodButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerHutStats"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
 theme_override_font_sizes/font_size = 12
 text = "Food: 0"
 icon = ExtResource("4_ulahn")
+flat = true
 expand_icon = true
 
 [node name="CollectButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerHutStats"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
 text = "COLLECT"
 
 [node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(24, 50)
+position = Vector2(24, 52)
 
 [connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1Button" to="." method="_on_worker_1_button_pressed"]
 [connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1FireButton" to="." method="_on_worker_1_fire_button_pressed"]
