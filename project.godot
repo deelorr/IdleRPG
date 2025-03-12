@@ -28,10 +28,13 @@ window/size/viewport_height=1920
 window/size/window_width_override=405
 window/size/window_height_override=720
 window/stretch/mode="viewport"
+window/stretch/aspect="keep_width"
 window/handheld/orientation=1
 
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+rendering_device/driver.ios="vulkan"
+rendering_device/driver.macos="vulkan"
 renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
