@@ -1,9 +1,7 @@
 extends Node
 
-# Constants with typing
 const SAVE_PATH: String = "user://savegame.json"
 
-# Typed node references
 @onready var sun_light: DirectionalLight2D = $DirectionalLight2D
 @onready var sky_tint: ColorRect = $TilemapLayers/ColorRect
 @onready var world_env: WorldEnvironment = $WorldEnvironment
@@ -13,20 +11,23 @@ const SAVE_PATH: String = "user://savegame.json"
 @onready var offline_wood_label: Label = $UI/Control/OfflinePopupPanel/VBoxContainer/OfflineWoodLabel
 @onready var offline_popup_panel: PopupPanel = $UI/Control/OfflinePopupPanel
 
-# Exported variables for editor tweaking
 @export var day_brightness: float = 1.2
 @export var night_brightness: float = 0.4
 
 @onready var tree_timer: Timer = $TreeTimer
+@onready var bush_timer: Timer = $BushTimer
 @onready var tree_scene = preload("res://scenes/Tree.tscn")
-@onready var spawn_area_polygon: Polygon2D = $TheWoods
-@export var max_trees: int = 30
+@onready var bush_scene = preload("res://scenes/Bush.tscn")
+@onready var tree_spawn_area: Polygon2D = $TheWoods
+@onready var food_spawn_area: Polygon2D = $TheFoods
+@export var max_trees: int = 20
+@export var max_bushes: int = 20
 
 func _ready() -> void:
-	for i in 15:
-		spawn_tree()
-	# Connect signals with validation
-	#assert(TimeManager.time_updated, "TimeManager.time_updated signal not found!")
+	for i in 20:
+		spawn_object(tree_scene, tree_spawn_area, "tree", max_trees, Vector2(2.0, 2.0))
+	for i in 20:
+		spawn_object(bush_scene, food_spawn_area, "bush", max_bushes, Vector2(2.0, 2.0))
 	TimeManager.time_updated.connect(_on_time_changed)
 	_on_time_changed(int(TimeManager.time_of_day * TimeManager.HOURS_IN_DAY), 0, TimeManager.day_count)
 	
@@ -80,45 +81,44 @@ func _input(event: InputEvent) -> void:
 				TimeManager.skip_hours(24)
 
 func _on_tree_timer_timeout():
-	spawn_tree()
+	spawn_object(tree_scene, tree_spawn_area, "tree", max_trees, Vector2(2.0, 2.0))
 
-func spawn_tree():
-	var current_tree_count = get_tree().get_nodes_in_group("tree").size()
-	if current_tree_count >= max_trees:
-		print("Reached max tree limit: ", max_trees)
+func spawn_object(scene: PackedScene, spawn_area: Polygon2D, group: String, max_count: int, scale: Vector2, min_distance: float = 100.0) -> void:
+	var current_count = get_tree().get_nodes_in_group(group).size()
+	if current_count >= max_count:
+		print("Reached max ", group, " limit: ", max_count)
 		return
 
-	var new_tree = tree_scene.instantiate() as StaticBody2D
-	add_child(new_tree)
-
-	# Try to find a non-overlapping position
+	var new_object = scene.instantiate()
+	add_child(new_object)
+	
 	var max_attempts = 100  # Prevent infinite loops
 	var spawn_point: Vector2
 	var found_valid_position = false
 
-	for i in max_attempts:
-		var temp_point = get_random_point_in_polygon(spawn_area_polygon.polygon)
-		if not is_position_overlapping(temp_point):  # Check if this position is valid
+	for i in range(max_attempts):
+		var temp_point = get_random_point_in_polygon(spawn_area.polygon)
+		if not is_position_overlapping(temp_point, min_distance, group):
 			spawn_point = temp_point
 			found_valid_position = true
-			break  # Stop searching once a valid spot is found
+			break
 
 	if not found_valid_position:
-		print("WARNING: Could not find non-overlapping spawn position!")
-		return  # Exit function to prevent spawning in a bad location
+		print("WARNING: Could not find non-overlapping spawn position for ", group)
+		return
 
-	new_tree.global_position = spawn_area_polygon.to_global(spawn_point)
-	new_tree.scale = Vector2(2.0, 2.0)
-	
-	new_tree.add_to_group("tree")
-	print("Tree spawned at: ", new_tree.global_position)
+	new_object.global_position = spawn_area.to_global(spawn_point)
+	new_object.scale = scale
+	new_object.add_to_group(group)
+	print(group, " spawned at: ", new_object.global_position)
 
 
-func is_position_overlapping(position: Vector2, min_distance: float = 100.0) -> bool:
-	for tree in get_tree().get_nodes_in_group("tree"):
-		if tree.global_position.distance_to(position) < min_distance:
-			return true  # Overlapping
-	return false  # Safe
+func is_position_overlapping(position: Vector2, min_distance: float = 100.0, group: String = "tree") -> bool:
+	for obj in get_tree().get_nodes_in_group(group):
+		if obj.global_position.distance_to(position) < min_distance:
+			return true
+	return false
+
 
 func get_random_point_in_polygon(polygon: PackedVector2Array) -> Vector2:
 	var rect = Rect2(polygon[0], Vector2.ZERO)
@@ -127,7 +127,7 @@ func get_random_point_in_polygon(polygon: PackedVector2Array) -> Vector2:
 
 	var random_point: Vector2
 	var max_attempts = 100
-	for i in max_attempts:
+	for i in range(max_attempts):
 		random_point = Vector2(
 			randf_range(rect.position.x, rect.end.x),
 			randf_range(rect.position.y, rect.end.y)

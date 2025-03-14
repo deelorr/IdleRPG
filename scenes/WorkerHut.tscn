@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://clfhfh54lg1nf"]
+[gd_scene load_steps=13 format=3 uid="uid://clfhfh54lg1nf"]
 
 [ext_resource type="Script" uid="uid://eeiumum23bc" path="res://scripts/workers_hut.gd" id="1_dmtaq"]
 [ext_resource type="Texture2D" uid="uid://divfpcj4wyvog" path="res://art/WorkersHutSprite.png" id="2_l0p07"]
@@ -12,6 +12,9 @@ size = Vector2(46, 46)
 size = Vector2(25, 25)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_svdfu"]
+size = Vector2(16, 16)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ssdrr"]
 size = Vector2(16, 16)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_orf8p"]
@@ -40,7 +43,6 @@ position = Vector2(24, 23)
 shape = SubResource("RectangleShape2D_yrk0c")
 
 [node name="MenuPanel" type="Panel" parent="."]
-visible = false
 offset_left = 4.0
 offset_top = 50.0
 offset_right = 220.0
@@ -87,6 +89,10 @@ horizontal_alignment = 1
 [node name="Worker1FireButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker1"]
 layout_mode = 2
 icon = SubResource("PlaceholderTexture2D_svdfu")
+
+[node name="SwitchJobButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker1"]
+layout_mode = 2
+icon = SubResource("PlaceholderTexture2D_ssdrr")
 
 [node name="Worker2" type="HBoxContainer" parent="MenuPanel/VBoxContainer/WorkerButtons"]
 layout_mode = 2
@@ -170,6 +176,7 @@ position = Vector2(24, 52)
 
 [connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1Button" to="." method="_on_worker_1_button_pressed"]
 [connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1FireButton" to="." method="_on_worker_1_fire_button_pressed"]
+[connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker1/SwitchJobButton" to="." method="_on_switch_job_button_pressed"]
 [connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2Button" to="." method="_on_worker_2_button_pressed"]
 [connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2FireButton" to="." method="_on_worker_2_fire_button_pressed"]
 [connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3Button" to="." method="_on_worker_3_button_pressed"]

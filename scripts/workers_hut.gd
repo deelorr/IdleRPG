@@ -16,6 +16,9 @@ class_name WorkerHut
 
 @onready var marker: Marker2D = $Marker2D
 
+@onready var switch_job_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker1/SwitchJobButton
+
+
 var workers: Array = []
 var current_workers: int = 1
 var max_workers: int = 3
@@ -69,15 +72,9 @@ func update_labels() -> void:
 					worker_button.icon = worker.face_sprite.texture
 					worker_button.text = ""
 			if worker_state_label:
-				match worker.current_state:
-					"chopping_tree":
-						worker_state_label.text = "CHOP"
-					"going_to_tree":
-						worker_state_label.text = "SEARCH"
-					"returning_to_hut":
-						worker_state_label.text = "RETURN"
-					_:
-						worker_state_label.text = "IDLE"
+				var job_text = "WOOD" if worker.current_job == worker.JobType.CHOP_WOOD else "FOOD"
+				worker_state_label.text = job_text
+
 			# Make the fire button visible when a worker exists in this slot
 			if worker_fire_button:
 				worker_fire_button.visible = true
@@ -214,3 +211,10 @@ func update_worker_spawn_buttons() -> void:
 			worker1_button.disabled = true
 			worker2_button.disabled = true
 			worker3_button.disabled = true
+
+func _on_switch_job_button_pressed() -> void:
+	for worker in workers:
+		worker.current_job = worker.JobType.GATHER_FOOD if worker.current_job == worker.JobType.CHOP_WOOD else worker.JobType.CHOP_WOOD
+		worker.find_target_resource()  # Immediately find new target
+
+	update_labels()  # Refresh UI

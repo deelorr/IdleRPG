@@ -1,122 +1,128 @@
 extends CharacterBody2D
 
 @onready var face_sprite: Sprite2D = $FaceSprite
-@onready var tree_chop_timer: Timer = $TreeChopTimer
+@onready var chop_timer: Timer = $TreeChopTimer
 @onready var animations: AnimationPlayer = $AnimationPlayer
 @onready var action_label: Label = $ActionLabel
 
 var workers_hut: WorkerHut
-var target_tree: TreeClass
-var speed: float = 50.0                 # Movement speed
-var wood_per_trip: int = 6              # Wood gathered per tree
-var carried_wood: int = 0               # Wood currently carried
-var current_state: String = "idle"      # States: "chopping", idle", "finding", "returning"
+var target_resource: Node2D = null  # Can be either a tree or a bush
 
-# Physics process for movement and state management
+var speed: float = 50.0                  # Movement speed
+var resource_per_trip: int = 6           # Amount gathered per resource
+var carried_resource: int = 0            # Currently carried wood/food
+var current_state: String = "idle"       # States: "chopping", "idle", "going_to_resource", "returning"
+
+enum JobType { CHOP_WOOD, GATHER_FOOD }
+var current_job: JobType = JobType.CHOP_WOOD  # Default to wood chopping
+
+# Called every frame
 func _physics_process(_delta: float) -> void:
 	match current_state:
-		"going_to_tree":
-			if target_tree:
-				move_to_target(target_tree.global_position)
-		"chopping_tree":
+		"going_to_resource":
+			if target_resource:
+				move_to_target(target_resource.global_position)
+		"chopping":
 			velocity = Vector2.ZERO
 		"returning_to_hut":
 			move_to_target(workers_hut.marker.global_position)
 		"idle":
-			find_target_tree()
-			if target_tree:
-				current_state = "going_to_tree"
+			find_target_resource()
+			if target_resource:
+				current_state = "going_to_resource"
 			else:
 				velocity = Vector2.ZERO
+
 	move_and_slide()
 	update_animation()
 
-# Update animations based on velocity
-func update_animation() -> void:
-	if current_state == "chopping_tree":
-		animations.play("RESET") # Placeholder for chopping animation later
-	if velocity.length() > 0:
-		var anim_direction = velocity.normalized()
-		if abs(anim_direction.x) > abs(anim_direction.y):
-			if anim_direction.x > 0:
-				animations.play("walk_right")
-			else:
-				animations.play("walk_left")
-		else:
-			if anim_direction.y > 0:
-				animations.play("walk_down")
-			else:
-				animations.play("walk_up")
-	else:
-		animations.stop()
-
-# Move towards a target position
+# Moves towards a target position
 func move_to_target(target: Vector2) -> void:
 	var direction = (target - global_position).normalized()
 	velocity = direction * speed
 	move_and_slide()
 
-	# Check if close enough to the target
+	# Check if close enough to interact
 	if global_position.distance_to(target) < 10.0:
-		if current_state == "going_to_tree":
-			chop_tree()
+		if current_state == "going_to_resource":
+			start_gathering()
 		elif current_state == "returning_to_hut":
-			deposit_wood()
+			deposit_resource()
 
-# Chop the target tree and gather wood
-func chop_tree() -> void:
-	if target_tree and tree_chop_timer.is_stopped():
+# Finds the closest valid tree or bush
+func find_target_resource() -> void:
+	var closest_resource: Node2D = null
+	var closest_dist: float = INF
+	var resource_group = "tree" if current_job == JobType.CHOP_WOOD else "bush"
+
+	for resource in get_tree().get_nodes_in_group(resource_group):
+		if resource.is_targeted:
+			continue
+
+		var dist = global_position.distance_to(resource.global_position)
+		if dist < closest_dist:
+			closest_dist = dist
+			closest_resource = resource
+
+	if closest_resource:
+		target_resource = closest_resource
+		target_resource.is_targeted = true  # Mark as targeted
+		current_state = "going_to_resource"
+
+# Starts the gathering process
+func start_gathering() -> void:
+	if target_resource and chop_timer.is_stopped():
 		velocity = Vector2.ZERO
-		tree_chop_timer.start()
-		current_state = "chopping_tree"  # Add this line
-		flash_chopped_text()
+		chop_timer.start()
+		current_state = "chopping"
+		flash_gather_text()
 
-func flash_chopped_text() -> void:
+# Flashes "+2 Wood!!" or "+2 Food!!" while gathering
+func flash_gather_text() -> void:
 	var flash_times = 3
-	var flash_duration = 3.0 / (flash_times * 2)  # Calculate half-cycle duration
-	
+	var flash_duration = 3.0 / (flash_times * 2)
+	var message = "+2 Wood!!" if current_job == JobType.CHOP_WOOD else "+2 Food!!"
+
 	for i in flash_times:
-		action_label.text = "+2 Wood!!"
+		action_label.text = message
 		await get_tree().create_timer(flash_duration).timeout
 		action_label.text = ""
 		await get_tree().create_timer(flash_duration).timeout
-		
-	# Reset or clear the text after flashing
+
 	action_label.text = ""
 
-# Deposit wood at the hut
-func deposit_wood() -> void:
-	if carried_wood > 0:
-		workers_hut.hut_wood += carried_wood  # Add wood to hut's storage
-		carried_wood = 0                        # Reset carried wood
-	current_state = "idle"                      # Return to idle state
+# Deposits gathered wood or food
+func deposit_resource() -> void:
+	if carried_resource > 0:
+		if current_job == JobType.CHOP_WOOD:
+			workers_hut.hut_wood += carried_resource
+		else:
+			workers_hut.hut_food += carried_resource
 
-# Find the closest tree to target
-func find_target_tree() -> void:
-	if not is_inside_tree():
-		await ready  # Ensure the node is fully in the scene tree
+	carried_resource = 0
+	current_state = "idle"
 
-	var closest_tree: Node2D = null
-	var closest_dist: float = INF
-
-	for tree in get_tree().get_nodes_in_group("tree"):
-		# Skip trees already targeted by other workers
-		if tree.is_targeted:
-			continue
-
-		var dist = global_position.distance_to(tree.global_position)
-		if dist < closest_dist:
-			closest_dist = dist
-			closest_tree = tree
-
-	if closest_tree:
-		target_tree = closest_tree
-		target_tree.is_targeted = true  # Mark tree as targeted immediately
-
-
+# When gathering timer ends
 func _on_tree_chop_timer_timeout():
 	action_label.text = ""
-	target_tree.queue_free()         # Remove the tree from the scene
-	carried_wood += wood_per_trip    # Add wood to carried amount
-	target_tree = null               # Clear the target
-	current_state = "returning_to_hut"
+
+	# ✅ Fix: Ensure worker properly collects food before moving
+	if target_resource:
+		carried_resource += resource_per_trip  # ✅ Make sure food is added
+		target_resource.queue_free()  # ✅ Remove tree/bush from scene
+		target_resource = null  # ✅ Clear the target
+		current_state = "returning_to_hut"  # ✅ Now properly returns after gathering
+
+
+# Updates animations based on velocity
+func update_animation() -> void:
+	if current_state == "chopping":
+		animations.play("RESET")  # Placeholder for chopping animation
+	elif velocity.length() > 0:
+		var anim_direction = velocity.normalized()
+		if abs(anim_direction.x) > abs(anim_direction.y):
+			animations.play("walk_right" if anim_direction.x > 0 else "walk_left")
+		else:
+			animations.play("walk_down" if anim_direction.y > 0 else "walk_up")
+	else:
+		animations.stop()
