@@ -4,25 +4,19 @@ class_name WorkerHut
 
 @onready var sprite: Sprite2D = $WorkerHutSprite
 @onready var menu: Control = $MenuPanel
-
 @onready var wood_button: Button = $MenuPanel/VBoxContainer/WorkerHutStats/WoodButton
 @onready var food_button: Button = $MenuPanel/VBoxContainer/WorkerHutStats/FoodButton
-
 @onready var worker1_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1Button
 @onready var worker2_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2Button
 @onready var worker3_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3Button
-
 @onready var worker_scene = preload("res://scenes/worker.tscn")
-
 @onready var marker: Marker2D = $Marker2D
 
 var workers: Array = []
 var current_workers: int = 1
 var max_workers: int = 3
-
 var hut_wood: int = 0
 var max_wood: int = 30
-
 var hut_food: int = 0
 var max_food: int = 30
 
@@ -46,7 +40,6 @@ func spawn_worker() -> void:
 	get_parent().add_child.call_deferred(worker)         # Add to scene
 	workers.append(worker)                               # Track worker
 
-# Update UI labels
 func update_labels() -> void:
 	wood_button.text = "Wood: " + str(hut_wood)
 	
@@ -91,7 +84,6 @@ func update_labels() -> void:
 			if worker_fire_button:
 				worker_fire_button.visible = false
 
-# Handle input events (e.g., clicking the hut)
 func _input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if not _left_mouse_click(event):
 		return
@@ -99,42 +91,37 @@ func _input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	highlight()   # Visual feedback
 	toggle_menu() # Show/hide menu
 
-# Check for left mouse click
 func _left_mouse_click(event: InputEvent) -> bool:
 	return event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT
 
-# Highlight the hut sprite briefly
 func highlight() -> void:
 	sprite.modulate = Color(1.2, 1.2, 1.2, 1)  # Brighten
 	await get_tree().create_timer(0.2).timeout
 	sprite.modulate = Color(1, 1, 1, 1)        # Reset
 
-# Toggle the menu visibility
 func toggle_menu() -> void:
 	if menu.visible:
 		hide_menu()
 	else:
 		show_menu()
 
-# Show the menu with animation
 func show_menu() -> void:
 	menu.visible = true
 	menu.scale = Vector2.ZERO
 	var tween := create_tween()
 	tween.tween_property(menu, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
-# Hide the menu with animation
 func hide_menu() -> void:
 	var tween := create_tween()
 	tween.tween_property(menu, "scale", Vector2.ZERO, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 	await tween.finished
 	menu.visible = false
 
-# Collect wood when the button is pressed
 func _on_collect_button_pressed() -> void:
-	Global.total_city_wood += hut_wood  # Add to global wood (assumes Global script exists)
-	hut_wood = 0                       # Reset hut wood
-	update_labels()                    # Update UI
+	Global.total_city_wood += hut_wood  # First, add hut_wood to global total
+	Global.resource_changed.emit("wood", Global.total_city_wood)  # Then emit the updated value
+	hut_wood = 0  # Reset hut wood
+	update_labels()  # Update UI
 
 func _on_worker_1_button_pressed() -> void:
 	if workers.size() == 0:
@@ -191,7 +178,7 @@ func fire_worker(index: int) -> void:
 		worker_to_fire.queue_free()  # Remove worker from scene
 	workers.remove_at(index)  # Remove worker from the array
 	update_labels()  # Update your UI, if needed
-	
+
 func update_worker_spawn_buttons() -> void:
 	match workers.size():
 		0:

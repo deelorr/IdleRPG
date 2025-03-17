@@ -1,9 +1,7 @@
 extends CanvasLayer
 
-# Signal with typed parameter
 signal camera_target(target: String)
 
-# Typed node references
 @onready var menu: Panel = $Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel
 @onready var speed_button: Button = $Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SpeedButton
 
@@ -17,10 +15,10 @@ func _on_home_base_pressed() -> void:
 	camera_target.emit("home")
 
 func _on_section_3_button_pressed() -> void:
-	camera_target.emit("section_3")
+	camera_target.emit("snow")
 
 func _on_section_4_button_pressed() -> void:
-	camera_target.emit("section_4")
+	camera_target.emit("cave")
 
 func _on_menu_pressed() -> void:
 	toggle_menu()

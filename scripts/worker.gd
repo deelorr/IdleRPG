@@ -12,7 +12,6 @@ var wood_per_trip: int = 6              # Wood gathered per tree
 var carried_wood: int = 0               # Wood currently carried
 var current_state: String = "idle"      # States: "chopping", idle", "finding", "returning"
 
-# Physics process for movement and state management
 func _physics_process(_delta: float) -> void:
 	match current_state:
 		"going_to_tree":
@@ -31,7 +30,6 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 	update_animation()
 
-# Update animations based on velocity
 func update_animation() -> void:
 	if current_state == "chopping_tree":
 		animations.play("RESET") # Placeholder for chopping animation later
@@ -50,7 +48,6 @@ func update_animation() -> void:
 	else:
 		animations.stop()
 
-# Move towards a target position
 func move_to_target(target: Vector2) -> void:
 	var direction = (target - global_position).normalized()
 	velocity = direction * speed
@@ -63,7 +60,6 @@ func move_to_target(target: Vector2) -> void:
 		elif current_state == "returning_to_hut":
 			deposit_wood()
 
-# Chop the target tree and gather wood
 func chop_tree() -> void:
 	if target_tree and tree_chop_timer.is_stopped():
 		velocity = Vector2.ZERO
@@ -84,14 +80,12 @@ func flash_chopped_text() -> void:
 	# Reset or clear the text after flashing
 	action_label.text = ""
 
-# Deposit wood at the hut
 func deposit_wood() -> void:
 	if carried_wood > 0:
 		workers_hut.hut_wood += carried_wood  # Add wood to hut's storage
 		carried_wood = 0                        # Reset carried wood
 	current_state = "idle"                      # Return to idle state
 
-# Find the closest tree to target
 func find_target_tree() -> void:
 	if not is_inside_tree():
 		await ready  # Ensure the node is fully in the scene tree
@@ -112,7 +106,6 @@ func find_target_tree() -> void:
 	if closest_tree:
 		target_tree = closest_tree
 		target_tree.is_targeted = true  # Mark tree as targeted immediately
-
 
 func _on_tree_chop_timer_timeout():
 	action_label.text = ""

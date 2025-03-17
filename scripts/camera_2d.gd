@@ -1,38 +1,22 @@
 extends Camera2D
 
-# Exported variables with proper typing and editor hints
-@export_range(1.0, 10.0, 0.1) var transition_speed: float = 5.0  # Speed of camera movement (higher = faster)
-@export_range(1.0, 3.0, 0.1) var zoom_out_level: float = 1.8    # Zoom level when camera is moving
-@export var default_zoom: Vector2 = Vector2(2, 2)               # Zoom level when camera is stationary
+@onready var ui_node: CanvasLayer = $"../UI"
 
-# Constants with typing
-const MOVE_THRESHOLD: float = 5.0
-
-# Typed dictionary for clarity and safety
 var section_positions: Dictionary = {
 	"woods": Vector2.ZERO,
 	"home": Vector2(544, 0),
-	"section_3": Vector2(0, 1008),
-	"section_4": Vector2(544, 1008),
+	"snow": Vector2(0, 1008),
+	"cave": Vector2(544, 1008),
 }
 
-# Typed variables
-var target_position: Vector2 = Vector2.ZERO
+var target_position: Vector2 = section_positions["home"]
 var is_moving: bool = false
-
-# Optional: Export a NodePath for the UI to avoid hardcoding
-@export_node_path("CanvasLayer") var ui_path: NodePath = ^"../UI"
+var default_zoom: Vector2 = Vector2(2, 2) 
+var transition_speed: float = 5.0 
+var zoom_out_level: float = 1.8
 
 func _ready() -> void:
-	# Set initial position
-	target_position = section_positions["home"]
-	position = target_position
-	
-	# Connect signal safely with error checking
-	if ui_path:
-		var ui_node: CanvasLayer = get_node_or_null(ui_path)
-		assert(ui_node, "UI node not found at path: %s" % ui_path)
-		ui_node.camera_target.connect(_on_camera_target)
+	ui_node.camera_target.connect(_on_camera_target)
 
 func _on_camera_target(target: String) -> void:
 	if section_positions.has(target) and target_position != section_positions[target]:
@@ -40,7 +24,7 @@ func _on_camera_target(target: String) -> void:
 		animate_camera()
 
 func animate_camera() -> void:
-	if is_moving:  # Prevent overlapping animations
+	if is_moving:
 		return
 	
 	is_moving = true

@@ -69,25 +69,6 @@ func load_game():
 		var current_timestamp = Time.get_unix_time_from_system()
 		var time_passed = current_timestamp - last_timestamp  #Time in seconds
 		print("Time passed while offline:", time_passed, "seconds")
-
-		apply_offline_earnings(time_passed)
 	else:
 		print("Failed to load game!")
 		return null
-
-func apply_offline_earnings(time_passed: int):
-	var wood_per_second = 5
-	var food_per_second = 5
-
-	var offline_wood = wood_per_second * time_passed
-	var offline_food = food_per_second * time_passed
-
-	var max_hours = 5
-	offline_wood = min(offline_wood, wood_per_second * (max_hours * 3600))
-	offline_food = min(offline_food, food_per_second * (max_hours * 3600))
-
-	Global.total_city_wood += offline_wood
-	Global.total_city_food += offline_food
-
-	Global.offline_wood = offline_wood
-	Global.offline_food = offline_food
