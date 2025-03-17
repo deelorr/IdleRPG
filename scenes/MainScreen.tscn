@@ -515,11 +515,21 @@ script = ExtResource("4_trvrf")
 wait_time = 10.0
 autostart = true
 
+[node name="BushTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
 [node name="TheWoods" type="Polygon2D" parent="."]
-position = Vector2(-426.155, 99.2087)
-scale = Vector2(0.890863, 0.924419)
+position = Vector2(-366.346, 140.076)
+scale = Vector2(0.812406, 0.454251)
 color = Color(0, 0.435294, 0.215686, 0)
-polygon = PackedVector2Array(977.878, 59.271, 979, 876, 585, 876, 585, 194, 707.353, 192.956, 707.353, 59.271)
+polygon = PackedVector2Array(977.878, 59.271, 977.769, 462.132, 979, 876, 585, 876, 583.878, 314.636, 708.476, 323.442, 707.353, 59.271)
+
+[node name="TheFoods" type="Polygon2D" parent="."]
+position = Vector2(-363, 515)
+scale = Vector2(0.812406, 0.454251)
+color = Color(0, 0.435294, 0.215686, 0)
+polygon = PackedVector2Array(977.878, 59.271, 977.769, 462.132, 979, 876, 585, 876, 583.878, 314.636, 708.476, 323.442, 707.353, 59.271)
 
 [node name="WorkerHut" parent="." instance=ExtResource("5_y448k")]
 position = Vector2(48, 96)
@@ -530,3 +540,4 @@ position = Vector2(592, 96)
 scale = Vector2(2, 2)
 
 [connection signal="timeout" from="TreeTimer" to="." method="_on_tree_timer_timeout"]
+[connection signal="timeout" from="BushTimer" to="." method="_on_tree_timer_timeout"]
