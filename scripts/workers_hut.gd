@@ -7,7 +7,7 @@ class_name WorkerHut
 @onready var worker1_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1Button
 @onready var worker2_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2Button
 @onready var worker3_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3Button
-@onready var worker_scene = preload("res://scenes/worker.tscn")
+@onready var worker_scene = preload("res://scenes/Worker.tscn")
 @onready var spawn_marker: Marker2D = $SpawnMarker
 
 var workers: Array = []
@@ -60,7 +60,7 @@ func update_labels() -> void:
 					worker_button.icon = worker.face_sprite.texture
 					worker_button.text = ""
 			if worker_state_label:
-				var job_text = "WOOD" if worker.current_job == worker.JobType.CHOP_WOOD else "FOOD"
+				var job_text = "WOOD" if worker.current_job == worker.WorkerJob.GATHER_WOOD else "FOOD"
 				worker_state_label.text = job_text
 
 			# Make the fire button visible when a worker exists in this slot
@@ -184,7 +184,7 @@ func update_worker_spawn_buttons() -> void:
 
 func _on_switch_job_button_pressed() -> void:
 	for worker in workers:
-		worker.current_job = worker.JobType.GATHER_FOOD if worker.current_job == worker.JobType.CHOP_WOOD else worker.JobType.CHOP_WOOD
+		worker.current_job = worker.WorkerJob.GATHER_FOOD if worker.current_job == worker.WorkerJob.GATHER_WOOD else worker.WorkerJob.GATHER_WOOD
 		worker.find_target_resource()  # Immediately find new target
 
 	update_labels()  # Refresh UI

@@ -1,8 +1,8 @@
 [gd_scene load_steps=12 format=3 uid="uid://drwwji61qlf4y"]
 
-[ext_resource type="Texture2D" uid="uid://djsp02jphs5ma" path="res://art/WorkerSpriteSheet.png" id="1_krgcu"]
-[ext_resource type="Script" uid="uid://mp568a6nawgw" path="res://scripts/worker.gd" id="1_mk28a"]
-[ext_resource type="Texture2D" uid="uid://cdrgi07ti5bms" path="res://art/WorkerFaceSprite.png" id="3_ujfku"]
+[ext_resource type="Script" uid="uid://mp568a6nawgw" path="res://scripts/worker.gd" id="1_ujfku"]
+[ext_resource type="Texture2D" uid="uid://djsp02jphs5ma" path="res://art/WorkerSpriteSheet.png" id="2_x7atv"]
+[ext_resource type="Texture2D" uid="uid://cdrgi07ti5bms" path="res://art/WorkerFaceSprite.png" id="3_x6owh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rnx45"]
 radius = 4.01386
@@ -106,20 +106,20 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_ujfku"]
 radius = 47.0106
 
-[node name="Worker2" type="CharacterBody2D" groups=["workers"]]
+[node name="Worker" type="CharacterBody2D" groups=["workers"]]
 collision_layer = 2
-script = ExtResource("1_mk28a")
+script = ExtResource("1_ujfku")
 
 [node name="WorkerSprite" type="Sprite2D" parent="."]
 y_sort_enabled = true
-texture = ExtResource("1_krgcu")
+texture = ExtResource("2_x7atv")
 offset = Vector2(0, -6)
 hframes = 4
 vframes = 7
 
 [node name="FaceSprite" type="Sprite2D" parent="."]
 visible = false
-texture = ExtResource("3_ujfku")
+texture = ExtResource("3_x6owh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2)
