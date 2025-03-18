@@ -1,25 +1,20 @@
 extends CharacterBody2D
 
 @onready var face_sprite: Sprite2D = $FaceSprite
-@onready var tree_chop_timer: Timer = $TreeChopTimer
-@onready var bush_chop_timer: Timer = $BushChopTimer
 @onready var animations: AnimationPlayer = $AnimationPlayer
 @onready var action_label: Label = $ActionLabel
+@onready var tree_chop_timer: Timer = $TreeChopTimer
+@onready var bush_chop_timer: Timer = $BushChopTimer
 
-var speed: float = 50.0
+var speed: float = 150.0
 var wood_per_trip: int = 6
 var food_per_trip: int = 6
 var carried_wood: int = 0
 var carried_food: int = 0
-var current_state : WorkerState = WorkerState.IDLE
-var current_job : WorkerJob = WorkerJob.GATHER_WOOD
+var current_state: WorkerState = WorkerState.IDLE
+var current_job: WorkerJob = WorkerJob.GATHER_WOOD
 var target_resource: ResourceTarget = null
 var home_hut: WorkerHut = null
-
-var timers = {
-	WorkerJob.GATHER_WOOD: tree_chop_timer,
-	WorkerJob.GATHER_FOOD: bush_chop_timer
-}
 
 enum WorkerState {
 	GATHERING,
@@ -52,8 +47,8 @@ func _physics_process(_delta: float) -> void:
 
 func update_animation() -> void:
 	if current_state == WorkerState.GATHERING:
-		animations.play("RESET") # Placeholder for chopping animation later
-	if velocity.length() > 0:
+		animations.play("RESET")  # Placeholder for "chopping" animation
+	elif velocity.length() > 0:
 		var anim_direction = velocity.normalized()
 		if abs(anim_direction.x) > abs(anim_direction.y):
 			if anim_direction.x > 0:
@@ -66,15 +61,12 @@ func update_animation() -> void:
 			else:
 				animations.play("walk_up")
 	else:
-		animations.stop()
+		animations.stop()  # Placeholder for "idle" animation
 
 func move_to_target(target: Vector2) -> void:
 	var direction = (target - global_position).normalized()
 	velocity = direction * speed
-	move_and_slide()
-
 	var distance = global_position.distance_to(target)
-
 	if distance < 15.0:
 		if current_state == WorkerState.FINDING:
 			current_state = WorkerState.GATHERING
@@ -84,25 +76,30 @@ func move_to_target(target: Vector2) -> void:
 func gather_resource(resource_type: WorkerJob) -> void:
 	if not target_resource:
 		return
-	
-	var timer = timers.get(resource_type)
-	if timer.is_stopped():
+
+	# Start the correct timer based on resource type.
+	if resource_type == WorkerJob.GATHER_WOOD and tree_chop_timer.is_stopped():
 		velocity = Vector2.ZERO
-		timer.start()
+		tree_chop_timer.start()
+		flash_text(resource_type)
+	elif resource_type == WorkerJob.GATHER_FOOD and bush_chop_timer.is_stopped():
+		velocity = Vector2.ZERO
+		bush_chop_timer.start()
 		flash_text(resource_type)
 
 func flash_text(resource_type: WorkerJob) -> void:
 	var flash_times = 3
-	var flash_duration = 3.0 / (flash_times * 2)  # Calculate half-cycle duration
+	var flash_duration = 3.0 / (flash_times * 2)  # Duration for half-cycle flash
 	var message = "+2 Wood!!" if resource_type == WorkerJob.GATHER_WOOD else "+2 Food!!"
 
-	for i in flash_times:
+	# Use 'range(flash_times)' for looping in GDScript.
+	for i in range(flash_times):
 		action_label.text = message
 		await get_tree().create_timer(flash_duration).timeout
 		action_label.text = ""
 		await get_tree().create_timer(flash_duration).timeout
 
-	# Ensure text is cleared after flashing
+	# Clear text explicitly after the flash sequence.
 	action_label.text = ""
 
 func deposit_resource(resource_type: WorkerJob) -> void:
@@ -112,7 +109,7 @@ func deposit_resource(resource_type: WorkerJob) -> void:
 	elif resource_type == WorkerJob.GATHER_FOOD and carried_food > 0:
 		home_hut.hut_food += carried_food
 		carried_food = 0
-	current_state = WorkerState.IDLE  # Return to idle state
+	current_state = WorkerState.IDLE  # Return to idle after deposit
 
 func find_target_resource() -> void:
 	if not is_inside_tree():
@@ -129,7 +126,7 @@ func find_target_resource() -> void:
 	var closest_dist: float = INF
 
 	for resource in get_tree().get_nodes_in_group(resource_group):
-		# Skip resources already targeted by other workers
+		# Skip resources already targeted by other workers.
 		if resource.is_targeted:
 			continue
 
@@ -143,18 +140,19 @@ func find_target_resource() -> void:
 		target_resource.is_targeted = true  # Mark resource as targeted immediately
 		current_state = WorkerState.FINDING
 
-func _on_tree_chop_timer_timeout():
+func _on_tree_chop_timer_timeout() -> void:
 	action_label.text = ""
 	if target_resource:
-		target_resource.queue_free()
+		target_resource.queue_free()  # Remove the gathered resource
 		carried_wood += wood_per_trip
-		target_resource = null
-	current_state = WorkerState.RETURNING
+		target_resource = null  # Clear the target
+	current_state = WorkerState.RETURNING  # Head back to deposit resources
+
 
 func _on_bush_chop_timer_timeout() -> void:
 	action_label.text = ""
 	if target_resource:
-		target_resource.queue_free()
+		target_resource.queue_free()  # Remove the gathered resource
 		carried_food += food_per_trip
-		target_resource = null
-	current_state = WorkerState.RETURNING
+		target_resource = null  # Clear the target
+	current_state = WorkerState.RETURNING  # Head back to deposit resources

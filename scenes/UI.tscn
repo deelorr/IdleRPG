@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cf6wems303amh"]
 
-[ext_resource type="StyleBox" uid="uid://sugqjf8hn4gk" path="res://scenes/ButtonStyle.tres" id="1_dj8aq"]
+[ext_resource type="StyleBox" uid="uid://sugqjf8hn4gk" path="res://art/ButtonStyle.tres" id="1_dj8aq"]
 [ext_resource type="Script" uid="uid://dw27mfl60waj5" path="res://scripts/ui.gd" id="1_ro3t7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ro3t7"]

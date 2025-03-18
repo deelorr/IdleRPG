@@ -7,7 +7,7 @@ class_name WorkerHut
 @onready var worker1_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1Button
 @onready var worker2_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2Button
 @onready var worker3_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3Button
-@onready var worker_scene = preload("res://scenes/Worker.tscn")
+@onready var worker_scene = preload("res://scenes/ForestWorker.tscn")
 @onready var spawn_marker: Marker2D = $SpawnMarker
 
 var workers: Array = []
