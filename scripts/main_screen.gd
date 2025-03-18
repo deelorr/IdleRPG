@@ -5,13 +5,18 @@ const SAVE_PATH: String = "user://savegame.json"
 @onready var clock_label: Label = $UI/Overlay/Panel/ClockPanel/ClockLabel
 @onready var tree_timer: Timer = $TreeTimer
 @onready var tree_scene = preload("res://scenes/Tree.tscn")
+@onready var bush_scene = preload("res://scenes/Bush.tscn")
 @onready var spawn_area_polygon: Polygon2D = $TheWoods
+@onready var food_spawn: Polygon2D = $TheFoods
 
 @export var max_trees: int = 30
+@export var max_bushes: int = 30
 
 func _ready() -> void:
 	for i in 15:
 		spawn_tree()
+	for i in 15:
+		spawn_bush()
 	TimeManager.time_updated.connect(_on_time_changed)
 	_on_time_changed(int(TimeManager.time_of_day * TimeManager.HOURS_IN_DAY), 0, TimeManager.day_count)
 	
@@ -34,6 +39,37 @@ func _input(event: InputEvent) -> void:
 
 func _on_tree_timer_timeout():
 	spawn_tree()
+
+func spawn_bush():
+	var current_bush_count = get_tree().get_nodes_in_group("bush").size()
+	if current_bush_count >= max_bushes:
+		print("Reached max tree limit: ", max_bushes)
+		return
+
+	var new_bush = bush_scene.instantiate() as StaticBody2D
+	add_child(new_bush)
+
+	# Try to find a non-overlapping position
+	var max_attempts = 100  # Prevent infinite loops
+	var spawn_point: Vector2
+	var found_valid_position = false
+
+	for i in max_attempts:
+		var temp_point = get_random_point_in_polygon(spawn_area_polygon.polygon)
+		if not is_position_overlapping(temp_point):  # Check if this position is valid
+			spawn_point = temp_point
+			found_valid_position = true
+			break  # Stop searching once a valid spot is found
+
+	if not found_valid_position:
+		print("WARNING: Could not find non-overlapping spawn position!")
+		return  # Exit function to prevent spawning in a bad location
+
+	new_bush.global_position = spawn_area_polygon.to_global(spawn_point)
+	new_bush.scale = Vector2(2.0, 2.0)
+	
+	new_bush.add_to_group("bush")
+	print("Bush spawned at: ", new_bush.global_position)
 
 func spawn_tree():
 	var current_tree_count = get_tree().get_nodes_in_group("tree").size()

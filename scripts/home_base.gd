@@ -9,12 +9,12 @@ extends StaticBody2D
 func _ready() -> void:
 	Global.resource_changed.connect(update_home_resource_display)
 	update_home_resource_display()
-	
+
 func update_home_resource_display() -> void:
 	gold_button.text = "Gold: %d" % Global.total_city_gold
 	wood_button.text = "Wood: %d" % Global.total_city_wood
 	food_button.text = "Food: %d" % Global.total_city_food
-	
+
 func _input_event(_viewport, event: InputEvent, _shape_idx) -> void:
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
 		highlight()

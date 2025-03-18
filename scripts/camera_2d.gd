@@ -7,7 +7,7 @@ var section_positions: Dictionary = {
 	"home": Vector2(544, 0),
 	"snow": Vector2(0, 1008),
 	"cave": Vector2(544, 1008),
-}
+	}
 
 var target_position: Vector2 = section_positions["home"]
 var is_moving: bool = false

@@ -6,11 +6,17 @@ extends CharacterBody2D
 @onready var action_label: Label = $ActionLabel
 
 var workers_hut: WorkerHut
-var target_tree: TreeClass
+var target_tree: Node2D
 var speed: float = 50.0                 # Movement speed
 var wood_per_trip: int = 6              # Wood gathered per tree
 var carried_wood: int = 0               # Wood currently carried
 var current_state: String = "idle"      # States: "chopping", idle", "finding", "returning"
+var current_job = JobType.CHOP_WOOD
+
+enum JobType {
+	CHOP_WOOD, 
+	GATHER_FOOD,
+}
 
 func _physics_process(_delta: float) -> void:
 	match current_state:
@@ -85,6 +91,34 @@ func deposit_wood() -> void:
 		workers_hut.hut_wood += carried_wood  # Add wood to hut's storage
 		carried_wood = 0                        # Reset carried wood
 	current_state = "idle"                      # Return to idle state
+
+func find_target_resource() -> void:
+	if current_job == JobType.CHOP_WOOD:
+		find_target_tree()
+	elif current_job == JobType.GATHER_FOOD:
+		find_target_food()
+
+func find_target_food() -> void:
+	if not is_inside_tree():
+		await ready  # Ensure the node is fully in the scene tree
+
+	var closest_food: Node2D = null
+	var closest_dist: float = INF
+
+	for food in get_tree().get_nodes_in_group("food"):
+		# Skip food sources already targeted by other workers
+		if food.is_targeted:
+			continue
+
+		var dist = global_position.distance_to(food.global_position)
+		if dist < closest_dist:
+			closest_dist = dist
+			closest_food = food
+
+	if closest_food:
+		target_tree = closest_food  # Assign as target resource
+		target_tree.is_targeted = true  # Mark food as targeted immediately
+		current_state = "going_to_tree"
 
 func find_target_tree() -> void:
 	if not is_inside_tree():
