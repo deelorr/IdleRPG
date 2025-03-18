@@ -540,4 +540,4 @@ position = Vector2(592, 96)
 scale = Vector2(2, 2)
 
 [connection signal="timeout" from="TreeTimer" to="." method="_on_tree_timer_timeout"]
-[connection signal="timeout" from="BushTimer" to="." method="_on_tree_timer_timeout"]
+[connection signal="timeout" from="BushTimer" to="." method="_on_bush_timer_timeout"]

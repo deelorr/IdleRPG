@@ -4,10 +4,11 @@ const SAVE_PATH: String = "user://savegame.json"
 
 @onready var clock_label: Label = $UI/Overlay/Panel/ClockPanel/ClockLabel
 @onready var tree_timer: Timer = $TreeTimer
+@onready var bush_timer: Timer = $BushTimer
 @onready var tree_scene = preload("res://scenes/Tree.tscn")
 @onready var bush_scene = preload("res://scenes/Bush.tscn")
-@onready var spawn_area_polygon: Polygon2D = $TheWoods
-@onready var food_spawn: Polygon2D = $TheFoods
+@onready var tree_spawn: Polygon2D = $TheWoods
+@onready var bush_spawn: Polygon2D = $TheFoods
 
 @export var max_trees: int = 30
 @export var max_bushes: int = 30
@@ -55,7 +56,7 @@ func spawn_bush():
 	var found_valid_position = false
 
 	for i in max_attempts:
-		var temp_point = get_random_point_in_polygon(spawn_area_polygon.polygon)
+		var temp_point = get_random_point_in_polygon(bush_spawn.polygon)
 		if not is_position_overlapping(temp_point):  # Check if this position is valid
 			spawn_point = temp_point
 			found_valid_position = true
@@ -65,7 +66,7 @@ func spawn_bush():
 		print("WARNING: Could not find non-overlapping spawn position!")
 		return  # Exit function to prevent spawning in a bad location
 
-	new_bush.global_position = spawn_area_polygon.to_global(spawn_point)
+	new_bush.global_position = bush_spawn.to_global(spawn_point)
 	new_bush.scale = Vector2(2.0, 2.0)
 	
 	new_bush.add_to_group("bush")
@@ -86,7 +87,7 @@ func spawn_tree():
 	var found_valid_position = false
 
 	for i in max_attempts:
-		var temp_point = get_random_point_in_polygon(spawn_area_polygon.polygon)
+		var temp_point = get_random_point_in_polygon(tree_spawn.polygon)
 		if not is_position_overlapping(temp_point):  # Check if this position is valid
 			spawn_point = temp_point
 			found_valid_position = true
@@ -96,7 +97,7 @@ func spawn_tree():
 		print("WARNING: Could not find non-overlapping spawn position!")
 		return  # Exit function to prevent spawning in a bad location
 
-	new_tree.global_position = spawn_area_polygon.to_global(spawn_point)
+	new_tree.global_position = tree_spawn.to_global(spawn_point)
 	new_tree.scale = Vector2(2.0, 2.0)
 	
 	new_tree.add_to_group("tree")
@@ -125,3 +126,6 @@ func get_random_point_in_polygon(polygon: PackedVector2Array) -> Vector2:
 
 	push_warning("Could not find valid point in polygon after max attempts.")
 	return rect.position
+
+func _on_bush_timer_timeout() -> void:
+	spawn_bush()

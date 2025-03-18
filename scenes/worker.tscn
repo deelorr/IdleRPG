@@ -141,6 +141,10 @@ shape = SubResource("CircleShape2D_ujfku")
 wait_time = 3.0
 one_shot = true
 
+[node name="BushChopTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [node name="ActionLabel" type="Label" parent="."]
 offset_left = -20.0
 offset_top = -36.0
@@ -149,3 +153,4 @@ offset_bottom = -13.0
 
 [connection signal="body_entered" from="FOV" to="." method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="TreeChopTimer" to="." method="_on_tree_chop_timer_timeout"]
+[connection signal="timeout" from="BushChopTimer" to="." method="_on_bush_chop_timer_timeout"]

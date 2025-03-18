@@ -1,19 +1,14 @@
 extends StaticBody2D
-
 class_name WorkerHut
 
 @onready var sprite: Sprite2D = $WorkerHutSprite
 @onready var menu: Control = $MenuPanel
 @onready var wood_button: Button = $MenuPanel/VBoxContainer/WorkerHutStats/WoodButton
-@onready var food_button: Button = $MenuPanel/VBoxContainer/WorkerHutStats/FoodButton
 @onready var worker1_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1Button
 @onready var worker2_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2Button
 @onready var worker3_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3Button
 @onready var worker_scene = preload("res://scenes/worker.tscn")
-@onready var marker: Marker2D = $Marker2D
-
-@onready var switch_job_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker1/SwitchJobButton
-
+@onready var spawn_marker: Marker2D = $SpawnMarker
 
 var workers: Array = []
 var current_workers: int = 1
@@ -37,11 +32,11 @@ func spawn_worker() -> void:
 		return
 	
 	var worker = worker_scene.instantiate() as CharacterBody2D
-	worker.global_position = marker.global_position   # Spawn near hut
-	worker.scale = Vector2(2.0, 2.0)
-	worker.workers_hut = self                            # Link worker to this hut
-	get_parent().add_child.call_deferred(worker)         # Add to scene
-	workers.append(worker)                               # Track worker
+	worker.global_position = spawn_marker.global_position # Spawn at marker
+	worker.scale = Vector2(2.0, 2.0) # Default scale for Characters for now
+	worker.home_hut = self # Link worker to this hut
+	get_parent().add_child.call_deferred(worker) # Add to scene
+	workers.append(worker) # Track worker
 
 func update_labels() -> void:
 	wood_button.text = "Wood: " + str(hut_wood)
@@ -81,15 +76,10 @@ func update_labels() -> void:
 			if worker_fire_button:
 				worker_fire_button.visible = false
 
-func _input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if not _left_mouse_click(event):
-		return
-
-	highlight()   # Visual feedback
-	toggle_menu() # Show/hide menu
-
-func _left_mouse_click(event: InputEvent) -> bool:
-	return event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT
+func _input_event(_viewport, event: InputEvent, _shape_idx) -> void:
+	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
+		highlight()
+		toggle_menu()
 
 func highlight() -> void:
 	sprite.modulate = Color(1.2, 1.2, 1.2, 1)  # Brighten
@@ -97,22 +87,15 @@ func highlight() -> void:
 	sprite.modulate = Color(1, 1, 1, 1)        # Reset
 
 func toggle_menu() -> void:
+	var tween := create_tween()
 	if menu.visible:
-		hide_menu()
+		tween.tween_property(menu, "scale", Vector2.ZERO, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+		await tween.finished
+		menu.visible = false
 	else:
-		show_menu()
-
-func show_menu() -> void:
-	menu.visible = true
-	menu.scale = Vector2.ZERO
-	var tween := create_tween()
-	tween.tween_property(menu, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-
-func hide_menu() -> void:
-	var tween := create_tween()
-	tween.tween_property(menu, "scale", Vector2.ZERO, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-	await tween.finished
-	menu.visible = false
+		menu.visible = true
+		menu.scale = Vector2.ZERO
+		tween.tween_property(menu, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _on_collect_button_pressed() -> void:
 	Global.total_city_wood += hut_wood  # First, add hut_wood to global total

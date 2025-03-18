@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ctks6llt2mjyk"]
 
-[ext_resource type="Script" uid="uid://c06f0trs2cinr" path="res://bush.gd" id="1_lecah"]
+[ext_resource type="Script" uid="uid://j85ydmkktqa0" path="res://scripts/resource_target.gd" id="1_lecah"]
 [ext_resource type="Texture2D" uid="uid://d2rs7isidq8ps" path="res://art/BushSprite.png" id="2_lecah"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nbyt5"]
