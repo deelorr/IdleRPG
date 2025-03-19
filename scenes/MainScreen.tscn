@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://cn3opsn1ip0s6"]
+[gd_scene load_steps=11 format=4 uid="uid://cn3opsn1ip0s6"]
 
 [ext_resource type="Script" uid="uid://cgr0gbaww5a8g" path="res://scripts/main_screen.gd" id="1_5aeyp"]
 [ext_resource type="Texture2D" uid="uid://58rndofkpfve" path="res://art/TilesetGround.png" id="2_2skl6"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cf6wems303amh" path="res://scenes/UI.tscn" id="5_1agfe"]
 [ext_resource type="PackedScene" uid="uid://clfhfh54lg1nf" path="res://scenes/WorkerHut.tscn" id="5_y448k"]
 [ext_resource type="PackedScene" uid="uid://ogv02rj6n4io" path="res://scenes/HomeBase.tscn" id="6_el83a"]
+[ext_resource type="Script" uid="uid://c4wo705ehnpn6" path="res://scenes/bush_spawn_area.gd" id="7_1agfe"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_y4gqh"]
 texture = ExtResource("2_2skl6")
@@ -488,9 +489,13 @@ texture = ExtResource("2_2skl6")
 [sub_resource type="TileSet" id="TileSet_rrqh5"]
 sources/0 = SubResource("TileSetAtlasSource_y4gqh")
 
-[node name="MainScreen" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_svp2y"]
+size = Vector2(384.75, 387)
+
+[node name="MainScreen" type="Node2D" node_paths=PackedStringArray("bush_spawn_area")]
 y_sort_enabled = true
 script = ExtResource("1_5aeyp")
+bush_spawn_area = NodePath("BushSpawnArea")
 
 [node name="TilemapLayers" type="Node2D" parent="."]
 
@@ -502,7 +507,6 @@ tile_set = SubResource("TileSet_rrqh5")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(544, 0)
 anchor_mode = 0
-zoom = Vector2(2, 2)
 limit_left = 0
 limit_top = 0
 limit_right = 1088
@@ -538,6 +542,14 @@ scale = Vector2(2, 2)
 [node name="HomeBase" parent="." instance=ExtResource("6_el83a")]
 position = Vector2(592, 96)
 scale = Vector2(2, 2)
+
+[node name="BushSpawnArea" type="Area2D" parent="."]
+position = Vector2(273, 741)
+script = ExtResource("7_1agfe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BushSpawnArea"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_svp2y")
 
 [connection signal="timeout" from="TreeTimer" to="." method="_on_tree_timer_timeout"]
 [connection signal="timeout" from="BushTimer" to="." method="_on_bush_timer_timeout"]
