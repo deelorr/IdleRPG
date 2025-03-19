@@ -536,11 +536,11 @@ color = Color(0, 0.435294, 0.215686, 0)
 polygon = PackedVector2Array(977.878, 59.271, 977.769, 462.132, 979, 876, 585, 876, 583.878, 314.636, 708.476, 323.442, 707.353, 59.271)
 
 [node name="WorkerHut" parent="." instance=ExtResource("5_y448k")]
-position = Vector2(48, 96)
+position = Vector2(49, 151)
 scale = Vector2(2, 2)
 
 [node name="HomeBase" parent="." instance=ExtResource("6_el83a")]
-position = Vector2(592, 96)
+position = Vector2(593, 151)
 scale = Vector2(2, 2)
 
 [node name="BushSpawnArea" type="Area2D" parent="."]

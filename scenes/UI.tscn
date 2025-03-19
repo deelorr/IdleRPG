@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cf6wems303amh"]
+[gd_scene load_steps=5 format=3 uid="uid://cf6wems303amh"]
 
 [ext_resource type="StyleBox" uid="uid://sugqjf8hn4gk" path="res://art/ButtonStyle.tres" id="1_dj8aq"]
 [ext_resource type="Script" uid="uid://dw27mfl60waj5" path="res://scripts/ui.gd" id="1_ro3t7"]
+[ext_resource type="Theme" uid="uid://cq5uc11a85s43" path="res://art/ButtonContainerTheme.tres" id="3_5en4g"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ro3t7"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -31,9 +32,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -526.0
-offset_top = -193.0
+offset_top = -321.0
 offset_right = 526.0
-offset_bottom = -25.0
+offset_bottom = -44.0
 grow_horizontal = 2
 grow_vertical = 0
 
@@ -43,17 +44,18 @@ mouse_filter = 2
 theme_override_styles/panel = ExtResource("1_dj8aq")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/MenuContainer"]
+custom_minimum_size = Vector2(1000, 200)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/separation = 10
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/MenuContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_override_constants/separation = 10
+theme = ExtResource("3_5en4g")
+theme_override_constants/separation = 20
 
 [node name="WoodsButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(63, 30)
@@ -72,7 +74,7 @@ text = "Snow"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_override_constants/separation = 10
+theme = ExtResource("3_5en4g")
 
 [node name="Menu" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2"]
 custom_minimum_size = Vector2(63, 30)
@@ -125,7 +127,8 @@ text = "Reset"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_override_constants/separation = 10
+theme = ExtResource("3_5en4g")
+theme_override_constants/separation = 20
 
 [node name="HomeButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer3"]
 layout_mode = 2
@@ -154,11 +157,12 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_ro3t7")
 [node name="ClockPanel" type="PanelContainer" parent="Overlay/Panel"]
 custom_minimum_size = Vector2(63, 30)
 layout_mode = 2
-offset_left = 745.0
-offset_top = 33.0
-offset_right = 808.0
-offset_bottom = 63.0
+offset_left = 730.0
+offset_top = 46.0
+offset_right = 923.0
+offset_bottom = 115.0
 size_flags_vertical = 0
+theme = ExtResource("3_5en4g")
 
 [node name="ClockLabel" type="Label" parent="Overlay/Panel/ClockPanel"]
 layout_mode = 2
