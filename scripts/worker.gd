@@ -3,6 +3,10 @@ extends CharacterBody2D
 @onready var face_sprite: Sprite2D = $FaceSprite
 @onready var animations: AnimationPlayer = $AnimationPlayer
 @onready var action_label: Label = $ActionLabel
+@onready var worker_panel := $WorkerPanel
+@onready var worker_level := $WorkerPanel/VBoxContainer/WorkerLevel
+@onready var carried_wood_label := $WorkerPanel/VBoxContainer/WorkerWood
+@onready var carried_food_label := $WorkerPanel/VBoxContainer/WorkerFood
 @onready var tree_chop_timer: Timer = $TreeChopTimer
 @onready var bush_chop_timer: Timer = $BushChopTimer
 
@@ -15,6 +19,7 @@ var current_state: WorkerState = WorkerState.IDLE
 var current_job: WorkerJob = WorkerJob.GATHER_WOOD
 var target_resource: ResourceTarget = null
 var home_hut: WorkerHut = null
+var current_level: int = 1
 
 enum WorkerState {
 	GATHERING,
@@ -27,6 +32,11 @@ enum WorkerJob {
 	GATHER_WOOD,
 	GATHER_FOOD,
 }
+
+func update_worker_panel():
+	worker_level.text = str(current_level)
+	carried_food_label.text = str(carried_food)
+	carried_wood_label.text = str(carried_wood)
 
 func _physics_process(_delta: float) -> void:
 	match current_state:
@@ -44,6 +54,7 @@ func _physics_process(_delta: float) -> void:
 				current_state = WorkerState.RETURNING
 	move_and_slide()
 	update_animation()
+	update_worker_panel()
 
 func update_animation() -> void:
 	if current_state == WorkerState.GATHERING:
@@ -156,3 +167,8 @@ func _on_bush_chop_timer_timeout() -> void:
 		carried_food += food_per_trip
 		target_resource = null  # Clear the target
 	current_state = WorkerState.RETURNING  # Head back to deposit resources
+
+
+func _on_input_event(viewport, event, shape_idx):
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		worker_panel.visible = !worker_panel.visible  # Toggles visibility

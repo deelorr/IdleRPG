@@ -4,6 +4,7 @@ class_name WorkerHut
 @onready var sprite: Sprite2D = $WorkerHutSprite
 @onready var menu: Control = $MenuPanel
 @onready var wood_button: Button = $MenuPanel/VBoxContainer/WorkerHutStats/WoodButton
+@onready var food_button: Button = $MenuPanel/VBoxContainer/WorkerHutStats/FoodButton
 @onready var worker1_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1Button
 @onready var worker2_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2Button
 @onready var worker3_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3Button
@@ -40,6 +41,7 @@ func spawn_worker() -> void:
 
 func update_labels() -> void:
 	wood_button.text = "Wood: " + str(hut_wood)
+	food_button.text = "Food: " + str(hut_food)
 	
 	# Loop through each worker slot (assuming max_workers is the total number of slots)
 	for i in range(max_workers):
@@ -99,8 +101,9 @@ func toggle_menu() -> void:
 
 func _on_collect_button_pressed() -> void:
 	Global.total_city_wood += hut_wood  # First, add hut_wood to global total
-	Global.resource_changed.emit("wood", Global.total_city_wood)  # Then emit the updated value
+	Global.total_city_food += hut_food
 	hut_wood = 0  # Reset hut wood
+	hut_food = 0
 	update_labels()  # Update UI
 
 func _on_worker_1_button_pressed() -> void:
