@@ -10,6 +10,7 @@ class_name WorkerHut
 @onready var worker3_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3Button
 @onready var worker_scene = preload("res://scenes/ForestWorker.tscn")
 @onready var spawn_marker: Marker2D = $SpawnMarker
+@onready var menu_anchor: Marker2D = $MenuAnchor
 
 var workers: Array = []
 var current_workers: int = 1
@@ -19,25 +20,8 @@ var max_wood: int = 30
 var hut_food: int = 0
 var max_food: int = 30
 
-func _ready() -> void:
-	for i in range(current_workers):
-		spawn_worker()
-	update_worker_spawn_buttons()
-
 func _physics_process(_delta):
 	update_labels()
-
-func spawn_worker() -> void:
-	if workers.size() >= max_workers:
-		print("Worker hut is full!")
-		return
-	
-	var worker = worker_scene.instantiate() as CharacterBody2D
-	worker.global_position = spawn_marker.global_position # Spawn at marker
-	worker.scale = Vector2(2.0, 2.0) # Default scale for Characters for now
-	worker.home_hut = self # Link worker to this hut
-	get_parent().add_child.call_deferred(worker) # Add to scene
-	workers.append(worker) # Track worker
 
 func update_labels() -> void:
 	wood_button.text = "Wood: " + str(hut_wood)
@@ -90,14 +74,34 @@ func highlight() -> void:
 
 func toggle_menu() -> void:
 	var tween := create_tween()
+
+	# If this menu is already open, close it and reset the global tracker
 	if menu.visible:
 		tween.tween_property(menu, "scale", Vector2.ZERO, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 		await tween.finished
 		menu.visible = false
+
+		# Only clear Global.currently_open_hut **if** this hut was the active one
+		if Global.currently_open_hut == self:
+			Global.currently_open_hut = null
+
 	else:
+		# If another hut's menu is open, close it first
+		if Global.currently_open_hut and Global.currently_open_hut != self:
+			Global.currently_open_hut.force_close_menu()
+
+		# Open this menu
+		Global.currently_open_hut = self
 		menu.visible = true
+		menu.global_position = menu_anchor.global_position
 		menu.scale = Vector2.ZERO
 		tween.tween_property(menu, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+func force_close_menu() -> void:
+	if menu.visible:
+		menu.visible = false
+		menu.scale = Vector2.ONE
+		Global.currently_open_hut = null
 
 func _on_collect_button_pressed() -> void:
 	Global.total_city_wood += hut_wood  # First, add hut_wood to global total
@@ -105,6 +109,41 @@ func _on_collect_button_pressed() -> void:
 	hut_wood = 0  # Reset hut wood
 	hut_food = 0
 	update_labels()  # Update UI
+
+func spawn_worker() -> void:
+	if workers.size() >= max_workers:
+		print("Worker hut is full!")
+		return
+	
+	var worker = worker_scene.instantiate() as CharacterBody2D
+	worker.global_position = spawn_marker.global_position # Spawn at marker
+	worker.scale = Vector2(2.0, 2.0) # Default scale for Characters for now
+	worker.home_hut = self # Link worker to this hut
+	get_parent().add_child.call_deferred(worker) # Add to scene
+	workers.append(worker) # Track worker
+
+func update_worker_spawn_buttons() -> void:
+	match workers.size():
+		0:
+			worker1_button.disabled = false
+			worker2_button.disabled = true
+			worker3_button.disabled = true
+		1:
+			worker1_button.disabled = true
+			worker2_button.disabled = false
+			worker3_button.disabled = true
+		2:
+			worker1_button.disabled = true
+			worker2_button.disabled = true
+			worker3_button.disabled = false
+		3:
+			worker1_button.disabled = true
+			worker2_button.disabled = true
+			worker3_button.disabled = true
+		_:
+			worker1_button.disabled = true
+			worker2_button.disabled = true
+			worker3_button.disabled = true
 
 func _on_worker_1_button_pressed() -> void:
 	if workers.size() == 0:
@@ -130,6 +169,17 @@ func _on_worker_3_button_pressed() -> void:
 	else:
 		print("Worker slot 3 cannot be filled right now. Current worker count: ", workers.size())
 
+func fire_worker(index: int) -> void:
+	if index < 0 or index >= workers.size():
+		print("Invalid worker index!")
+		return
+
+	var worker_to_fire = workers[index]
+	if worker_to_fire and is_instance_valid(worker_to_fire):
+		worker_to_fire.queue_free()  # Remove worker from scene
+	workers.remove_at(index)  # Remove worker from the array
+	update_labels()  # Update your UI, if needed
+
 func _on_worker_1_fire_button_pressed() -> void:
 	# Fire the worker at index 0 if it exists.
 	if workers.size() > 0:
@@ -151,43 +201,20 @@ func _on_worker_3_fire_button_pressed() -> void:
 		update_worker_spawn_buttons()
 		update_labels()
 
-func fire_worker(index: int) -> void:
-	if index < 0 or index >= workers.size():
-		print("Invalid worker index!")
-		return
-
-	var worker_to_fire = workers[index]
-	if worker_to_fire and is_instance_valid(worker_to_fire):
-		worker_to_fire.queue_free()  # Remove worker from scene
-	workers.remove_at(index)  # Remove worker from the array
-	update_labels()  # Update your UI, if needed
-
-func update_worker_spawn_buttons() -> void:
-	match workers.size():
-		0:
-			worker1_button.disabled = false
-			worker2_button.disabled = true
-			worker3_button.disabled = true
-		1:
-			worker1_button.disabled = true
-			worker2_button.disabled = false
-			worker3_button.disabled = true
-		2:
-			worker1_button.disabled = true
-			worker2_button.disabled = true
-			worker3_button.disabled = false
-		3:
-			worker1_button.disabled = true
-			worker2_button.disabled = true
-			worker3_button.disabled = true
-		_:
-			worker1_button.disabled = true
-			worker2_button.disabled = true
-			worker3_button.disabled = true
-
-func _on_switch_job_button_pressed() -> void:
-	for worker in workers:
+func switch_worker_job(index: int) -> void:
+	if index >= 0 and index < workers.size():
+		var worker = workers[index]
 		worker.current_job = worker.WorkerJob.GATHER_FOOD if worker.current_job == worker.WorkerJob.GATHER_WOOD else worker.WorkerJob.GATHER_WOOD
-		worker.find_target_resource()  # Immediately find new target
+		worker.find_target_resource()
+		update_labels()
+	else:
+		print("Invalid worker index: ", index)
 
-	update_labels()  # Refresh UI
+func _on_worker_1_switch_job_button_pressed():
+	switch_worker_job(0)
+
+func _on_worker_2_switch_job_button_pressed():
+	switch_worker_job(1)
+
+func _on_worker_3_switch_job_button_pressed():
+	switch_worker_job(2)

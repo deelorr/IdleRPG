@@ -34,9 +34,9 @@ enum WorkerJob {
 }
 
 func update_worker_panel():
-	worker_level.text = str(current_level)
-	carried_food_label.text = str(carried_food)
-	carried_wood_label.text = str(carried_wood)
+	worker_level.text = "Level: " + str(current_level)
+	carried_food_label.text ="Food: " + str(carried_food)
+	carried_wood_label.text = "Wood: " + str(carried_wood)
 
 func _physics_process(_delta: float) -> void:
 	match current_state:
@@ -169,6 +169,6 @@ func _on_bush_chop_timer_timeout() -> void:
 	current_state = WorkerState.RETURNING  # Head back to deposit resources
 
 
-func _on_input_event(viewport, event, shape_idx):
+func _on_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		worker_panel.visible = !worker_panel.visible  # Toggles visibility

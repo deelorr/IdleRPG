@@ -6,7 +6,7 @@ extends StaticBody2D
 @onready var food_button: Button = $HomeBaseStats/FoodButton
 @onready var wood_button: Button = $HomeBaseStats/WoodButton
 
-func _process(delta):
+func _process(_delta):
 	update_home_resource_display()
 
 func update_home_resource_display() -> void:

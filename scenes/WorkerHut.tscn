@@ -29,7 +29,7 @@ size = Vector2(25, 25)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xp4s3"]
 size = Vector2(16, 16)
 
-[node name="WorkerHut" type="StaticBody2D"]
+[node name="WorkerHut" type="StaticBody2D" groups=["worker_hut"]]
 z_index = 1
 input_pickable = true
 script = ExtResource("1_dmtaq")
@@ -91,7 +91,7 @@ horizontal_alignment = 1
 layout_mode = 2
 icon = SubResource("PlaceholderTexture2D_svdfu")
 
-[node name="SwitchJobButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker1"]
+[node name="Worker1SwitchJobButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker1"]
 layout_mode = 2
 icon = SubResource("PlaceholderTexture2D_ssdrr")
 
@@ -115,6 +115,10 @@ horizontal_alignment = 1
 layout_mode = 2
 icon = SubResource("PlaceholderTexture2D_yrk0c")
 
+[node name="Worker2SwitchJobButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker2"]
+layout_mode = 2
+icon = SubResource("PlaceholderTexture2D_ssdrr")
+
 [node name="Worker3" type="HBoxContainer" parent="MenuPanel/VBoxContainer/WorkerButtons"]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -134,6 +138,10 @@ horizontal_alignment = 1
 [node name="Worker3FireButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker3"]
 layout_mode = 2
 icon = SubResource("PlaceholderTexture2D_xp4s3")
+
+[node name="Worker3SwitchJobButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker3"]
+layout_mode = 2
+icon = SubResource("PlaceholderTexture2D_ssdrr")
 
 [node name="WorkerHutStats" type="VBoxContainer" parent="MenuPanel/VBoxContainer"]
 custom_minimum_size = Vector2(175, 0)
@@ -175,11 +183,16 @@ text = "COLLECT"
 [node name="SpawnMarker" type="Marker2D" parent="."]
 position = Vector2(53, 44)
 
+[node name="MenuAnchor" type="Marker2D" parent="."]
+position = Vector2(25, 49)
+
 [connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1Button" to="." method="_on_worker_1_button_pressed"]
 [connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1FireButton" to="." method="_on_worker_1_fire_button_pressed"]
-[connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker1/SwitchJobButton" to="." method="_on_switch_job_button_pressed"]
+[connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1SwitchJobButton" to="." method="_on_worker_1_switch_job_button_pressed"]
 [connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2Button" to="." method="_on_worker_2_button_pressed"]
 [connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2FireButton" to="." method="_on_worker_2_fire_button_pressed"]
+[connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2SwitchJobButton" to="." method="_on_worker_2_switch_job_button_pressed"]
 [connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3Button" to="." method="_on_worker_3_button_pressed"]
 [connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3FireButton" to="." method="_on_worker_3_fire_button_pressed"]
+[connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3SwitchJobButton" to="." method="_on_worker_3_switch_job_button_pressed"]
 [connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerHutStats/CollectButton" to="." method="_on_collect_button_pressed"]
