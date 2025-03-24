@@ -1,18 +1,21 @@
 extends CharacterBody2D
+class_name Worker
 
 @onready var face_sprite: Sprite2D = $FaceSprite
 @onready var animations: AnimationPlayer = $AnimationPlayer
 @onready var action_label: Label = $ActionLabel
 @onready var worker_panel := $WorkerPanel
 @onready var worker_level := $WorkerPanel/VBoxContainer/WorkerLevel
-@onready var carried_wood_label := $WorkerPanel/VBoxContainer/WorkerWood
-@onready var carried_food_label := $WorkerPanel/VBoxContainer/WorkerFood
+@onready var carried_wood_label := $WorkerPanel/VBoxContainer/GridContainer/WorkerFoodAmount
+@onready var carried_food_label := $WorkerPanel/VBoxContainer/GridContainer/WorkerWoodAmount
 @onready var tree_chop_timer: Timer = $TreeChopTimer
 @onready var bush_chop_timer: Timer = $BushChopTimer
+@onready var target_line: Line2D = $TargetLine
+
 
 var speed: float = 150.0
-var wood_per_trip: int = 6
-var food_per_trip: int = 6
+var base_wood_capacity: int = 24
+var base_food_capacity: int = 24
 var carried_wood: int = 0
 var carried_food: int = 0
 var current_state: WorkerState = WorkerState.IDLE
@@ -35,13 +38,21 @@ enum WorkerJob {
 
 func update_worker_panel():
 	worker_level.text = "Level: " + str(current_level)
-	carried_food_label.text ="Food: " + str(carried_food)
-	carried_wood_label.text = "Wood: " + str(carried_wood)
+	carried_wood_label.text = " %d / %d" % [carried_wood, get_wood_capacity()]
+	carried_food_label.text = " %d / %d" % [carried_food, get_food_capacity()]
 
 func _physics_process(_delta: float) -> void:
 	match current_state:
 		WorkerState.FINDING:
-			move_to_target(target_resource.global_position)
+			if is_instance_valid(target_resource):
+				if target_resource.has_method("get_gather_position"):
+					move_to_target(target_resource.get_gather_position())
+				else:
+					move_to_target(target_resource.global_position)
+			else:
+				target_resource = null
+				current_state = WorkerState.IDLE
+
 		WorkerState.GATHERING:
 			gather_resource(current_job)
 		WorkerState.RETURNING:
@@ -55,6 +66,8 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 	update_animation()
 	update_worker_panel()
+	update_target_line()
+
 
 func update_animation() -> void:
 	if current_state == WorkerState.GATHERING:
@@ -99,18 +112,9 @@ func gather_resource(resource_type: WorkerJob) -> void:
 		flash_text(resource_type)
 
 func flash_text(resource_type: WorkerJob) -> void:
-	var flash_times = 3
-	var flash_duration = 3.0 / (flash_times * 2)  # Duration for half-cycle flash
 	var message = "+2 Wood!!" if resource_type == WorkerJob.GATHER_WOOD else "+2 Food!!"
-
-	# Use 'range(flash_times)' for looping in GDScript.
-	for i in range(flash_times):
-		action_label.text = message
-		await get_tree().create_timer(flash_duration).timeout
-		action_label.text = ""
-		await get_tree().create_timer(flash_duration).timeout
-
-	# Clear text explicitly after the flash sequence.
+	action_label.text = message
+	await get_tree().create_timer(0.5).timeout
 	action_label.text = ""
 
 func deposit_resource(resource_type: WorkerJob) -> void:
@@ -149,26 +153,86 @@ func find_target_resource() -> void:
 	if closest_resource:
 		target_resource = closest_resource
 		target_resource.is_targeted = true  # Mark resource as targeted immediately
+		target_resource.targeted_by = self  # Track the worker
 		current_state = WorkerState.FINDING
 
 func _on_tree_chop_timer_timeout() -> void:
 	action_label.text = ""
-	if target_resource:
-		target_resource.queue_free()  # Remove the gathered resource
-		carried_wood += wood_per_trip
-		target_resource = null  # Clear the target
-	current_state = WorkerState.RETURNING  # Head back to deposit resources
 
+	if target_resource:
+		var chunk_size := 2  # Amount gathered per tick
+		var amount_collected = target_resource.reduce_amount(chunk_size)
+		carried_wood += amount_collected
+
+		if amount_collected > 0:
+			flash_text(WorkerJob.GATHER_WOOD)
+
+		var tree_depleted = target_resource.is_depleted()
+		if tree_depleted:
+			target_resource.is_targeted = false
+			target_resource.targeted_by = null
+			target_resource.queue_free()
+			target_resource = null
+		else:
+			target_resource.is_targeted = false
+			target_resource.targeted_by = null
+
+	if carried_wood >= get_wood_capacity():
+		current_state = WorkerState.RETURNING
+	elif target_resource == null:
+		find_target_resource()
+		if target_resource:
+			current_state = WorkerState.FINDING
+		else:
+			current_state = WorkerState.RETURNING
+	else:
+		tree_chop_timer.start()
 
 func _on_bush_chop_timer_timeout() -> void:
 	action_label.text = ""
+
 	if target_resource:
-		target_resource.queue_free()  # Remove the gathered resource
-		carried_food += food_per_trip
-		target_resource = null  # Clear the target
-	current_state = WorkerState.RETURNING  # Head back to deposit resources
+		var chunk_size := 2  # Amount gathered per tick
+		var amount_collected = target_resource.reduce_amount(chunk_size)
+		carried_food += amount_collected
+
+		if amount_collected > 0:
+			flash_text(WorkerJob.GATHER_FOOD)
+
+		var bush_depleted = target_resource.is_depleted()
+		if bush_depleted:
+			target_resource.is_targeted = false
+			target_resource.targeted_by = null
+			target_resource.queue_free()
+			target_resource = null
+		else:
+			target_resource.is_targeted = false
+			target_resource.targeted_by = null
+
+	if carried_food >= get_food_capacity():
+		current_state = WorkerState.RETURNING
+	elif target_resource == null:
+		find_target_resource()
+		if target_resource:
+			current_state = WorkerState.FINDING
+		else:
+			current_state = WorkerState.RETURNING
+	else:
+		bush_chop_timer.start()
 
 
 func _on_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		worker_panel.visible = !worker_panel.visible  # Toggles visibility
+
+func get_wood_capacity() -> int:
+	return base_wood_capacity + (current_level - 1) * 2  # +2 capacity per level
+
+func get_food_capacity() -> int:
+	return base_food_capacity + (current_level - 1) * 1  # +1 capacity per level
+
+func update_target_line():
+	if is_instance_valid(target_resource):
+		target_line.points = [Vector2.ZERO, target_resource.global_position - global_position]
+	else:
+		target_line.clear_points()

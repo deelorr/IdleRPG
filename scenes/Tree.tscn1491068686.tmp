@@ -13,15 +13,8 @@ script = ExtResource("1_omb14")
 texture = ExtResource("1_2cic4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 8)
 shape = SubResource("CircleShape2D_nbyt5")
 
 [node name="GatherPoint" type="Marker2D" parent="."]
 position = Vector2(0, 24)
-
-[node name="Label" type="Label" parent="."]
-offset_left = -24.0
-offset_top = -32.0
-offset_right = 24.0
-offset_bottom = -8.0

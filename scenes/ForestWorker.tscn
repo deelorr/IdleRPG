@@ -104,8 +104,21 @@ _data = {
 &"walk_up": SubResource("Animation_e4gc4")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ujfku"]
-radius = 47.0106
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r1ivn"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
 
 [node name="Worker" type="CharacterBody2D" groups=["workers"]]
 collision_layer = 2
@@ -124,6 +137,7 @@ visible = false
 texture = ExtResource("3_x6owh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -5)
 shape = SubResource("CapsuleShape2D_r1ivn")
 
@@ -131,13 +145,6 @@ shape = SubResource("CapsuleShape2D_r1ivn")
 libraries = {
 &"": SubResource("AnimationLibrary_74vtg")
 }
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-
-[node name="FOV" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FOV"]
-shape = SubResource("CircleShape2D_ujfku")
 
 [node name="TreeChopTimer" type="Timer" parent="."]
 wait_time = 3.0
@@ -154,34 +161,67 @@ offset_right = 20.0
 offset_bottom = -13.0
 
 [node name="WorkerPanel" type="Panel" parent="."]
+z_index = 1
 offset_left = 9.0
 offset_top = -11.0
-offset_right = 74.0
-offset_bottom = 69.0
+offset_right = 88.0
+offset_bottom = 58.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_r1ivn")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="WorkerPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -2.0
-offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="WorkerLevel" type="Label" parent="WorkerPanel/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 text = "Level: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="WorkerWood" type="Label" parent="WorkerPanel/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="WorkerPanel/VBoxContainer"]
 layout_mode = 2
-text = "Wood: 0"
+size_flags_horizontal = 4
+columns = 2
 
-[node name="WorkerFood" type="Label" parent="WorkerPanel/VBoxContainer"]
+[node name="WorkerWood" type="Label" parent="WorkerPanel/VBoxContainer/GridContainer"]
 layout_mode = 2
-text = "Food: 0"
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 12
+text = "Wood:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WorkerFood" type="Label" parent="WorkerPanel/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Food:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WorkerFoodAmount" type="Label" parent="WorkerPanel/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "0/24"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WorkerWoodAmount" type="Label" parent="WorkerPanel/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "0/24"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TargetLine" type="Line2D" parent="."]
+position = Vector2(0, -5)
+width = 2.0
+default_color = Color(0.111162, 0.242011, 0.148207, 1)
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
-[connection signal="body_entered" from="FOV" to="." method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="TreeChopTimer" to="." method="_on_tree_chop_timer_timeout"]
 [connection signal="timeout" from="BushChopTimer" to="." method="_on_bush_chop_timer_timeout"]
