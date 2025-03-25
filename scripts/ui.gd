@@ -2,8 +2,37 @@ extends CanvasLayer
 
 signal camera_target(target: String)
 
-@onready var menu: Panel = $Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel
-@onready var speed_button: Button = $Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/MenuPanel/VBoxContainer/SpeedButton
+@onready var menu: TabContainer = $Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer
+@onready var speed_button: Button = $Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/VBoxContainer/SpeedButton
+
+@onready var plus_hut_button: Button = $Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/VBoxContainer/HBoxContainer/PlusHutButton
+@onready var minus_hut_button: Button = $Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/VBoxContainer/HBoxContainer/MinusHutButton
+
+var current_hut_count: int = 1
+const MAX_HUTS := 3
+
+# Access worker huts via parent (MainScreen)
+@onready var hut1: Node = get_parent().get_node("WorkerHut")
+@onready var hut2: Node = get_parent().get_node("WorkerHut2")
+@onready var hut3: Node = get_parent().get_node("WorkerHut3")
+
+func _on_plus_hut_button_pressed() -> void:
+	if current_hut_count < MAX_HUTS:
+		current_hut_count += 1
+		match current_hut_count:
+			2:
+				hut2.visible = true
+			3:
+				hut3.visible = true
+
+func _on_minus_hut_button_pressed() -> void:
+	if current_hut_count > 1:
+		match current_hut_count:
+			2:
+				hut2.visible = false
+			3:
+				hut3.visible = false
+		current_hut_count -= 1
 
 func _on_the_woods_button_pressed() -> void:
 	camera_target.emit("woods")
@@ -54,19 +83,12 @@ func _on_reset_pressed() -> void:
 	SaveManager.reset_save()
 
 func toggle_menu() -> void:
+	var tween := create_tween()
 	if menu.visible:
-		hide_menu()
+		tween.tween_property(menu, "scale", Vector2.ZERO, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+		await tween.finished
+		menu.visible = false
 	else:
-		show_menu()
-
-func show_menu() -> void:
-	menu.visible = true
-	menu.scale = Vector2(0, 0)
-	var tween = create_tween()
-	tween.tween_property(menu, "scale", Vector2(1, 1), 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-
-func hide_menu() -> void:
-	var tween = create_tween()
-	tween.tween_property(menu, "scale", Vector2(0, 0), 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-	await tween.finished
-	menu.visible = false
+		menu.visible = true
+		menu.scale = Vector2.ZERO
+		tween.tween_property(menu, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)

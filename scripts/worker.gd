@@ -89,7 +89,7 @@ func update_animation() -> void:
 
 func move_to_target(target: Vector2) -> void:
 	var direction = (target - global_position).normalized()
-	velocity = direction * speed
+	velocity = direction * speed * TimeManager.time_speed_multiplier
 	var distance = global_position.distance_to(target)
 	if distance < 15.0:
 		if current_state == WorkerState.FINDING:
@@ -104,17 +104,19 @@ func gather_resource(resource_type: WorkerJob) -> void:
 	# Start the correct timer based on resource type.
 	if resource_type == WorkerJob.GATHER_WOOD and tree_chop_timer.is_stopped():
 		velocity = Vector2.ZERO
+		tree_chop_timer.wait_time = 1.0 / TimeManager.time_speed_multiplier
 		tree_chop_timer.start()
 		flash_text(resource_type)
 	elif resource_type == WorkerJob.GATHER_FOOD and bush_chop_timer.is_stopped():
 		velocity = Vector2.ZERO
+		bush_chop_timer.wait_time = 1.0 / TimeManager.time_speed_multiplier
 		bush_chop_timer.start()
 		flash_text(resource_type)
 
 func flash_text(resource_type: WorkerJob) -> void:
 	var message = "+2 Wood!!" if resource_type == WorkerJob.GATHER_WOOD else "+2 Food!!"
 	action_label.text = message
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.5 / TimeManager.time_speed_multiplier).timeout
 	action_label.text = ""
 
 func deposit_resource(resource_type: WorkerJob) -> void:

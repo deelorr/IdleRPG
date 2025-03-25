@@ -161,6 +161,7 @@ offset_right = 20.0
 offset_bottom = -13.0
 
 [node name="WorkerPanel" type="Panel" parent="."]
+visible = false
 z_index = 1
 offset_left = 9.0
 offset_top = -11.0
