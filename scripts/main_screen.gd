@@ -15,6 +15,8 @@ const GRID_SIZE = 16  # Size of each "grid" cell
 @onready var worker_hut2_scene := $WorkerHut2
 @onready var worker_hut3_scene := $WorkerHut3
 
+@onready var text_box := $UI/TextBox
+
 var occupied_cells = {}  # Stores occupied grid positions
 var max_trees: int = 20
 var max_bushes: int = 20
@@ -30,6 +32,13 @@ func _ready() -> void:
 
 	if FileAccess.file_exists(SAVE_PATH):
 		SaveManager.load_game()
+		
+	text_box.show_text_sequence([
+	{"speaker": "Narrator", "text": "Your first worker is now ready."},
+	{"speaker": "Worker", "text": "I'll gather as much slime as I can!"},
+	{"speaker": "Narrator", "text": "The worker runs off toward the forest."}
+])
+
 
 func _on_time_changed(in_game_hours: int, in_game_minutes: int, _new_day: int) -> void:
 	clock_label.text = "%02d:%02d" % [in_game_hours, in_game_minutes]

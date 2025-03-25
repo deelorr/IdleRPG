@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://cy5oqv1377hf7"]
+
+[ext_resource type="Script" uid="uid://bliwog0rw6pwi" path="res://scripts/text_box.gd" id="1_wscpg"]
+
+[node name="TextBox" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_wscpg")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1046.0
+offset_bottom = 150.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -4.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="StoryLabel" type="Label" parent="Panel/VBoxContainer"]
+custom_minimum_size = Vector2(1042, 112)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 50
+text = "Hello!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="SpeakerLabel" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 25
+text = "Speaker"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NextButton" type="Button" parent="Panel/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[connection signal="pressed" from="Panel/VBoxContainer/NextButton" to="." method="_on_next_button_pressed"]

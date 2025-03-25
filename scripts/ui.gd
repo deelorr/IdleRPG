@@ -3,10 +3,10 @@ extends CanvasLayer
 signal camera_target(target: String)
 
 @onready var menu: TabContainer = $Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer
-@onready var speed_button: Button = $Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/VBoxContainer/SpeedButton
-
-@onready var plus_hut_button: Button = $Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/VBoxContainer/HBoxContainer/PlusHutButton
-@onready var minus_hut_button: Button = $Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/VBoxContainer/HBoxContainer/MinusHutButton
+@onready var speed_button: Button = $Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/MarginContainer/DebugBox/SpeedButton
+@onready var pause_button : Button = $Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Settings/MarginContainer/SettingsBox/PauseButton
+@onready var plus_hut_button: Button = $Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/MarginContainer/DebugBox/HBoxContainer/PlusHutButton
+@onready var minus_hut_button: Button = $Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/MarginContainer/DebugBox/HBoxContainer/MinusHutButton
 
 var current_hut_count: int = 1
 const MAX_HUTS := 3
@@ -92,3 +92,13 @@ func toggle_menu() -> void:
 		menu.visible = true
 		menu.scale = Vector2.ZERO
 		tween.tween_property(menu, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+func _on_pause_button_pressed():
+	Global.toggle_pause()
+	update_pause_button_text()
+	
+func update_pause_button_text():
+	if Global.is_game_paused:
+		pause_button.text = "Resume"
+	else:
+		pause_button.text = "Pause"

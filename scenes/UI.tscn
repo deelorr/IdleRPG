@@ -1,9 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://cf6wems303amh"]
+[gd_scene load_steps=9 format=3 uid="uid://cf6wems303amh"]
 
 [ext_resource type="StyleBox" uid="uid://sugqjf8hn4gk" path="res://art/ButtonStyle.tres" id="1_dj8aq"]
 [ext_resource type="Script" uid="uid://dw27mfl60waj5" path="res://scripts/ui.gd" id="1_ro3t7"]
+[ext_resource type="PackedScene" uid="uid://cy5oqv1377hf7" path="res://scenes/text_box.tscn" id="2_xpksx"]
 [ext_resource type="Theme" uid="uid://cq5uc11a85s43" path="res://art/ButtonContainerTheme.tres" id="3_5en4g"]
+[ext_resource type="StyleBox" uid="uid://bjdawk0ucffvb" path="res://art/ButtonsDisabled.tres" id="4_3wlde"]
 [ext_resource type="StyleBox" uid="uid://bj3abd8vdb802" path="res://art/Buttons.tres" id="4_ua6yw"]
+[ext_resource type="StyleBox" uid="uid://bhybe3yt3d0pm" path="res://art/ButtonsPressed.tres" id="5_xpksx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ro3t7"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -15,6 +18,21 @@ border_width_bottom = 150
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_ro3t7")
 
+[node name="TextBox" parent="." instance=ExtResource("2_xpksx")]
+visible = false
+z_index = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -523.0
+offset_top = 473.0
+offset_right = -523.0
+offset_bottom = 473.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
@@ -25,6 +43,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="MenuContainer" type="MarginContainer" parent="Control"]
+process_mode = 3
 z_index = 1
 layout_mode = 1
 anchors_preset = 7
@@ -62,6 +81,8 @@ theme_override_constants/separation = 20
 custom_minimum_size = Vector2(63, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "Woods
 "
@@ -70,6 +91,8 @@ text = "Woods
 custom_minimum_size = Vector2(63, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 disabled = true
 text = "Snow"
@@ -84,10 +107,13 @@ theme = ExtResource("3_5en4g")
 custom_minimum_size = Vector2(63, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "Menu"
 
 [node name="TabContainer" type="TabContainer" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu"]
+process_mode = 3
 visible = false
 layout_mode = 0
 offset_left = -322.0
@@ -101,29 +127,81 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="Settings" type="Control" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer"]
-layout_mode = 2
-metadata/_tab_index = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Settings"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Stats"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="StatsBox" type="VBoxContainer" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Stats/MarginContainer"]
+layout_mode = 2
 alignment = 1
 
-[node name="SaveButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Settings/VBoxContainer"]
+[node name="Stat" type="Label" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Stats/MarginContainer/StatsBox"]
+layout_mode = 2
+text = "Stat 1"
+
+[node name="Stat2" type="Label" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Stats/MarginContainer/StatsBox"]
+layout_mode = 2
+text = "Stat 2"
+
+[node name="Stat3" type="Label" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Stats/MarginContainer/StatsBox"]
+layout_mode = 2
+text = "Stat 3"
+
+[node name="Stat4" type="Label" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Stats/MarginContainer/StatsBox"]
+layout_mode = 2
+text = "Stat 4"
+
+[node name="Settings" type="Control" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Settings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="SettingsBox" type="VBoxContainer" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Settings/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="PauseButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Settings/MarginContainer/SettingsBox"]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/pressed = ExtResource("5_xpksx")
+theme_override_styles/normal = ExtResource("4_ua6yw")
+text = "Pause"
+
+[node name="SaveButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Settings/MarginContainer/SettingsBox"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "Save"
 
-[node name="ResetButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Settings/VBoxContainer"]
+[node name="ResetButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Settings/MarginContainer/SettingsBox"]
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "Reset"
 
@@ -132,42 +210,55 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="DebugBox" type="VBoxContainer" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/MarginContainer"]
+layout_mode = 2
 alignment = 1
 
-[node name="SpeedButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/VBoxContainer"]
+[node name="SpeedButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/MarginContainer/DebugBox"]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "Speed x1.0"
 
-[node name="SkipButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/VBoxContainer"]
+[node name="SkipButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/MarginContainer/DebugBox"]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "Skip Hour"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/MarginContainer/DebugBox"]
 layout_mode = 2
 alignment = 1
 
-[node name="PlusHutButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/VBoxContainer/HBoxContainer"]
+[node name="PlusHutButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/MarginContainer/DebugBox/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "+1 Hut"
 
-[node name="MinusHutButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/VBoxContainer/HBoxContainer"]
+[node name="MinusHutButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/MarginContainer/DebugBox/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "-1 Hut"
 
@@ -181,6 +272,8 @@ theme_override_constants/separation = 20
 [node name="HomeButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer3"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "Home"
 
@@ -188,6 +281,8 @@ text = "Home"
 custom_minimum_size = Vector2(63, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 disabled = true
 text = "Cave"
@@ -213,11 +308,14 @@ offset_top = 46.0
 offset_right = 923.0
 offset_bottom = 115.0
 size_flags_vertical = 0
-theme = ExtResource("3_5en4g")
+theme_override_styles/panel = ExtResource("4_ua6yw")
 
 [node name="ClockLabel" type="Label" parent="Overlay/Panel/ClockPanel"]
 layout_mode = 2
+size_flags_vertical = 1
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "00:00"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -225,11 +323,12 @@ vertical_alignment = 1
 [connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer/WoodsButton" to="." method="_on_the_woods_button_pressed"]
 [connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer/SnowButton" to="." method="_on_section_3_button_pressed"]
 [connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu" to="." method="_on_menu_pressed"]
-[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Settings/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
-[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Settings/VBoxContainer/ResetButton" to="." method="_on_reset_pressed"]
-[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/VBoxContainer/SpeedButton" to="." method="_on_speed_button_pressed"]
-[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/VBoxContainer/SkipButton" to="." method="_on_skip_button_pressed"]
-[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/VBoxContainer/HBoxContainer/PlusHutButton" to="." method="_on_plus_hut_button_pressed"]
-[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/VBoxContainer/HBoxContainer/MinusHutButton" to="." method="_on_minus_hut_button_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Settings/MarginContainer/SettingsBox/PauseButton" to="." method="_on_pause_button_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Settings/MarginContainer/SettingsBox/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Settings/MarginContainer/SettingsBox/ResetButton" to="." method="_on_reset_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/MarginContainer/DebugBox/SpeedButton" to="." method="_on_speed_button_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/MarginContainer/DebugBox/SkipButton" to="." method="_on_skip_button_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/MarginContainer/DebugBox/HBoxContainer/PlusHutButton" to="." method="_on_plus_hut_button_pressed"]
+[connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/MarginContainer/DebugBox/HBoxContainer/MinusHutButton" to="." method="_on_minus_hut_button_pressed"]
 [connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer3/HomeButton" to="." method="_on_home_base_pressed"]
 [connection signal="pressed" from="Control/MenuContainer/HBoxContainer/VBoxContainer3/CaveButton" to="." method="_on_section_4_button_pressed"]
