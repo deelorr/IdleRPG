@@ -4,13 +4,23 @@
 [ext_resource type="Texture2D" uid="uid://d2rs7isidq8ps" path="res://art/BushSprite.png" id="2_lecah"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nbyt5"]
-radius = 4.12311
+radius = 0.0
 
 [node name="Bush" type="StaticBody2D" groups=["bush"]]
 script = ExtResource("1_lecah")
+max_amount = 12
+resource_type = "food"
 
 [node name="BushSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_lecah")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_nbyt5")
+
+[node name="GatherPoint" type="Marker2D" parent="."]
+position = Vector2(0, 10)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -8.0
+offset_top = -24.0
+offset_right = 8.0

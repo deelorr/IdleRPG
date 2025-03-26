@@ -4,16 +4,17 @@
 [ext_resource type="Script" uid="uid://2y6mpsh7ljcd" path="res://scripts/tree.gd" id="1_omb14"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nbyt5"]
-radius = 4.0
+radius = 0.0
 
 [node name="Tree" type="StaticBody2D" groups=["tree"]]
 script = ExtResource("1_omb14")
+max_amount = 12
+resource_type = "wood"
 
 [node name="TreeSprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_2cic4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 8)
 shape = SubResource("CircleShape2D_nbyt5")
 
@@ -21,8 +22,7 @@ shape = SubResource("CircleShape2D_nbyt5")
 position = Vector2(0, 24)
 
 [node name="Label" type="Label" parent="."]
-visible = false
-offset_left = -24.0
+offset_left = -8.0
 offset_top = -32.0
-offset_right = 24.0
-offset_bottom = -8.0
+offset_right = 8.0
+offset_bottom = -9.0

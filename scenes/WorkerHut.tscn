@@ -43,11 +43,10 @@ position = Vector2(24, 23)
 shape = SubResource("RectangleShape2D_yrk0c")
 
 [node name="MenuPanel" type="Panel" parent="."]
-visible = false
 offset_left = 4.0
 offset_top = 50.0
 offset_right = 220.0
-offset_bottom = 428.0
+offset_bottom = 418.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 

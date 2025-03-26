@@ -5,6 +5,9 @@ class_name WorkerHut
 @onready var menu: Control = $MenuPanel
 @onready var wood_button: Button = $MenuPanel/VBoxContainer/WorkerHutStats/WoodButton
 @onready var food_button: Button = $MenuPanel/VBoxContainer/WorkerHutStats/FoodButton
+@onready var worker1_state_label := $MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1StateLabel
+@onready var worker2_state_label := $MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2StateLabel
+@onready var worker3_state_label := $MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3StateLabel
 @onready var worker1_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1Button
 @onready var worker2_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2Button
 @onready var worker3_button: Button = $MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3Button
@@ -131,7 +134,7 @@ func update_worker_spawn_buttons() -> void:
 		1:
 			worker1_button.disabled = true
 			worker2_button.disabled = false
-			worker3_button.disabled = true
+
 		2:
 			worker1_button.disabled = true
 			worker2_button.disabled = true
@@ -204,8 +207,17 @@ func _on_worker_3_fire_button_pressed() -> void:
 func switch_worker_job(index: int) -> void:
 	if index >= 0 and index < workers.size():
 		var worker = workers[index]
-		worker.current_job = worker.WorkerJob.GATHER_FOOD if worker.current_job == worker.WorkerJob.GATHER_WOOD else worker.WorkerJob.GATHER_WOOD
-		worker.find_target_resource()
+
+		# Clear the current target, if any.
+		if worker.target_resource:
+			worker.target_resource.is_targeted = false
+			worker.target_resource.targeted_by = null
+			worker.target_resource = null
+
+		# Force the worker to return to the hut.
+		worker.pending_job_switch = true
+		worker.return_to_hut()  # This sets state to RETURNING.
+
 		update_labels()
 	else:
 		print("Invalid worker index: ", index)

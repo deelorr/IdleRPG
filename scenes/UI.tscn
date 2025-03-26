@@ -1,12 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://cf6wems303amh"]
+[gd_scene load_steps=12 format=3 uid="uid://cf6wems303amh"]
 
 [ext_resource type="StyleBox" uid="uid://sugqjf8hn4gk" path="res://art/ButtonStyle.tres" id="1_dj8aq"]
 [ext_resource type="Script" uid="uid://dw27mfl60waj5" path="res://scripts/ui.gd" id="1_ro3t7"]
 [ext_resource type="PackedScene" uid="uid://cy5oqv1377hf7" path="res://scenes/text_box.tscn" id="2_xpksx"]
 [ext_resource type="Theme" uid="uid://cq5uc11a85s43" path="res://art/ButtonContainerTheme.tres" id="3_5en4g"]
 [ext_resource type="StyleBox" uid="uid://bjdawk0ucffvb" path="res://art/ButtonsDisabled.tres" id="4_3wlde"]
-[ext_resource type="StyleBox" uid="uid://bj3abd8vdb802" path="res://art/Buttons.tres" id="4_ua6yw"]
+[ext_resource type="StyleBox" uid="uid://bam4l8q4sox5a" path="res://art/Buttons.tres" id="4_ua6yw"]
+[ext_resource type="StyleBox" uid="uid://dw7b8tj1mod63" path="res://art/ButtonsFocus.tres" id="5_ukj8e"]
 [ext_resource type="StyleBox" uid="uid://bhybe3yt3d0pm" path="res://art/ButtonsPressed.tres" id="5_xpksx"]
+[ext_resource type="StyleBox" uid="uid://bumwekepwycwa" path="res://art/ButtonsHover.tres" id="6_24e4x"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ro3t7"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -14,6 +16,15 @@ border_width_left = 15
 border_width_top = 150
 border_width_right = 15
 border_width_bottom = 150
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xpksx"]
+bg_color = Color(0.262932, 0.262932, 0.262932, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+shadow_color = Color(0.980139, 0.980139, 0.980139, 0.6)
+shadow_size = 5
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_ro3t7")
@@ -80,7 +91,9 @@ theme_override_constants/separation = 20
 custom_minimum_size = Vector2(63, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/focus = ExtResource("5_ukj8e")
 theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/hover = ExtResource("6_24e4x")
 theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "Woods
@@ -90,7 +103,9 @@ text = "Woods
 custom_minimum_size = Vector2(63, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/focus = ExtResource("5_ukj8e")
 theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/hover = ExtResource("6_24e4x")
 theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 disabled = true
@@ -106,7 +121,9 @@ theme = ExtResource("3_5en4g")
 custom_minimum_size = Vector2(63, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/focus = ExtResource("5_ukj8e")
 theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/hover = ExtResource("6_24e4x")
 theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "Menu"
@@ -182,7 +199,9 @@ alignment = 1
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/focus = ExtResource("5_ukj8e")
 theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/hover = ExtResource("6_24e4x")
 theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "Pause"
@@ -191,7 +210,9 @@ text = "Pause"
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/focus = ExtResource("5_ukj8e")
 theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/hover = ExtResource("6_24e4x")
 theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "Save"
@@ -199,7 +220,9 @@ text = "Save"
 [node name="ResetButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Settings/MarginContainer/SettingsBox"]
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_styles/focus = ExtResource("5_ukj8e")
 theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/hover = ExtResource("6_24e4x")
 theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "Reset"
@@ -227,7 +250,9 @@ alignment = 1
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/focus = ExtResource("5_ukj8e")
 theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/hover = ExtResource("6_24e4x")
 theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "Speed x1.0"
@@ -236,7 +261,9 @@ text = "Speed x1.0"
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/focus = ExtResource("5_ukj8e")
 theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/hover = ExtResource("6_24e4x")
 theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "Skip Hour"
@@ -248,7 +275,9 @@ alignment = 1
 [node name="PlusHutButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/MarginContainer/DebugBox/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/focus = ExtResource("5_ukj8e")
 theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/hover = ExtResource("6_24e4x")
 theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "+1 Hut"
@@ -256,7 +285,9 @@ text = "+1 Hut"
 [node name="MinusHutButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer2/Menu/TabContainer/Debug/MarginContainer/DebugBox/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/focus = ExtResource("5_ukj8e")
 theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/hover = ExtResource("6_24e4x")
 theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "-1 Hut"
@@ -271,7 +302,9 @@ theme_override_constants/separation = 20
 [node name="HomeButton" type="Button" parent="Control/MenuContainer/HBoxContainer/VBoxContainer3"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/focus = ExtResource("5_ukj8e")
 theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/hover = ExtResource("6_24e4x")
 theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 text = "Home"
@@ -280,7 +313,9 @@ text = "Home"
 custom_minimum_size = Vector2(63, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/focus = ExtResource("5_ukj8e")
 theme_override_styles/disabled = ExtResource("4_3wlde")
+theme_override_styles/hover = ExtResource("6_24e4x")
 theme_override_styles/pressed = ExtResource("5_xpksx")
 theme_override_styles/normal = ExtResource("4_ua6yw")
 disabled = true
@@ -307,14 +342,14 @@ offset_top = 46.0
 offset_right = 923.0
 offset_bottom = 115.0
 size_flags_vertical = 0
-theme_override_styles/panel = ExtResource("4_ua6yw")
+theme_override_styles/panel = SubResource("StyleBoxFlat_xpksx")
 
 [node name="ClockLabel" type="Label" parent="Overlay/Panel/ClockPanel"]
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = ExtResource("4_ua6yw")
+theme_override_styles/normal = SubResource("StyleBoxFlat_xpksx")
 text = "00:00"
 horizontal_alignment = 1
 vertical_alignment = 1

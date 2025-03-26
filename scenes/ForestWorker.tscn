@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://cdrgi07ti5bms" path="res://art/WorkerFaceSprite.png" id="3_x6owh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r1ivn"]
-radius = 5.0
-height = 14.0
+radius = 2.0
+height = 8.0
 
 [sub_resource type="Animation" id="Animation_7i2gc"]
 length = 0.001
@@ -105,7 +105,7 @@ _data = {
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r1ivn"]
-bg_color = Color(0, 0, 0, 1)
+bg_color = Color(0, 0, 0, 0.27451)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -137,7 +137,6 @@ visible = false
 texture = ExtResource("3_x6owh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, -5)
 shape = SubResource("CapsuleShape2D_r1ivn")
 
@@ -165,8 +164,8 @@ visible = false
 z_index = 1
 offset_left = 9.0
 offset_top = -11.0
-offset_right = 88.0
-offset_bottom = 58.0
+offset_right = 133.0
+offset_bottom = 140.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_r1ivn")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="WorkerPanel"]
@@ -183,6 +182,15 @@ size_flags_horizontal = 4
 text = "Level: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="StateLabel" type="Label" parent="WorkerPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="JobLabel" type="Label" parent="WorkerPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="TargetLabel" type="Label" parent="WorkerPanel/VBoxContainer"]
+layout_mode = 2
 
 [node name="GridContainer" type="GridContainer" parent="WorkerPanel/VBoxContainer"]
 layout_mode = 2

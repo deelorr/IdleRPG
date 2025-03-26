@@ -8,10 +8,14 @@ class_name Worker
 @onready var worker_level := $WorkerPanel/VBoxContainer/WorkerLevel
 @onready var carried_wood_label := $WorkerPanel/VBoxContainer/GridContainer/WorkerFoodAmount
 @onready var carried_food_label := $WorkerPanel/VBoxContainer/GridContainer/WorkerWoodAmount
+
+@onready var state_label := $WorkerPanel/VBoxContainer/StateLabel
+@onready var target_label := $WorkerPanel/VBoxContainer/TargetLabel
+@onready var job_label := $WorkerPanel/VBoxContainer/JobLabel
+
 @onready var tree_chop_timer: Timer = $TreeChopTimer
 @onready var bush_chop_timer: Timer = $BushChopTimer
 @onready var target_line: Line2D = $TargetLine
-
 
 var speed: float = 150.0
 var base_wood_capacity: int = 24
@@ -23,6 +27,7 @@ var current_job: WorkerJob = WorkerJob.GATHER_WOOD
 var target_resource: ResourceTarget = null
 var home_hut: WorkerHut = null
 var current_level: int = 1
+var pending_job_switch: bool = false
 
 enum WorkerState {
 	GATHERING,
@@ -40,12 +45,20 @@ func update_worker_panel():
 	worker_level.text = "Level: " + str(current_level)
 	carried_wood_label.text = " %d / %d" % [carried_wood, get_wood_capacity()]
 	carried_food_label.text = " %d / %d" % [carried_food, get_food_capacity()]
+	state_label.text = str(WorkerState.keys()[current_state])
+	job_label.text = str(WorkerJob.keys()[current_job])
+	
+	if is_instance_valid(target_resource):
+		target_label.text = "Target: " + target_resource.name
+	else:
+		target_label.text = "Target: None"
 
+	
 func _physics_process(_delta: float) -> void:
 	match current_state:
 		WorkerState.FINDING:
 			if is_instance_valid(target_resource):
-				if target_resource.has_method("get_gather_position"):
+				if is_instance_valid(target_resource):
 					move_to_target(target_resource.get_gather_position())
 				else:
 					move_to_target(target_resource.global_position)
@@ -68,7 +81,6 @@ func _physics_process(_delta: float) -> void:
 	update_worker_panel()
 	update_target_line()
 
-
 func update_animation() -> void:
 	if current_state == WorkerState.GATHERING:
 		animations.play("RESET")  # Placeholder for "chopping" animation
@@ -88,14 +100,18 @@ func update_animation() -> void:
 		animations.stop()  # Placeholder for "idle" animation
 
 func move_to_target(target: Vector2) -> void:
+
 	var direction = (target - global_position).normalized()
 	velocity = direction * speed * TimeManager.time_speed_multiplier
+
 	var distance = global_position.distance_to(target)
 	if distance < 15.0:
 		if current_state == WorkerState.FINDING:
 			current_state = WorkerState.GATHERING
 		elif current_state == WorkerState.RETURNING:
 			deposit_resource(current_job)
+			print("Deposited at hut, at:", home_hut.spawn_marker.global_position)
+
 
 func gather_resource(resource_type: WorkerJob) -> void:
 	if not target_resource:
@@ -126,7 +142,15 @@ func deposit_resource(resource_type: WorkerJob) -> void:
 	elif resource_type == WorkerJob.GATHER_FOOD and carried_food > 0:
 		home_hut.hut_food += carried_food
 		carried_food = 0
-	current_state = WorkerState.IDLE  # Return to idle after deposit
+
+	# After depositing, if a job switch is pending, perform it now.
+	if pending_job_switch:
+		current_job = WorkerJob.GATHER_FOOD if current_job == WorkerJob.GATHER_WOOD else WorkerJob.GATHER_WOOD
+		pending_job_switch = false
+		print("Job switched after deposit")
+
+	current_state = WorkerState.IDLE
+	print("Deposited at hut. Wood:", home_hut.hut_wood, " Food:", home_hut.hut_food)
 
 func find_target_resource() -> void:
 	if not is_inside_tree():
@@ -157,6 +181,20 @@ func find_target_resource() -> void:
 		target_resource.is_targeted = true  # Mark resource as targeted immediately
 		target_resource.targeted_by = self  # Track the worker
 		current_state = WorkerState.FINDING
+	print("Worker looking for:", resource_group)
+	print("Found resource at:", closest_resource.global_position if closest_resource else "None")
+
+func return_to_hut():
+	# Clear current target
+	if target_resource:
+		target_resource.is_targeted = false
+		target_resource.targeted_by = null
+		target_resource = null
+
+	# Stop moving and change state
+	velocity = Vector2.ZERO
+	current_state = WorkerState.RETURNING
+	print("Worker returning to hut with resources.")
 
 func _on_tree_chop_timer_timeout() -> void:
 	action_label.text = ""
@@ -180,7 +218,7 @@ func _on_tree_chop_timer_timeout() -> void:
 			target_resource.targeted_by = null
 
 	if carried_wood >= get_wood_capacity():
-		current_state = WorkerState.RETURNING
+		return_to_hut()
 	elif target_resource == null:
 		find_target_resource()
 		if target_resource:
@@ -194,6 +232,8 @@ func _on_bush_chop_timer_timeout() -> void:
 	action_label.text = ""
 
 	if target_resource:
+		target_resource.is_targeted = false
+		target_resource.targeted_by = null
 		var chunk_size := 2  # Amount gathered per tick
 		var amount_collected = target_resource.reduce_amount(chunk_size)
 		carried_food += amount_collected
@@ -212,7 +252,8 @@ func _on_bush_chop_timer_timeout() -> void:
 			target_resource.targeted_by = null
 
 	if carried_food >= get_food_capacity():
-		current_state = WorkerState.RETURNING
+		print("Returning to hut with food:", carried_food)
+		return_to_hut()
 	elif target_resource == null:
 		find_target_resource()
 		if target_resource:
@@ -221,7 +262,6 @@ func _on_bush_chop_timer_timeout() -> void:
 			current_state = WorkerState.RETURNING
 	else:
 		bush_chop_timer.start()
-
 
 func _on_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
