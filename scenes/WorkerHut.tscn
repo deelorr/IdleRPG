@@ -43,116 +43,153 @@ position = Vector2(24, 23)
 shape = SubResource("RectangleShape2D_yrk0c")
 
 [node name="MenuPanel" type="Panel" parent="."]
-offset_left = 4.0
-offset_top = 50.0
-offset_right = 220.0
+offset_left = 2.0
+offset_top = 48.0
+offset_right = 253.0
 offset_bottom = 418.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MenuPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="MenuPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -4.0
-offset_bottom = -58.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_top = 10
 
-[node name="WorkerButtons" type="VBoxContainer" parent="MenuPanel/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuPanel/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="WorkerButtons" type="VBoxContainer" parent="MenuPanel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
 size_flags_vertical = 6
 
-[node name="WorkersLabel" type="Label" parent="MenuPanel/VBoxContainer/WorkerButtons"]
-layout_mode = 2
-text = "Workers:"
-horizontal_alignment = 1
-
-[node name="Worker1" type="HBoxContainer" parent="MenuPanel/VBoxContainer/WorkerButtons"]
+[node name="Worker1" type="GridContainer" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons"]
 layout_mode = 2
 size_flags_horizontal = 4
+columns = 4
 
-[node name="Worker1Button" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker1"]
+[node name="Worker1Button" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker1"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Worker"
 icon = SubResource("PlaceholderTexture2D_2chc0")
 
-[node name="Worker1StateLabel" type="Label" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker1"]
+[node name="Worker1StateLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker1"]
 custom_minimum_size = Vector2(63, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 horizontal_alignment = 1
 
-[node name="Worker1FireButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker1"]
+[node name="Worker1FireButton" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker1"]
 layout_mode = 2
 icon = SubResource("PlaceholderTexture2D_svdfu")
 
-[node name="Worker1SwitchJobButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker1"]
+[node name="Worker1SwitchJobButton" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker1"]
 layout_mode = 2
 icon = SubResource("PlaceholderTexture2D_ssdrr")
 
-[node name="Worker2" type="HBoxContainer" parent="MenuPanel/VBoxContainer/WorkerButtons"]
+[node name="JobLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker1"]
+layout_mode = 2
+
+[node name="LevelLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker1"]
+layout_mode = 2
+
+[node name="WoodLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker1"]
+layout_mode = 2
+
+[node name="FoodLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker1"]
+layout_mode = 2
+
+[node name="Worker2" type="GridContainer" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons"]
 layout_mode = 2
 size_flags_horizontal = 4
+columns = 4
 
-[node name="Worker2Button" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker2"]
+[node name="Worker2Button" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker2"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Worker"
 icon = SubResource("PlaceholderTexture2D_orf8p")
 
-[node name="Worker2StateLabel" type="Label" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker2"]
+[node name="Worker2StateLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker2"]
 custom_minimum_size = Vector2(63, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 horizontal_alignment = 1
 
-[node name="Worker2FireButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker2"]
+[node name="Worker2FireButton" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker2"]
 layout_mode = 2
 icon = SubResource("PlaceholderTexture2D_yrk0c")
 
-[node name="Worker2SwitchJobButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker2"]
+[node name="Worker2SwitchJobButton" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker2"]
 layout_mode = 2
 icon = SubResource("PlaceholderTexture2D_ssdrr")
 
-[node name="Worker3" type="HBoxContainer" parent="MenuPanel/VBoxContainer/WorkerButtons"]
+[node name="JobLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker2"]
+layout_mode = 2
+
+[node name="LevelLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker2"]
+layout_mode = 2
+
+[node name="WoodLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker2"]
+layout_mode = 2
+
+[node name="FoodLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker2"]
+layout_mode = 2
+
+[node name="Worker3" type="GridContainer" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons"]
 layout_mode = 2
 size_flags_horizontal = 4
+columns = 4
 
-[node name="Worker3Button" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker3"]
+[node name="Worker3Button" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker3"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Worker"
 icon = SubResource("PlaceholderTexture2D_r17t8")
 
-[node name="Worker3StateLabel" type="Label" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker3"]
+[node name="Worker3StateLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker3"]
 custom_minimum_size = Vector2(63, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 horizontal_alignment = 1
 
-[node name="Worker3FireButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker3"]
+[node name="Worker3FireButton" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker3"]
 layout_mode = 2
 icon = SubResource("PlaceholderTexture2D_xp4s3")
 
-[node name="Worker3SwitchJobButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerButtons/Worker3"]
+[node name="Worker3SwitchJobButton" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker3"]
 layout_mode = 2
 icon = SubResource("PlaceholderTexture2D_ssdrr")
 
-[node name="WorkerHutStats" type="VBoxContainer" parent="MenuPanel/VBoxContainer"]
+[node name="JobLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker3"]
+layout_mode = 2
+
+[node name="LevelLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker3"]
+layout_mode = 2
+
+[node name="WoodLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker3"]
+layout_mode = 2
+
+[node name="FoodLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker3"]
+layout_mode = 2
+
+[node name="WorkerHutStats" type="VBoxContainer" parent="MenuPanel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
 size_flags_vertical = 6
 
-[node name="StatsLabel" type="Label" parent="MenuPanel/VBoxContainer/WorkerHutStats"]
+[node name="StatsLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerHutStats"]
 layout_mode = 2
 text = "Stats:"
 horizontal_alignment = 1
 
-[node name="WoodButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerHutStats"]
+[node name="WoodButton" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerHutStats"]
 custom_minimum_size = Vector2(90, 25)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -163,7 +200,7 @@ icon = ExtResource("3_x7al1")
 flat = true
 expand_icon = true
 
-[node name="FoodButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerHutStats"]
+[node name="FoodButton" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerHutStats"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
@@ -173,7 +210,7 @@ icon = ExtResource("4_ulahn")
 flat = true
 expand_icon = true
 
-[node name="CollectButton" type="Button" parent="MenuPanel/VBoxContainer/WorkerHutStats"]
+[node name="CollectButton" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer/WorkerHutStats"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
@@ -185,13 +222,13 @@ position = Vector2(53, 44)
 [node name="MenuAnchor" type="Marker2D" parent="."]
 position = Vector2(25, 49)
 
-[connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1Button" to="." method="_on_worker_1_button_pressed"]
-[connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1FireButton" to="." method="_on_worker_1_fire_button_pressed"]
-[connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker1/Worker1SwitchJobButton" to="." method="_on_worker_1_switch_job_button_pressed"]
-[connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2Button" to="." method="_on_worker_2_button_pressed"]
-[connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2FireButton" to="." method="_on_worker_2_fire_button_pressed"]
-[connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker2/Worker2SwitchJobButton" to="." method="_on_worker_2_switch_job_button_pressed"]
-[connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3Button" to="." method="_on_worker_3_button_pressed"]
-[connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3FireButton" to="." method="_on_worker_3_fire_button_pressed"]
-[connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerButtons/Worker3/Worker3SwitchJobButton" to="." method="_on_worker_3_switch_job_button_pressed"]
-[connection signal="pressed" from="MenuPanel/VBoxContainer/WorkerHutStats/CollectButton" to="." method="_on_collect_button_pressed"]
+[connection signal="pressed" from="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker1/Worker1Button" to="." method="_on_worker_1_button_pressed"]
+[connection signal="pressed" from="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker1/Worker1FireButton" to="." method="_on_worker_1_fire_button_pressed"]
+[connection signal="pressed" from="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker1/Worker1SwitchJobButton" to="." method="_on_worker_1_switch_job_button_pressed"]
+[connection signal="pressed" from="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker2/Worker2Button" to="." method="_on_worker_2_button_pressed"]
+[connection signal="pressed" from="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker2/Worker2FireButton" to="." method="_on_worker_2_fire_button_pressed"]
+[connection signal="pressed" from="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker2/Worker2SwitchJobButton" to="." method="_on_worker_2_switch_job_button_pressed"]
+[connection signal="pressed" from="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker3/Worker3Button" to="." method="_on_worker_3_button_pressed"]
+[connection signal="pressed" from="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker3/Worker3FireButton" to="." method="_on_worker_3_fire_button_pressed"]
+[connection signal="pressed" from="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker3/Worker3SwitchJobButton" to="." method="_on_worker_3_switch_job_button_pressed"]
+[connection signal="pressed" from="MenuPanel/MarginContainer/VBoxContainer/WorkerHutStats/CollectButton" to="." method="_on_collect_button_pressed"]

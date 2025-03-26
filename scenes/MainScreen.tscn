@@ -528,7 +528,7 @@ position = Vector2(85, 152)
 scale = Vector2(2, 2)
 
 [node name="MenuAnchor" parent="WorkerHut" index="4"]
-position = Vector2(-9.5, 51.5)
+position = Vector2(-33.5, 49.5)
 
 [node name="WorkerHut2" parent="." instance=ExtResource("5_y448k")]
 visible = false
