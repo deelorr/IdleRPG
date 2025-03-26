@@ -34,9 +34,9 @@ func _ready() -> void:
 		SaveManager.load_game()
 		
 	text_box.show_text_sequence([
-	{"speaker": "Narrator", "text": "Your first worker is now ready."},
-	{"speaker": "Worker", "text": "I'll gather as much slime as I can!"},
-	{"speaker": "Narrator", "text": "The worker runs off toward the forest."}
+	{"speaker": "Narrator", "text": "Welcome to your Home Base."},
+	{"speaker": "Narrator", "text": "This is where you will store all the resources you gather."},
+	{"speaker": "Narrator", "text": "Lets start collecting wood now."}
 ])
 
 
