@@ -33,13 +33,11 @@ enum WorkerState {
 	GATHERING,
 	IDLE,
 	FINDING,
-	RETURNING
-}
+	RETURNING }
 
 enum WorkerJob {
 	GATHER_WOOD,
-	GATHER_FOOD,
-}
+	GATHER_FOOD }
 
 func update_worker_panel():
 	worker_level.text = "Level: " + str(current_level)
@@ -53,7 +51,6 @@ func update_worker_panel():
 	else:
 		target_label.text = "Target: None"
 
-	
 func _physics_process(_delta: float) -> void:
 	match current_state:
 		WorkerState.FINDING:
@@ -65,7 +62,6 @@ func _physics_process(_delta: float) -> void:
 			else:
 				target_resource = null
 				current_state = WorkerState.IDLE
-
 		WorkerState.GATHERING:
 			gather_resource(current_job)
 		WorkerState.RETURNING:
@@ -111,7 +107,6 @@ func move_to_target(target: Vector2) -> void:
 		elif current_state == WorkerState.RETURNING:
 			deposit_resource(current_job)
 			print("Deposited at hut, at:", home_hut.spawn_marker.global_position)
-
 
 func gather_resource(resource_type: WorkerJob) -> void:
 	if not target_resource:

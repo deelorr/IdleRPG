@@ -9,3 +9,4 @@ func _ready() -> void:
 	
 func _process(_delta):
 	wood_label.text = str(current_amount)
+	

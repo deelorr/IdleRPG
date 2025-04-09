@@ -43,6 +43,7 @@ position = Vector2(24, 23)
 shape = SubResource("RectangleShape2D_yrk0c")
 
 [node name="MenuPanel" type="Panel" parent="."]
+visible = false
 offset_left = 2.0
 offset_top = 48.0
 offset_right = 253.0
@@ -217,10 +218,10 @@ size_flags_vertical = 0
 text = "COLLECT"
 
 [node name="SpawnMarker" type="Marker2D" parent="."]
-position = Vector2(53, 44)
+position = Vector2(46, 48)
 
 [node name="MenuAnchor" type="Marker2D" parent="."]
-position = Vector2(25, 49)
+position = Vector2(2, 48)
 
 [connection signal="pressed" from="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker1/Worker1Button" to="." method="_on_worker_1_button_pressed"]
 [connection signal="pressed" from="MenuPanel/MarginContainer/VBoxContainer/WorkerButtons/Worker1/Worker1FireButton" to="." method="_on_worker_1_fire_button_pressed"]
