@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://cn3opsn1ip0s6"]
+[gd_scene load_steps=11 format=4 uid="uid://cn3opsn1ip0s6"]
 
 [ext_resource type="Script" uid="uid://cgr0gbaww5a8g" path="res://scripts/main_screen.gd" id="1_5aeyp"]
 [ext_resource type="Texture2D" uid="uid://58rndofkpfve" path="res://art/TilesetGround.png" id="2_2skl6"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cf6wems303amh" path="res://scenes/UI.tscn" id="5_1agfe"]
 [ext_resource type="PackedScene" uid="uid://clfhfh54lg1nf" path="res://scenes/WorkerHut.tscn" id="5_y448k"]
 [ext_resource type="PackedScene" uid="uid://ogv02rj6n4io" path="res://scenes/HomeBase.tscn" id="6_el83a"]
+[ext_resource type="Script" uid="uid://cl63a786e7gcd" path="res://scripts/grid_debugger.gd" id="7_1agfe"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_y4gqh"]
 texture = ExtResource("2_2skl6")
@@ -489,7 +490,7 @@ texture = ExtResource("2_2skl6")
 sources/0 = SubResource("TileSetAtlasSource_y4gqh")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_svp2y"]
-size = Vector2(368.375, 279.25)
+size = Vector2(384, 256)
 
 [node name="MainScreen" type="Node2D"]
 y_sort_enabled = true
@@ -551,16 +552,22 @@ position = Vector2(593, 151)
 scale = Vector2(2, 2)
 
 [node name="TreeSpawnArea" type="Area2D" parent="."]
-position = Vector2(272, 436)
+position = Vector2(288, 448)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TreeSpawnArea"]
+position = Vector2(-32, 0)
 shape = SubResource("RectangleShape2D_svp2y")
 
 [node name="BushSpawnArea" type="Area2D" parent="."]
-position = Vector2(272, 774)
+position = Vector2(256, 768)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BushSpawnArea"]
 shape = SubResource("RectangleShape2D_svp2y")
+
+[node name="GridDebugger" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("7_1agfe")
 
 [connection signal="timeout" from="TreeTimer" to="." method="_on_tree_timer_timeout"]
 [connection signal="timeout" from="BushTimer" to="." method="_on_bush_timer_timeout"]
